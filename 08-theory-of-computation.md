@@ -570,7 +570,7 @@ L is **NP-complete** if NP-hard AND L ∈ NP.
 <details>
 <summary>Q2. Regex equivalent to (a+b)*</summary>
 
-(a) a*b* (b) (a*b*)* (c) (a+b)(a+b)* (d) a*+b*
+(a) a*b* (b) (a*b*)_ (c) (a+b)(a+b)_ (d) a*+b*
 
 **Answer: (b)**
 
