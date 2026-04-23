@@ -14,14 +14,14 @@ Exam: May 1, 2026. Focus: relational model, SQL, FDs/normalization, transactions
 
 ### Keys
 
-| Key | Definition |
-|---|---|
-| Superkey | Any set of attrs that uniquely identifies a tuple |
-| Candidate key | Minimal superkey (no proper subset is a superkey) |
-| Primary key | Chosen candidate key (NOT NULL, unique) |
-| Alternate key | Candidate key not chosen as PK |
-| Foreign key | Attr(s) referencing a PK in another (or same) relation |
-| Composite key | Key made of >1 attribute |
+| Key           | Definition                                             |
+| ------------- | ------------------------------------------------------ |
+| Superkey      | Any set of attrs that uniquely identifies a tuple      |
+| Candidate key | Minimal superkey (no proper subset is a superkey)      |
+| Primary key   | Chosen candidate key (NOT NULL, unique)                |
+| Alternate key | Candidate key not chosen as PK                         |
+| Foreign key   | Attr(s) referencing a PK in another (or same) relation |
+| Composite key | Key made of >1 attribute                               |
 
 - **Entity integrity**: PK ≠ NULL.
 - **Referential integrity**: FK must equal some PK value or be NULL.
@@ -31,20 +31,20 @@ Exam: May 1, 2026. Focus: relational model, SQL, FDs/normalization, transactions
 
 ## 2. Relational Algebra
 
-| Op | Symbol | Meaning |
-|---|---|---|
-| Select | σ_cond(R) | Rows matching condition |
-| Project | π_attrs(R) | Columns (dedup — set semantics) |
-| Union | R ∪ S | Both (union-compatible) |
-| Intersect | R ∩ S | In both |
-| Difference | R − S | In R but not S |
-| Cartesian | R × S | All pairs |
-| Rename | ρ | Rename relation/attrs |
-| Natural join | R ⋈ S | Equi-join on common attrs, drop dupes |
-| Theta join | R ⋈_θ S | σ_θ(R × S) |
-| Equi-join | special theta with "=" |
-| Outer joins | ⟕ ⟖ ⟗ | Left / Right / Full |
-| Division | R ÷ S | "For all" queries |
+| Op           | Symbol                 | Meaning                               |
+| ------------ | ---------------------- | ------------------------------------- |
+| Select       | σ_cond(R)              | Rows matching condition               |
+| Project      | π_attrs(R)             | Columns (dedup — set semantics)       |
+| Union        | R ∪ S                  | Both (union-compatible)               |
+| Intersect    | R ∩ S                  | In both                               |
+| Difference   | R − S                  | In R but not S                        |
+| Cartesian    | R × S                  | All pairs                             |
+| Rename       | ρ                      | Rename relation/attrs                 |
+| Natural join | R ⋈ S                  | Equi-join on common attrs, drop dupes |
+| Theta join   | R ⋈_θ S                | σ_θ(R × S)                            |
+| Equi-join    | special theta with "=" |
+| Outer joins  | ⟕ ⟖ ⟗                  | Left / Right / Full                   |
+| Division     | R ÷ S                  | "For all" queries                     |
 
 - **Division example**: "students who took all courses." `Took(sid,cid) ÷ Courses(cid)` → sids in Took paired with every cid in Courses.
 - σ and π commute only if projection keeps all attrs in σ's condition.
@@ -59,6 +59,7 @@ Exam: May 1, 2026. Focus: relational model, SQL, FDs/normalization, transactions
 ```
 FROM → ON → JOIN → WHERE → GROUP BY → HAVING → SELECT → DISTINCT → ORDER BY → LIMIT
 ```
+
 (Writing order differs: `SELECT … FROM … WHERE … GROUP BY … HAVING … ORDER BY … LIMIT`.)
 
 Key consequence: column **aliases defined in SELECT** cannot be used in `WHERE`/`GROUP BY`/`HAVING` (but can in `ORDER BY`).
@@ -121,14 +122,14 @@ Key consequence: column **aliases defined in SELECT** cannot be used in `WHERE`/
 
 ## 5. Normalization
 
-| NF | Condition |
-|---|---|
-| 1NF | All attributes atomic (no repeating groups / multi-valued cells) |
-| 2NF | 1NF + no **partial dependency** (no non-prime attr depends on part of a composite candidate key) |
-| 3NF | 2NF + no **transitive dependency**: for every FD X→A (A non-prime), X is a superkey, **or** A is prime |
-| BCNF | For every non-trivial FD X→Y, X is a superkey |
-| 4NF | BCNF + no non-trivial MVD unless LHS is superkey |
-| 5NF | No non-trivial join dependencies except from candidate keys |
+| NF   | Condition                                                                                              |
+| ---- | ------------------------------------------------------------------------------------------------------ |
+| 1NF  | All attributes atomic (no repeating groups / multi-valued cells)                                       |
+| 2NF  | 1NF + no **partial dependency** (no non-prime attr depends on part of a composite candidate key)       |
+| 3NF  | 2NF + no **transitive dependency**: for every FD X→A (A non-prime), X is a superkey, **or** A is prime |
+| BCNF | For every non-trivial FD X→Y, X is a superkey                                                          |
+| 4NF  | BCNF + no non-trivial MVD unless LHS is superkey                                                       |
+| 5NF  | No non-trivial join dependencies except from candidate keys                                            |
 
 - **BCNF ⊂ 3NF**: BCNF stricter. 3NF tolerates `prime → prime` via non-superkey LHS.
 - **Decomposition properties**:
@@ -189,12 +190,12 @@ Key consequence: column **aliases defined in SELECT** cannot be used in `WHERE`/
 
 ## 8. Isolation Levels (SQL Standard)
 
-| Level | Dirty Read | Non-repeatable Read | Phantom Read |
-|---|---|---|---|
-| READ UNCOMMITTED | Possible | Possible | Possible |
-| READ COMMITTED | **No** | Possible | Possible |
-| REPEATABLE READ | **No** | **No** | Possible |
-| SERIALIZABLE | **No** | **No** | **No** |
+| Level            | Dirty Read | Non-repeatable Read | Phantom Read |
+| ---------------- | ---------- | ------------------- | ------------ |
+| READ UNCOMMITTED | Possible   | Possible            | Possible     |
+| READ COMMITTED   | **No**     | Possible            | Possible     |
+| REPEATABLE READ  | **No**     | **No**              | Possible     |
+| SERIALIZABLE     | **No**     | **No**              | **No**       |
 
 - **Dirty read**: read uncommitted data.
 - **Non-repeatable read**: re-read a row → different value.
@@ -245,47 +246,61 @@ Key consequence: column **aliases defined in SELECT** cannot be used in `WHERE`/
 ## 12. Practice MCQs
 
 **Q1.** R(A,B,C,D) with FDs: A→B, B→C, C→D. Candidate keys?
-- (a) A  (b) AB  (c) AC  (d) ABCD
-**A: (a) A.** A⁺ = ABCD. B,C,D each appear on RHS, A never does → A must be in every key. A alone suffices → only candidate key.
+
+- (a) A (b) AB (c) AC (d) ABCD
+  **A: (a) A.** A⁺ = ABCD. B,C,D each appear on RHS, A never does → A must be in every key. A alone suffices → only candidate key.
 
 **Q2.** Table T(id, val) has rows (1,10), (2,NULL), (3,20). What's `SELECT COUNT(*), COUNT(val), SUM(val), AVG(val) FROM T;`?
+
 - **A:** 3, 2, 30, 15. (AVG = 30/2, not 30/3.)
 
 **Q3.** R(A,B,C) with FDs A→B, B→C. Highest normal form?
+
 - (a) 1NF (b) 2NF (c) 3NF (d) BCNF
-**A: (b) 2NF.** Key is A. B→C is transitive (B not superkey, C not prime) → violates 3NF.
+  **A: (b) 2NF.** Key is A. B→C is transitive (B not superkey, C not prime) → violates 3NF.
 
 **Q4.** Schedule: T1:R(A); T2:W(A); T1:W(A); T2:Commit; T1:Commit. Conflict serializable?
+
 - Conflicts: T1.R(A)–T2.W(A) ⇒ T1→T2. T2.W(A)–T1.W(A) ⇒ T2→T1. **Cycle ⇒ NOT conflict serializable.**
 
 **Q5.** Which isolation level allows phantoms but not non-repeatable reads?
+
 - **A: REPEATABLE READ.**
 
 **Q6.** `SELECT * FROM A LEFT JOIN B ON A.x = B.x WHERE B.y = 5;` — Issue?
+
 - **A:** The WHERE on B effectively turns it into an inner join (NULLs from unmatched A rows fail `B.y = 5`). Move predicate to `ON` clause to preserve.
 
 **Q7.** R(A,B,C,D), FDs: AB→C, C→D, D→A. Is R in BCNF?
+
 - Candidate keys: AB, BC, BD (check closures). C→D violates BCNF (C not a superkey). **Not BCNF; it is 3NF** (D is prime since BD is a key, A is prime since AB is a key).
 
 **Q8.** Which operator expresses "customers who bought **every** product"?
+
 - **A: Division (÷).**
 
 **Q9.** 100 rows in A, 50 in B, `A CROSS JOIN B`?
+
 - **A: 5000.**
 
 **Q10.** `SELECT dept, COUNT(*) FROM emp GROUP BY dept HAVING COUNT(*) > 5 ORDER BY dept;` — if `emp` is empty?
+
 - **A:** Zero rows (no groups formed). Note: a query with no GROUP BY and aggregates only would return one row even on empty input.
 
 **Q11.** Which property does strict 2PL guarantee beyond plain 2PL?
+
 - **A:** Avoids **cascading aborts** and ensures recoverability/strictness by holding X-locks until commit.
 
 **Q12.** `WHERE col NOT IN (SELECT x FROM T)` returns nothing. Why?
+
 - **A:** Subquery returned a NULL; `col <> NULL` is UNKNOWN for every row → all filtered out. Use `NOT EXISTS`.
 
 **Q13.** R1 ⋈ R2 where R1 has schema (A,B), R2 has (B,C). Lossless guarantee when decomposing R(A,B,C)?
+
 - **A:** Lossless iff B → A or B → C (common attr B is a key in one side).
 
 **Q14.** B+ tree vs hash index — which supports `WHERE salary BETWEEN 1000 AND 2000`?
+
 - **A: B+ tree** (ordered leaves). Hash cannot do range.
 
 ---
@@ -294,22 +309,22 @@ Key consequence: column **aliases defined in SELECT** cannot be used in `WHERE`/
 
 ### Normal Forms (one-liner)
 
-| NF | Rule of Thumb |
-|---|---|
-| 1NF | Atomic cells |
-| 2NF | No partial key dependencies |
-| 3NF | Non-key attrs depend on **key, whole key, nothing but the key** |
-| BCNF | Every non-trivial FD's LHS is a superkey |
-| 4NF | Same, extended to MVDs |
+| NF   | Rule of Thumb                                                   |
+| ---- | --------------------------------------------------------------- |
+| 1NF  | Atomic cells                                                    |
+| 2NF  | No partial key dependencies                                     |
+| 3NF  | Non-key attrs depend on **key, whole key, nothing but the key** |
+| BCNF | Every non-trivial FD's LHS is a superkey                        |
+| 4NF  | Same, extended to MVDs                                          |
 
 ### Isolation Levels
 
-| Level | Dirty | Non-rep | Phantom |
-|---|---|---|---|
-| READ UNCOMMITTED | Y | Y | Y |
-| READ COMMITTED | N | Y | Y |
-| REPEATABLE READ | N | N | Y |
-| SERIALIZABLE | N | N | N |
+| Level            | Dirty | Non-rep | Phantom |
+| ---------------- | ----- | ------- | ------- |
+| READ UNCOMMITTED | Y     | Y       | Y       |
+| READ COMMITTED   | N     | Y       | Y       |
+| REPEATABLE READ  | N     | N       | Y       |
+| SERIALIZABLE     | N     | N       | N       |
 
 ### Conflict Rules (for Serializability)
 
@@ -347,7 +362,7 @@ R → R1, R2 lossless iff (R1 ∩ R2) → R1 or (R1 ∩ R2) → R2.
 
 ## 🧪 Try Yourself — Practice Questions
 
-1. **(Easy)** Which of the following is true about a *superkey* of a relation?
+1. **(Easy)** Which of the following is true about a _superkey_ of a relation?
    A. It must be minimal.
    B. It uniquely identifies every tuple but need not be minimal.
    C. It can contain NULL values in any attribute.
@@ -359,7 +374,7 @@ R → R1, R2 lossless iff (R1 ∩ R2) → R1 or (R1 ∩ R2) → R2.
    C. R − S
    D. R ⋈ S
 
-3. **(Easy)** In SQL, which clause is evaluated *before* `SELECT`?
+3. **(Easy)** In SQL, which clause is evaluated _before_ `SELECT`?
    A. ORDER BY
    B. DISTINCT
    C. HAVING
@@ -377,7 +392,7 @@ R → R1, R2 lossless iff (R1 ∩ R2) → R1 or (R1 ∩ R2) → R2.
    C. All attribute values are atomic (no repeating groups).
    D. Every determinant is a candidate key.
 
-6. **(Easy)** In an ER diagram, a *weak entity* is characterized by:
+6. **(Easy)** In an ER diagram, a _weak entity_ is characterized by:
    A. Having no attributes.
    B. Being identified only in combination with its identifying (owner) entity via a partial key.
    C. Participating only in unary relationships.
@@ -391,7 +406,7 @@ R → R1, R2 lossless iff (R1 ∩ R2) → R1 or (R1 ∩ R2) → R2.
 
 8. **(Easy)** Write-Ahead Logging (WAL) requires:
    A. Data pages be flushed to disk before log records.
-   B. Log records describing a change be flushed to disk *before* the corresponding data page.
+   B. Log records describing a change be flushed to disk _before_ the corresponding data page.
    C. Logs be written only at commit time.
    D. Checkpoints replace the need for logs.
 
@@ -419,7 +434,7 @@ R → R1, R2 lossless iff (R1 ∩ R2) → R1 or (R1 ∩ R2) → R2.
     C. {A,D}
     D. Both A and B (AB and BC are both candidate keys)
 
-13. **(Medium)** Which index is *best* for the query `WHERE salary BETWEEN 50000 AND 70000`?
+13. **(Medium)** Which index is _best_ for the query `WHERE salary BETWEEN 50000 AND 70000`?
     A. Hash index on salary.
     B. B+-tree index on salary.
     C. Bitmap index on department.
@@ -429,7 +444,7 @@ R → R1, R2 lossless iff (R1 ∩ R2) → R1 or (R1 ∩ R2) → R2.
     A. Each employee's salary if their dept has > 5 people.
     B. Average salary per department, only for departments with more than 5 employees.
     C. Departments with more than 5 distinct salaries.
-    D. Error: HAVING cannot use COUNT(*).
+    D. Error: HAVING cannot use COUNT(\*).
 
 15. **(Medium)** A left outer join `R LEFT JOIN S ON R.x = S.x` on 10 R-rows where only 4 match S will produce:
     A. 4 rows.
@@ -437,7 +452,7 @@ R → R1, R2 lossless iff (R1 ∩ R2) → R1 or (R1 ∩ R2) → R2.
     C. 14 rows.
     D. An error if S has NULLs in x.
 
-16. **(Medium)** Under isolation level **READ COMMITTED**, which anomaly is *still possible*?
+16. **(Medium)** Under isolation level **READ COMMITTED**, which anomaly is _still possible_?
     A. Dirty read.
     B. Non-repeatable read.
     C. Lost update on the same row within one statement.
@@ -455,7 +470,7 @@ R → R1, R2 lossless iff (R1 ∩ R2) → R1 or (R1 ∩ R2) → R2.
     C. BCNF (every determinant A, B, C is a superkey since all are candidate keys).
     D. Not even 1NF.
 
-19. **(Trap)** A transaction T1 runs `SELECT COUNT(*) FROM orders WHERE total > 100;` twice. Between the reads, T2 *inserts* a new qualifying row and commits. T1 sees different counts. This is:
+19. **(Trap)** A transaction T1 runs `SELECT COUNT(*) FROM orders WHERE total > 100;` twice. Between the reads, T2 _inserts_ a new qualifying row and commits. T1 sees different counts. This is:
     A. A dirty read.
     B. A non-repeatable read (same row changed).
     C. A phantom read — prevented only by SERIALIZABLE (or predicate/range locks).
@@ -472,25 +487,25 @@ R → R1, R2 lossless iff (R1 ∩ R2) → R1 or (R1 ∩ R2) → R2.
 <details>
 <summary>Reveal full answer key</summary>
 
-1. **B** — A superkey uniquely identifies tuples; a *candidate* key adds the minimality requirement.
+1. **B** — A superkey uniquely identifies tuples; a _candidate_ key adds the minimality requirement.
 2. **C** — Set difference `R − S` returns tuples in R but not S.
 3. **C** — Order: FROM → WHERE → GROUP BY → HAVING → **SELECT** → DISTINCT → ORDER BY → LIMIT. HAVING runs before SELECT.
 4. **B** — Transitivity: A → B and B → C ⇒ A → C.
 5. **C** — 1NF = atomic values / no repeating groups. No partial (2NF) or transitive (3NF) dependency constraints yet.
 6. **B** — Weak entities lack a full key of their own and depend on an identifying relationship + partial (discriminator) key.
 7. **B** — Durability = committed changes persist through crashes.
-8. **B** — WAL's core rule: log record on stable storage *before* the dirty data page.
+8. **B** — WAL's core rule: log record on stable storage _before_ the dirty data page.
 9. **B** — `COUNT(*)` = 10 counts all rows; `COUNT(salary)` = 7 ignores NULLs; difference = 3 (the NULL count).
 10. **C** — A cycle in the precedence graph means the schedule is **not** conflict-serializable.
-11. **B** — Strict 2PL holds exclusive locks until commit/abort, giving serializability + recoverability + no cascading aborts. It does *not* prevent deadlocks.
+11. **B** — Strict 2PL holds exclusive locks until commit/abort, giving serializability + recoverability + no cascading aborts. It does _not_ prevent deadlocks.
 12. **D** — AB → C → D → A, so AB determines all; also BC → (via C→D→A) → all, so BC is also a candidate key.
 13. **B** — Range queries need ordered traversal; B+-trees support ranges, hash indexes don't.
 14. **B** — Standard GROUP BY + HAVING semantics: aggregate per group, filter groups by aggregate predicate.
 15. **B** — LEFT OUTER JOIN preserves all left rows; unmatched right side becomes NULL.
-16. **B** — READ COMMITTED blocks dirty reads but *allows* non-repeatable reads and phantoms.
+16. **B** — READ COMMITTED blocks dirty reads but _allows_ non-repeatable reads and phantoms.
 17. **B** — NULL <> 1000 is UNKNOWN, not TRUE; `WHERE` drops UNKNOWN rows. Classic NULL trap.
 18. **C** — When every attribute is a candidate key (cyclic FDs A→B→C→A make {A},{B},{C} all keys), every determinant is a superkey ⇒ BCNF.
-19. **C** — New *inserted* rows matching a predicate between two reads = phantom. Requires SERIALIZABLE or predicate/range locks (standard 2PL on existing rows won't stop it).
-20. **C** — The only candidate key is {A,C}. A → B and C → D are *partial* dependencies on the key ⇒ violates 2NF. So R is only in 1NF. (Trap: looks like a 3NF-vs-BCNF question but fails earlier at 2NF.)
+19. **C** — New _inserted_ rows matching a predicate between two reads = phantom. Requires SERIALIZABLE or predicate/range locks (standard 2PL on existing rows won't stop it).
+20. **C** — The only candidate key is {A,C}. A → B and C → D are _partial_ dependencies on the key ⇒ violates 2NF. So R is only in 1NF. (Trap: looks like a 3NF-vs-BCNF question but fails earlier at 2NF.)
 
 </details>

@@ -8,14 +8,16 @@
 ## 1. Foundations
 
 ### Alphabets, Strings, Languages
+
 - **Alphabet (Σ):** finite non-empty set of symbols (e.g., {0,1}).
 - **String:** finite sequence over Σ. Empty string = **ε** (|ε| = 0).
 - **Σ\*** = set of all finite strings over Σ (including ε). Always **countably infinite**.
 - **Σ⁺** = Σ\* \ {ε}.
 - **Language:** any subset L ⊆ Σ\*. Number of possible languages over Σ is **uncountable** (2^ℵ₀) — so most languages are not describable by any finite machine.
-- **Kleene star:** A\* = ⋃_{i≥0} Aⁱ. Note A⁰ = {ε} always, so ε ∈ A\* for every A (even A = ∅; ∅\* = {ε}).
+- **Kleene star:** A\* = ⋃\_{i≥0} Aⁱ. Note A⁰ = {ε} always, so ε ∈ A\* for every A (even A = ∅; ∅\* = {ε}).
 
 ### String operations
+
 - Concatenation: |xy| = |x|+|y|; associative, not commutative.
 - Reverse: (xy)ᴿ = yᴿxᴿ.
 
@@ -24,9 +26,11 @@
 ## 2. Regular Languages
 
 ### Regular Expressions
-**Operators** (precedence high→low): **\* (Kleene)** > **concatenation** > **|  (union)**.
+
+**Operators** (precedence high→low): **\* (Kleene)** > **concatenation** > **| (union)**.
 
 **Identities:**
+
 - R | R = R (idempotent)
 - (R\*)\* = R\*
 - ε | RR\* = R\*
@@ -35,7 +39,9 @@
 - ∅\* = ε\* = ε (denotes {ε})
 
 ### DFA — Deterministic Finite Automaton
+
 **5-tuple:** M = (Q, Σ, δ, q₀, F)
+
 - Q: finite states
 - Σ: input alphabet
 - δ: Q × Σ → Q (**total** function — exactly one transition per symbol)
@@ -45,6 +51,7 @@
 Accepts w iff δ̂(q₀, w) ∈ F.
 
 ### NFA (with ε-transitions)
+
 - δ: Q × (Σ ∪ {ε}) → 2^Q (power set).
 - Accepts if **some** computation ends in F.
 - **Equivalence:** every NFA has an equivalent DFA (subset construction).
@@ -52,26 +59,31 @@ Accepts w iff δ̂(q₀, w) ∈ F.
   - Some languages genuinely need 2ⁿ DFA states (e.g., "n-th from end is 1").
 
 ### Equivalences (all equally powerful)
+
 **Regex ⇔ NFA ⇔ DFA ⇔ Regular Grammar (right-linear)**
+
 - **Thompson's construction:** regex → ε-NFA (linear size).
 - **Subset construction:** NFA → DFA (exponential).
 - **State elimination** / Arden's lemma: DFA → regex.
 
 ### Closure Properties (Regular Languages — all CLOSED)
-| Operation | Regular? |
-|---|---|
-| Union | Yes |
-| Intersection | Yes |
-| Complement | Yes |
-| Concatenation | Yes |
-| Kleene star | Yes |
-| Reverse | Yes |
-| Homomorphism | Yes |
-| Inverse homomorphism | Yes |
-| Difference (L1 \ L2) | Yes |
+
+| Operation            | Regular? |
+| -------------------- | -------- |
+| Union                | Yes      |
+| Intersection         | Yes      |
+| Complement           | Yes      |
+| Concatenation        | Yes      |
+| Kleene star          | Yes      |
+| Reverse              | Yes      |
+| Homomorphism         | Yes      |
+| Inverse homomorphism | Yes      |
+| Difference (L1 \ L2) | Yes      |
 
 ### Pumping Lemma (Regular)
+
 If L is regular, ∃ pumping length **p** such that every w ∈ L with |w| ≥ p can be split w = xyz with:
+
 1. |xy| ≤ p
 2. |y| ≥ 1
 3. ∀ i ≥ 0, xyⁱz ∈ L
@@ -79,20 +91,24 @@ If L is regular, ∃ pumping length **p** such that every w ∈ L with |w| ≥ p
 **Use:** Prove non-regular by contradiction. Adversary picks p; you pick w; adversary picks split; you pick i.
 
 **Classic non-regular examples:**
+
 - {aⁿbⁿ : n ≥ 0}
 - {aⁿbⁿcⁿ}
 - {wwᴿ : w ∈ {a,b}\*} (palindromes)
 - {aᵖ : p prime}
 - {aⁿ² : n ≥ 0}
 - {w : #a(w) = #b(w)}
-- {aⁿbᵐ : n ≠ m}  (careful — its complement w.r.t. a\*b\* isn't regular either)
+- {aⁿbᵐ : n ≠ m} (careful — its complement w.r.t. a\*b\* isn't regular either)
 
 ### Myhill–Nerode Theorem
-L is regular **iff** the relation "x ≡_L y  iff  ∀z: xz ∈ L ⇔ yz ∈ L" has **finitely many equivalence classes**. The number of classes = size of the minimum DFA. Gives:
+
+L is regular **iff** the relation "x ≡_L y iff ∀z: xz ∈ L ⇔ yz ∈ L" has **finitely many equivalence classes**. The number of classes = size of the minimum DFA. Gives:
+
 - Lower bounds on DFA size.
 - A non-regularity proof technique (exhibit infinitely many distinguishable prefixes).
 
 ### DFA Minimization
+
 - Remove unreachable states.
 - Merge equivalent states via **table-filling (partition refinement)**: start with {F, Q\F}; split if any symbol leads to different classes. Result is **unique** up to renaming.
 
@@ -101,44 +117,53 @@ L is regular **iff** the relation "x ≡_L y  iff  ∀z: xz ∈ L ⇔ yz ∈ L" 
 ## 3. Context-Free Languages
 
 ### CFG — Context-Free Grammar
+
 G = (V, Σ, R, S) where rules look like A → α with A ∈ V, α ∈ (V ∪ Σ)\*.
+
 - **Leftmost / rightmost derivation:** always expand leftmost / rightmost nonterminal.
 - **Parse tree:** yields equivalent derivation up to order.
 - **Ambiguous:** some string has ≥2 parse trees. Some CFLs are **inherently ambiguous** (e.g., {aⁱbʲcᵏ : i=j or j=k}).
 
 ### PDA — Pushdown Automaton
+
 CFG ≡ **nondeterministic** PDA. **DPDA < NPDA** (deterministic is strictly weaker).
+
 - Example CFL not accepted by any DPDA: {wwᴿ : w ∈ {a,b}\*} (even-length palindromes).
 - DCFLs are closed under complement; CFLs are NOT.
 
 ### Normal Forms
+
 - **Chomsky Normal Form (CNF):** A → BC or A → a (plus S → ε if ε ∈ L). Enables **CYK parsing** in O(n³).
 - **Greibach Normal Form (GNF):** A → aα where α ∈ V\*. Derivations have length = |string|.
 
 ### Pumping Lemma for CFLs
+
 If L is CFL, ∃ p such that every w with |w| ≥ p can be split w = uvxyz with:
+
 1. |vxy| ≤ p
 2. |vy| ≥ 1
 3. ∀ i ≥ 0, uvⁱxyⁱz ∈ L
 
 **Classic non-CFLs:**
+
 - {aⁿbⁿcⁿ}
-- {ww : w ∈ {a,b}\*}   (note: wwᴿ IS CFL, but ww is not)
+- {ww : w ∈ {a,b}\*} (note: wwᴿ IS CFL, but ww is not)
 - {aⁱbʲcᵏ : i ≤ j ≤ k}
 - {aᵖ : p prime}
 
 ### Closure Properties (CFLs)
-| Operation | CFL closed? |
-|---|---|
-| Union | **Yes** |
-| Concatenation | **Yes** |
-| Kleene star | **Yes** |
-| Reverse | **Yes** |
-| Homomorphism | **Yes** |
-| **Intersection** | **NO** |
-| **Complement** | **NO** |
-| CFL ∩ Regular | **YES** (special case — memorize!) |
-| Difference | NO |
+
+| Operation        | CFL closed?                        |
+| ---------------- | ---------------------------------- |
+| Union            | **Yes**                            |
+| Concatenation    | **Yes**                            |
+| Kleene star      | **Yes**                            |
+| Reverse          | **Yes**                            |
+| Homomorphism     | **Yes**                            |
+| **Intersection** | **NO**                             |
+| **Complement**   | **NO**                             |
+| CFL ∩ Regular    | **YES** (special case — memorize!) |
+| Difference       | NO                                 |
 
 **Proof sketch that CFLs not closed under ∩:** {aⁿbⁿcᵐ} and {aᵐbⁿcⁿ} are both CFL; their intersection is {aⁿbⁿcⁿ}, which is not.
 
@@ -146,12 +171,12 @@ If L is CFL, ∃ p such that every w with |w| ≥ p can be split w = uvxyz with:
 
 ## 4. Chomsky Hierarchy
 
-| Type | Name | Grammar form | Accepting machine | Example |
-|---|---|---|---|---|
-| **3** | Regular | A → aB, A → a | DFA / NFA | a\*b\* |
-| **2** | Context-Free | A → α (α ∈ (V∪Σ)\*) | NPDA | aⁿbⁿ |
-| **1** | Context-Sensitive | αAβ → αγβ, \|γ\|≥1 | Linear-Bounded Automaton (LBA) | aⁿbⁿcⁿ |
-| **0** | Recursively Enumerable (RE) | any α → β | Turing Machine | halting problem |
+| Type  | Name                        | Grammar form        | Accepting machine              | Example         |
+| ----- | --------------------------- | ------------------- | ------------------------------ | --------------- |
+| **3** | Regular                     | A → aB, A → a       | DFA / NFA                      | a\*b\*          |
+| **2** | Context-Free                | A → α (α ∈ (V∪Σ)\*) | NPDA                           | aⁿbⁿ            |
+| **1** | Context-Sensitive           | αAβ → αγβ, \|γ\|≥1  | Linear-Bounded Automaton (LBA) | aⁿbⁿcⁿ          |
+| **0** | Recursively Enumerable (RE) | any α → β           | Turing Machine                 | halting problem |
 
 Strict inclusions: **Type 3 ⊊ Type 2 ⊊ Type 1 ⊊ Type 0**.
 Also: **Decidable (recursive)** sits strictly between Type 1 and Type 0.
@@ -161,17 +186,22 @@ Also: **Decidable (recursive)** sits strictly between Type 1 and Type 0.
 ## 5. Turing Machines & Computability
 
 ### Turing Machine
+
 M = (Q, Σ, Γ, δ, q₀, q_accept, q_reject) where Γ ⊇ Σ ∪ {⊔} is tape alphabet.
+
 - **All variants equivalent in power:** multi-tape, nondeterministic, 2-way infinite tape, RAM — all accept the same class (RE).
 - Nondeterministic TM = Deterministic TM in power (but may differ in time).
 
 ### Recognizable vs Decidable
+
 - **Turing-recognizable (RE):** some TM accepts exactly L (may loop on non-members).
 - **Turing-decidable (recursive):** some TM always halts, accepting L, rejecting ~L.
 - **Decidable = RE ∩ co-RE.** If both L and Lᶜ are RE, then L is decidable.
 
 ### Halting Problem
+
 HALT = {⟨M, w⟩ : M halts on w}.
+
 - **HALT is RE** (simulate; accept if halts).
 - **HALT is undecidable** (Turing, 1936 — diagonalization).
 - **HALTᶜ is not even RE.**
@@ -179,14 +209,18 @@ HALT = {⟨M, w⟩ : M halts on w}.
 **Diagonalization sketch:** Suppose decider H exists. Define D(⟨M⟩) = "if H says M halts on ⟨M⟩, loop; else halt." Then D(⟨D⟩) contradicts.
 
 ### Rice's Theorem
+
 Every **non-trivial semantic property** of RE languages is **undecidable**.
+
 - "Non-trivial" = some TM has it, some doesn't.
 - "Semantic" = depends only on L(M), not the description of M.
 - Examples undecidable by Rice: L(M)=∅, L(M) regular, L(M)=Σ\*, M accepts 42, L(M₁)=L(M₂).
 - **Syntactic** properties (e.g., "M has ≥5 states") are NOT covered and may be decidable.
 
 ### Reductions
+
 **Mapping (many-one) reduction** A ≤ₘ B: computable f with x ∈ A ⇔ f(x) ∈ B.
+
 - If B decidable ⇒ A decidable.
 - Contrapositive: if A undecidable ⇒ B undecidable.
 - If B ∈ RE ⇒ A ∈ RE.
@@ -196,6 +230,7 @@ Every **non-trivial semantic property** of RE languages is **undecidable**.
 ## 6. Complexity
 
 ### Classes
+
 - **P:** decidable in polynomial time by deterministic TM.
 - **NP:** verifiable in poly time (equivalently, poly-time nondeterministic TM).
 - **co-NP:** complement in NP.
@@ -203,17 +238,20 @@ Every **non-trivial semantic property** of RE languages is **undecidable**.
 - **EXPTIME:** 2^poly(n) time.
 
 ### Known inclusions
+
 **P ⊆ NP ⊆ PSPACE ⊆ EXPTIME**
 **P ⊆ co-NP ⊆ PSPACE**
 **Proven strict:** P ⊊ EXPTIME (time hierarchy theorem). All other inclusions are open (P vs NP is the famous one).
 
 ### NP-completeness
+
 L is **NP-hard** if every A ∈ NP reduces (poly-time) to L.
 L is **NP-complete** if NP-hard AND L ∈ NP.
 
 **Cook–Levin (1971):** SAT is NP-complete.
 
 **Classic NP-complete problems (memorize):**
+
 - SAT, 3-SAT, CIRCUIT-SAT
 - CLIQUE, INDEPENDENT-SET, VERTEX-COVER (all three trivially inter-reducible)
 - HAM-PATH, HAM-CYCLE
@@ -229,28 +267,30 @@ L is **NP-complete** if NP-hard AND L ∈ NP.
 ## 7. Exam-Trap Cheat Sheet
 
 ### Critical "is it regular / CFL / decidable?" reference
-| Language | Regular? | CFL? | Decidable? |
-|---|---|---|---|
-| a\*b\* | Yes | Yes | Yes |
-| {aⁿbⁿ} | **No** | Yes | Yes |
-| {aⁿbⁿcⁿ} | No | **No** | Yes |
-| {wwᴿ} palindromes | No | Yes | Yes |
-| {ww} | No | **No** | Yes |
-| {aᵖ : p prime} | No | No | Yes |
-| {⟨M,w⟩ : M halts on w} | No | No | **No (RE)** |
-| Complement of HALT | No | No | **Not even RE** |
+
+| Language               | Regular? | CFL?   | Decidable?      |
+| ---------------------- | -------- | ------ | --------------- |
+| a\*b\*                 | Yes      | Yes    | Yes             |
+| {aⁿbⁿ}                 | **No**   | Yes    | Yes             |
+| {aⁿbⁿcⁿ}               | No       | **No** | Yes             |
+| {wwᴿ} palindromes      | No       | Yes    | Yes             |
+| {ww}                   | No       | **No** | Yes             |
+| {aᵖ : p prime}         | No       | No     | Yes             |
+| {⟨M,w⟩ : M halts on w} | No       | No     | **No (RE)**     |
+| Complement of HALT     | No       | No     | **Not even RE** |
 
 ### Closure summary
-| Op | Regular | DCFL | CFL | Decidable | RE |
-|---|---|---|---|---|---|
-| ∪ | Y | N | Y | Y | Y |
-| ∩ | Y | N | **N** | Y | Y |
-| complement | Y | Y | **N** | Y | **N** |
-| concat | Y | N | Y | Y | Y |
-| \* | Y | N | Y | Y | Y |
-| reverse | Y | N | Y | Y | Y |
-| hom | Y | N | Y | N | Y |
-| ∩ with regular | Y | Y | **Y** | Y | Y |
+
+| Op             | Regular | DCFL | CFL   | Decidable | RE    |
+| -------------- | ------- | ---- | ----- | --------- | ----- |
+| ∪              | Y       | N    | Y     | Y         | Y     |
+| ∩              | Y       | N    | **N** | Y         | Y     |
+| complement     | Y       | Y    | **N** | Y         | **N** |
+| concat         | Y       | N    | Y     | Y         | Y     |
+| \*             | Y       | N    | Y     | Y         | Y     |
+| reverse        | Y       | N    | Y     | Y         | Y     |
+| hom            | Y       | N    | Y     | N         | Y     |
+| ∩ with regular | Y       | Y    | **Y** | Y         | Y     |
 
 ---
 
@@ -265,7 +305,7 @@ L is **NP-complete** if NP-hard AND L ∈ NP.
 **Answer: (c).** Pumping lemma for CFL shows it's not CFL; a TM can easily decide it.
 
 **Q3.** Converting an NFA with n states to a DFA, the DFA has at most how many states?
-(a) n (b) n² (c) 2ⁿ (d) n! 
+(a) n (b) n² (c) 2ⁿ (d) n!
 **Answer: (c).** Subset construction.
 
 **Q4.** Which problem is decidable?
@@ -338,7 +378,7 @@ L is **NP-complete** if NP-hard AND L ∈ NP.
 (a) 3 (b) 4 (c) 8 (d) 16
 
 **Q2.** Which of the following regular expressions is equivalent to (a+b)*?
-(a) a*b* (b) (a*b*)* (c) (a+b)(a+b)* (d) a*+b*
+(a) a*b* (b) (a*b*)* (c) (a+b)(a+b)_ (d) a_+b\*
 
 **Q3.** An NFA with n states is converted to an equivalent DFA. The maximum possible number of states in the DFA is:
 (a) n (b) n² (c) 2ⁿ (d) n!
@@ -356,7 +396,7 @@ L is **NP-complete** if NP-hard AND L ∈ NP.
 (a) DPDA = NPDA in power (b) DPDA is strictly less powerful than NPDA (c) DPDA is more powerful than NPDA (d) Both accept all CFLs
 
 **Q8.** Which of the following languages is context-free?
-(a) {ww : w ∈ {a,b}*} (b) {wwᴿ : w ∈ {a,b}*} (c) {aⁿbⁿcⁿ} (d) {aᵖ : p is prime}
+(a) {ww : w ∈ {a,b}_} (b) {wwᴿ : w ∈ {a,b}_} (c) {aⁿbⁿcⁿ} (d) {aᵖ : p is prime}
 
 **Q9.** The intersection of a CFL and a regular language is always:
 (a) Regular (b) Context-free (c) Context-sensitive but not CFL (d) Undecidable
@@ -401,7 +441,7 @@ L is **NP-complete** if NP-hard AND L ∈ NP.
 
 **Q1. (c) 8.** For the k-th last symbol condition, a DFA needs 2ᵏ states; here k=3 → 2³ = 8.
 
-**Q2. (b) (a*b*)*.** Generates all strings over {a,b}. (a) misses 'ba'; (c) misses ε; (d) misses mixed strings.
+**Q2. (b) (a*b*)\*.** Generates all strings over {a,b}. (a) misses 'ba'; (c) misses ε; (d) misses mixed strings.
 
 **Q3. (c) 2ⁿ.** Subset construction — each DFA state is a subset of NFA states.
 
@@ -440,4 +480,3 @@ L is **NP-complete** if NP-hard AND L ∈ NP.
 **Q20. (b).** HALT is the canonical RE-but-undecidable language. Its complement is NOT RE (it's co-RE only).
 
 </details>
-

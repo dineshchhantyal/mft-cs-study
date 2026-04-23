@@ -14,13 +14,13 @@ Formal method for proving programs correct with respect to a specification. Writ
 
 A **Hoare triple** asserts that if a precondition holds before a statement executes, a postcondition holds after.
 
-| Notation | Name | Meaning |
-|----------|------|---------|
+| Notation    | Name                    | Meaning                                                                                                      |
+| ----------- | ----------------------- | ------------------------------------------------------------------------------------------------------------ |
 | `{P} S {Q}` | **Partial correctness** | If `P` holds before `S`, and `S` **terminates**, then `Q` holds after. (Says nothing about non-termination.) |
-| `[P] S [Q]` | **Total correctness** | If `P` holds before `S`, then `S` terminates **and** `Q` holds after. |
+| `[P] S [Q]` | **Total correctness**   | If `P` holds before `S`, then `S` terminates **and** `Q` holds after.                                        |
 
-- `P` = **precondition** (assertion on state *before* `S`).
-- `Q` = **postcondition** (assertion on state *after* `S`).
+- `P` = **precondition** (assertion on state _before_ `S`).
+- `Q` = **postcondition** (assertion on state _after_ `S`).
 - `S` = program / statement.
 
 Total correctness = partial correctness + termination proof.
@@ -36,7 +36,7 @@ Each rule is a schema: premises above the line, conclusion below.
   { Q[E/x] }  x := E  { Q }
 ```
 
-To make `Q` true *after* `x := E`, you must make `Q` with `x` replaced by `E` true *before*. This is the **only** axiom; everything else is a rule.
+To make `Q` true _after_ `x := E`, you must make `Q` with `x` replaced by `E` true _before_. This is the **only** axiom; everything else is a rule.
 
 **Example.** To show `{ ? } x := x+1 { x > 0 }`: substitute `x+1` for `x` in the postcondition → precondition is `x+1 > 0`, i.e., `x > -1`.
 
@@ -110,9 +110,9 @@ while (i < n) {
 
 **Invariant:** `I ≡ s = i*(i+1)/2  ∧  0 ≤ i ≤ n`.
 
-- *Init:* after `s:=0; i:=0`, we have `s=0, i=0`, and `0 = 0*1/2`. ✓
-- *Preservation:* assume `I ∧ i<n`. After `i:=i+1; s:=s+i`, new `i' = i+1`, new `s' = s + (i+1) = i(i+1)/2 + (i+1) = (i+1)(i+2)/2 = i'(i'+1)/2`. ✓
-- *Exit:* `¬(i<n)` and `i ≤ n` give `i = n`, so `s = n(n+1)/2`. ✓
+- _Init:_ after `s:=0; i:=0`, we have `s=0, i=0`, and `0 = 0*1/2`. ✓
+- _Preservation:_ assume `I ∧ i<n`. After `i:=i+1; s:=s+i`, new `i' = i+1`, new `s' = s + (i+1) = i(i+1)/2 + (i+1) = (i+1)(i+2)/2 = i'(i'+1)/2`. ✓
+- _Exit:_ `¬(i<n)` and `i ≤ n` give `i = n`, so `s = n(n+1)/2`. ✓
 
 #### Example B: Factorial
 
@@ -156,13 +156,13 @@ while (lo < hi) {
 
 Dijkstra's **predicate transformer**. `wp(S, Q)` is the weakest (most permissive) precondition ensuring `S` terminates with `Q`.
 
-| Statement `S` | `wp(S, Q)` |
-|---------------|------------|
-| `skip` | `Q` |
-| `x := E` | `Q[E/x]` |
-| `S1; S2` | `wp(S1, wp(S2, Q))` |
-| `if B then S1 else S2` | `(B ∧ wp(S1,Q)) ∨ (¬B ∧ wp(S2,Q))` |
-| `while B do S` | least fixpoint; in practice, supply invariant + variant |
+| Statement `S`          | `wp(S, Q)`                                              |
+| ---------------------- | ------------------------------------------------------- |
+| `skip`                 | `Q`                                                     |
+| `x := E`               | `Q[E/x]`                                                |
+| `S1; S2`               | `wp(S1, wp(S2, Q))`                                     |
+| `if B then S1 else S2` | `(B ∧ wp(S1,Q)) ∨ (¬B ∧ wp(S2,Q))`                      |
+| `while B do S`         | least fixpoint; in practice, supply invariant + variant |
 
 `{P} S {Q}` is valid iff `P ⇒ wp(S, Q)`. Weakest precondition is **backwards**: start from `Q`, push through `S` in reverse.
 
@@ -177,6 +177,7 @@ To prove a loop terminates, exhibit a **variant (ranking) function** `V` such th
 A well-founded order on ℕ means the sequence of `V` values must eventually hit the floor → exit.
 
 **Examples of variants:**
+
 - Sum / factorial loops: `V = n − i`.
 - Binary search: `V = hi − lo`.
 - Euclid's algorithm: `V = min(a,b)`.
@@ -193,15 +194,15 @@ Languages: Eiffel (native), Java (JML), C# (Code Contracts), Ada/SPARK, Python (
 
 ### 1.8 Cheat-Sheet
 
-| Concept | One-liner |
-|---------|-----------|
-| `{P}S{Q}` | partial correctness |
-| `[P]S[Q]` | total correctness = partial + termination |
-| Assignment | `{Q[E/x]} x:=E {Q}` — substitute into post |
+| Concept                | One-liner                                                 |
+| ---------------------- | --------------------------------------------------------- |
+| `{P}S{Q}`              | partial correctness                                       |
+| `[P]S[Q]`              | total correctness = partial + termination                 |
+| Assignment             | `{Q[E/x]} x:=E {Q}` — substitute into post                |
 | Loop proof obligations | init, preservation, `I ∧ ¬B ⇒ Q`, variant for termination |
-| `wp(x:=E, Q)` | `Q[E/x]` |
-| Consequence | strengthen pre, weaken post |
-| Variant | decreasing well-founded measure |
+| `wp(x:=E, Q)`          | `Q[E/x]`                                                  |
+| Consequence            | strengthen pre, weaken post                               |
+| Variant                | decreasing well-founded measure                           |
 
 ---
 
@@ -219,12 +220,12 @@ Source ─► Lexer ─► Parser ─► AST ─► Semantic Analysis ─► IR 
 Regular  ⊊  LL(k)  ⊊  LR(k)  ⊊  Deterministic CFG  ⊊  CFG  ⊊  CSG  ⊊  Rec. Enum.
 ```
 
-| Class | Recognizer | Typical use |
-|-------|-----------|-------------|
-| Regular | DFA/NFA | tokens (lexer) |
-| LL(1) | predictive parser, 1-token lookahead | hand-written recursive descent |
-| LR(1), LALR(1) | shift-reduce with states | yacc/bison |
-| CFG | CYK, Earley (O(n³)) | natural language, ambiguous DSLs |
+| Class          | Recognizer                           | Typical use                      |
+| -------------- | ------------------------------------ | -------------------------------- |
+| Regular        | DFA/NFA                              | tokens (lexer)                   |
+| LL(1)          | predictive parser, 1-token lookahead | hand-written recursive descent   |
+| LR(1), LALR(1) | shift-reduce with states             | yacc/bison                       |
+| CFG            | CYK, Earley (O(n³))                  | natural language, ambiguous DSLs |
 
 Every LL(k) is LR(k), but **not vice-versa**. LR is strictly more powerful.
 
@@ -241,12 +242,12 @@ Every LL(k) is LR(k), but **not vice-versa**. LR is strictly more powerful.
 - **Shift-reduce** automaton: push tokens until a production's RHS is on top, then reduce.
 - Variants, weakest to strongest:
 
-| Variant | Lookahead | Power | Table size |
-|---------|-----------|-------|------------|
-| LR(0) | none | weakest | small |
-| SLR(1) | FOLLOW sets | weak | small |
-| **LALR(1)** | merged LR(1) states | medium | small — **yacc/bison** |
-| LR(1) | full | strongest practical | large |
+| Variant     | Lookahead           | Power               | Table size             |
+| ----------- | ------------------- | ------------------- | ---------------------- |
+| LR(0)       | none                | weakest             | small                  |
+| SLR(1)      | FOLLOW sets         | weak                | small                  |
+| **LALR(1)** | merged LR(1) states | medium              | small — **yacc/bison** |
+| LR(1)       | full                | strongest practical | large                  |
 
 Every LALR(1) grammar is LR(1); merging states can introduce **reduce-reduce conflicts** not present in LR(1).
 
@@ -257,6 +258,7 @@ Given a grammar `G` with non-terminals `N`, terminals `T`, start `S`, and empty 
 #### FIRST(α) — terminals that can begin a string derived from α
 
 **Algorithm (for non-terminals):** iterate until no change.
+
 ```
 FIRST(a)     = {a}  for terminal a
 FIRST(ε)     = {ε}
@@ -287,17 +289,18 @@ T' → * F T' | ε
 F → ( E ) | id
 ```
 
-| X | FIRST(X) | FOLLOW(X) |
-|---|----------|-----------|
-| E | `(`, `id` | `)`, `$` |
-| E' | `+`, `ε` | `)`, `$` |
-| T | `(`, `id` | `+`, `)`, `$` |
-| T' | `*`, `ε` | `+`, `)`, `$` |
-| F | `(`, `id` | `*`, `+`, `)`, `$` |
+| X   | FIRST(X)  | FOLLOW(X)          |
+| --- | --------- | ------------------ |
+| E   | `(`, `id` | `)`, `$`           |
+| E'  | `+`, `ε`  | `)`, `$`           |
+| T   | `(`, `id` | `+`, `)`, `$`      |
+| T'  | `*`, `ε`  | `+`, `)`, `$`      |
+| F   | `(`, `id` | `*`, `+`, `)`, `$` |
 
 ### 2.5 LL(1) Parse Table Construction
 
 For each production `A → α`:
+
 1. For each `a ∈ FIRST(α)` with `a ≠ ε`: put `A → α` in `M[A, a]`.
 2. If `ε ∈ FIRST(α)`: for each `b ∈ FOLLOW(A)`, put `A → α` in `M[A, b]`.
 
@@ -306,9 +309,9 @@ A grammar is **LL(1)** iff no cell gets two productions.
 #### What breaks LL(1)
 
 - **Left recursion** `A → A α | β`: predictive parsers loop forever.
-  *Fix:* `A → β A'`, `A' → α A' | ε`.
+  _Fix:_ `A → β A'`, `A' → α A' | ε`.
 - **Common prefixes** `A → α β | α γ`: can't choose with 1-token lookahead.
-  *Fix (left factoring):* `A → α A'`, `A' → β | γ`.
+  _Fix (left factoring):_ `A → α A'`, `A' → β | γ`.
 - **Ambiguity** (e.g., dangling else): multiple parses for one string.
 
 ### 2.6 Shift-Reduce & Reduce-Reduce Conflicts
@@ -321,12 +324,14 @@ In an LR parser's action table:
 ### 2.7 Transformations
 
 **Eliminate immediate left recursion** `A → A α₁ | … | A αₘ | β₁ | … | βₙ`:
+
 ```
 A  → β₁ A' | … | βₙ A'
 A' → α₁ A' | … | αₘ A' | ε
 ```
 
 **Left factoring** `A → α β | α γ`:
+
 ```
 A  → α A'
 A' → β | γ
@@ -346,11 +351,11 @@ In yacc/bison: `%left`, `%right`, `%nonassoc` with order giving precedence (late
 
 ### 2.9 Parse Tree vs Abstract Syntax Tree
 
-| Parse tree (concrete) | AST (abstract) |
-|------------------------|----------------|
-| Every grammar rule firing is a node | Only semantically meaningful nodes |
+| Parse tree (concrete)                  | AST (abstract)                         |
+| -------------------------------------- | -------------------------------------- |
+| Every grammar rule firing is a node    | Only semantically meaningful nodes     |
 | Contains punctuation, parentheses, `ε` | Strips punctuation; structure implicit |
-| Large; reflects grammar | Compact; reflects meaning |
+| Large; reflects grammar                | Compact; reflects meaning              |
 
 `(a + b) * c`: the parse tree contains `(`, `)` nodes; the AST is just `Mul(Add(a,b), c)`.
 
@@ -365,27 +370,27 @@ After parsing, check things context-free grammars can't:
 
 ### 2.11 Intermediate Representations
 
-| IR | Shape | Use |
-|----|-------|-----|
-| **Three-Address Code (TAC)** | `t := a op b` | easy to optimize and translate |
-| **Quadruples / Triples** | records of op + operands | linear, close to machine |
-| **Control-Flow Graph (CFG)** | basic blocks + edges | dataflow analyses |
-| **SSA (Static Single Assignment)** | each variable assigned once; φ-nodes at merges | modern optimizers (LLVM, GCC) |
+| IR                                 | Shape                                          | Use                            |
+| ---------------------------------- | ---------------------------------------------- | ------------------------------ |
+| **Three-Address Code (TAC)**       | `t := a op b`                                  | easy to optimize and translate |
+| **Quadruples / Triples**           | records of op + operands                       | linear, close to machine       |
+| **Control-Flow Graph (CFG)**       | basic blocks + edges                           | dataflow analyses              |
+| **SSA (Static Single Assignment)** | each variable assigned once; φ-nodes at merges | modern optimizers (LLVM, GCC)  |
 
 **SSA idea:** rename variables so each has exactly one definition. At CFG join points, insert `x₃ := φ(x₁, x₂)` picking the right version. Enables fast constant propagation, DCE, GVN.
 
 ### 2.12 Classical Optimizations
 
-| Optimization | Idea | Example |
-|--------------|------|---------|
-| **Constant folding** | evaluate const exprs at compile time | `2*3` → `6` |
-| **Constant propagation** | replace uses of known-constant vars | `x=3; y=x+1;` → `y=4` |
-| **Dead code elimination (DCE)** | remove assignments whose value is never used | `x=5; x=7;` kills first |
-| **Common subexpression elimination (CSE)** | reuse prior compute | `(a+b)*c + (a+b)` → `t=a+b; t*c + t` |
-| **Loop-invariant code motion (LICM)** | hoist expressions out of loops | compute `m = x+y` once before loop |
-| **Strength reduction** | cheaper ops | `i*4` → `i<<2`; mult in loop → add |
-| **Inlining** | replace call with body | enables further opts |
-| **Tail-call optimization** | reuse stack frame | turns tail recursion into loop |
+| Optimization                               | Idea                                         | Example                              |
+| ------------------------------------------ | -------------------------------------------- | ------------------------------------ |
+| **Constant folding**                       | evaluate const exprs at compile time         | `2*3` → `6`                          |
+| **Constant propagation**                   | replace uses of known-constant vars          | `x=3; y=x+1;` → `y=4`                |
+| **Dead code elimination (DCE)**            | remove assignments whose value is never used | `x=5; x=7;` kills first              |
+| **Common subexpression elimination (CSE)** | reuse prior compute                          | `(a+b)*c + (a+b)` → `t=a+b; t*c + t` |
+| **Loop-invariant code motion (LICM)**      | hoist expressions out of loops               | compute `m = x+y` once before loop   |
+| **Strength reduction**                     | cheaper ops                                  | `i*4` → `i<<2`; mult in loop → add   |
+| **Inlining**                               | replace call with body                       | enables further opts                 |
+| **Tail-call optimization**                 | reuse stack frame                            | turns tail recursion into loop       |
 
 ### 2.13 Register Allocation (Graph Coloring)
 
@@ -408,12 +413,12 @@ Graph k-coloring is NP-hard in general; compilers use heuristics.
 
 ### 2.15 Cheat-Sheet
 
-| Tool | Parser class | Direction |
-|------|--------------|-----------|
-| Hand-written recursive descent | LL(1) | top-down, leftmost |
-| ANTLR | LL(*) | top-down |
-| yacc / bison / byacc | LALR(1) | bottom-up, rightmost-reversed |
-| GLR parsers | all CFGs | handles ambiguity, merges parses |
+| Tool                           | Parser class | Direction                        |
+| ------------------------------ | ------------ | -------------------------------- |
+| Hand-written recursive descent | LL(1)        | top-down, leftmost               |
+| ANTLR                          | LL(\*)       | top-down                         |
+| yacc / bison / byacc           | LALR(1)      | bottom-up, rightmost-reversed    |
+| GLR parsers                    | all CFGs     | handles ambiguity, merges parses |
 
 ---
 
@@ -425,12 +430,12 @@ Finite-precision arithmetic + iterative algorithms. Concerns: **accuracy**, **st
 
 IEEE 754 `double` = 1 sign + 11 exp + 52 mantissa bits; ~15–17 significant decimals.
 
-| Quantity | Meaning |
-|----------|---------|
-| **Absolute error** | `|x̂ − x|` |
-| **Relative error** | `|x̂ − x| / |x|` |
+| Quantity                  | Meaning                                                                 |
+| ------------------------- | ----------------------------------------------------------------------- | ----- | --- | --- | --- |
+| **Absolute error**        | `                                                                       | x̂ − x | `   |
+| **Relative error**        | `                                                                       | x̂ − x | /   | x   | `   |
 | **Machine epsilon `ε_m`** | smallest `ε` with `1 + ε > 1` in FP. Double: `ε_m ≈ 2⁻⁵² ≈ 2.22·10⁻¹⁶`. |
-| **Unit roundoff `u`** | typically `ε_m / 2`. Every real rounds to FP with rel error ≤ `u`. |
+| **Unit roundoff `u`**     | typically `ε_m / 2`. Every real rounds to FP with rel error ≤ `u`.      |
 
 Rounding modes: round-to-nearest-even (default), toward 0, +∞, −∞.
 
@@ -445,11 +450,13 @@ Subtracting nearly equal numbers kills significant digits.
 Standard `x = (−b ± √(b²−4ac)) / 2a` loses digits in one root when `b² ≫ 4ac`.
 
 **Stable form:** compute the larger-magnitude root first, then use Vieta:
+
 ```
 q = −½ (b + sign(b)·√(b²−4ac))
 x₁ = q / a
 x₂ = c / q
 ```
+
 This avoids the cancellation by using addition (same signs) in `q`, then recovering the other root by product `x₁·x₂ = c/a`.
 
 ### 3.3 Error Propagation in Sums — Kahan Summation
@@ -457,6 +464,7 @@ This avoids the cancellation by using addition (same signs) in `q`, then recover
 Naive `Σxᵢ` accumulates `O(n·u)` relative error.
 
 **Kahan compensated summation** carries a running correction `c`:
+
 ```
 s = 0; c = 0
 for x in xs:
@@ -465,6 +473,7 @@ for x in xs:
     c = (t − s) − y  # recover what was lost
     s = t
 ```
+
 Error becomes `O(u)` (independent of `n`, to leading order). Cost: 4× the work.
 
 ### 3.4 Root Finding
@@ -505,12 +514,12 @@ Rewrite `f(x)=0` as `x = g(x)`; iterate `x_{n+1} = g(x_n)`.
 
 #### Summary
 
-| Method | Order | Requires | Guarantee |
-|--------|-------|----------|-----------|
-| Bisection | linear (1) | sign change, continuity | always converges |
-| Fixed-point | linear | `|g'|<1` | local |
-| Secant | ≈1.618 | two starts | local |
-| Newton | 2 (quadratic) | `f'`, good start | local |
+| Method      | Order         | Requires                | Guarantee        |
+| ----------- | ------------- | ----------------------- | ---------------- | --- | ----- |
+| Bisection   | linear (1)    | sign change, continuity | always converges |
+| Fixed-point | linear        | `                       | g'               | <1` | local |
+| Secant      | ≈1.618        | two starts              | local            |
+| Newton      | 2 (quadratic) | `f'`, good start        | local            |
 
 ### 3.5 Convergence Rates — Definitions
 
@@ -527,26 +536,30 @@ Estimate `∫_a^b f(x) dx` via sampling.
 #### Trapezoidal rule
 
 With `n` subintervals of width `h = (b−a)/n`:
+
 ```
 T = h · [½f(x₀) + f(x₁) + … + f(x_{n−1}) + ½f(x_n)]
 ```
+
 Error: `O(h²)`. Exact for linear `f`.
 
 #### Simpson's 1/3 rule
 
 Requires `n` even. Fits parabolas on pairs of intervals:
+
 ```
 S = (h/3) · [f(x₀) + 4·(f₁+f₃+…) + 2·(f₂+f₄+…) + f(x_n)]
 ```
+
 Error: `O(h⁴)`. Exact for cubics (one order of "free" accuracy).
 
-| Rule | Poly. degree exact | Error |
-|------|--------------------|-------|
-| Midpoint | 1 | O(h²) |
-| Trapezoidal | 1 | O(h²) |
-| Simpson's 1/3 | 3 | O(h⁴) |
-| Simpson's 3/8 | 3 | O(h⁴) |
-| Gauss–Legendre (n pts) | 2n−1 | very high |
+| Rule                   | Poly. degree exact | Error     |
+| ---------------------- | ------------------ | --------- |
+| Midpoint               | 1                  | O(h²)     |
+| Trapezoidal            | 1                  | O(h²)     |
+| Simpson's 1/3          | 3                  | O(h⁴)     |
+| Simpson's 3/8          | 3                  | O(h⁴)     |
+| Gauss–Legendre (n pts) | 2n−1               | very high |
 
 ### 3.7 Linear Systems
 
@@ -571,10 +584,10 @@ Without pivoting, a small pivot (or zero) causes huge rounding errors or failure
 
 ### 3.8 Conditioning vs Stability
 
-| Notion | About | Formal |
-|--------|-------|--------|
-| **Condition number** `κ(A)` | the *problem* | `κ(A) = ‖A‖ · ‖A⁻¹‖` (in chosen norm) |
-| **Stability** | the *algorithm* | small perturbations → small forward error |
+| Notion                      | About           | Formal                                    |
+| --------------------------- | --------------- | ----------------------------------------- |
+| **Condition number** `κ(A)` | the _problem_   | `κ(A) = ‖A‖ · ‖A⁻¹‖` (in chosen norm)     |
+| **Stability**               | the _algorithm_ | small perturbations → small forward error |
 
 - `κ(A)` large ⇒ **ill-conditioned:** tiny changes in `b` cause big changes in `x`. Even a perfect algorithm can't recover lost information.
 - An algorithm is **backward stable** if computed answer is the exact answer to a slightly perturbed input.
@@ -591,6 +604,7 @@ Given `(xᵢ, yᵢ)` for `i=0..n`, find polynomial `p` of degree ≤ `n` with `p
 ```
 p(x) = Σᵢ yᵢ · Lᵢ(x),    Lᵢ(x) = Π_{j≠i} (x − xⱼ)/(xᵢ − xⱼ)
 ```
+
 Clean, but adding a new point forces recompute: `O(n²)` each time. Evaluation: `O(n²)`.
 
 #### Newton form (divided differences)
@@ -598,33 +612,35 @@ Clean, but adding a new point forces recompute: `O(n²)` each time. Evaluation: 
 ```
 p(x) = f[x₀] + f[x₀,x₁](x−x₀) + f[x₀,x₁,x₂](x−x₀)(x−x₁) + …
 ```
+
 Adding a new `(x_{n+1},y_{n+1})` appends **one term**: `O(n)` update (with table of divided diffs).
 
-| Form | Construct | Add a point | Evaluate |
-|------|-----------|-------------|----------|
-| Lagrange | O(n²) | O(n²) (rebuild) | O(n²) or O(n) via barycentric |
-| Newton | O(n²) | O(n) | O(n) (Horner-like nesting) |
+| Form     | Construct | Add a point     | Evaluate                      |
+| -------- | --------- | --------------- | ----------------------------- |
+| Lagrange | O(n²)     | O(n²) (rebuild) | O(n²) or O(n) via barycentric |
+| Newton   | O(n²)     | O(n)            | O(n) (Horner-like nesting)    |
 
 #### Runge Phenomenon
 
 Equispaced interpolation at high degree **oscillates wildly** near the endpoints, even for smooth functions. Classic example: `f(x) = 1/(1+25x²)` on `[−1,1]` — error grows as `n→∞`.
 
 **Mitigations:**
+
 - Use **Chebyshev nodes** `xₖ = cos((2k+1)π / (2n+2))` (clustered near endpoints).
 - Use **piecewise** interpolation: cubic splines, piecewise linear.
 - Limit degree.
 
 ### 3.10 Cheat-Sheet
 
-| Rule of thumb | |
-|---------------|-|
-| Machine epsilon (double) | `≈ 2.22 × 10⁻¹⁶` |
-| Avoid subtracting near-equal FP | reformulate |
-| Bisection always works, Newton is fast | pair them |
-| Simpson beats trapezoid by two orders | `O(h⁴)` vs `O(h²)` |
-| Partial pivoting is standard | |
-| Ill-conditioned ≠ unstable algorithm | different concepts |
-| High-degree equispaced = Runge | use Chebyshev/splines |
+| Rule of thumb                          |                       |
+| -------------------------------------- | --------------------- |
+| Machine epsilon (double)               | `≈ 2.22 × 10⁻¹⁶`      |
+| Avoid subtracting near-equal FP        | reformulate           |
+| Bisection always works, Newton is fast | pair them             |
+| Simpson beats trapezoid by two orders  | `O(h⁴)` vs `O(h²)`    |
+| Partial pivoting is standard           |                       |
+| Ill-conditioned ≠ unstable algorithm   | different concepts    |
+| High-degree equispaced = Runge         | use Chebyshev/splines |
 
 ---
 
@@ -633,98 +649,98 @@ Equispaced interpolation at high degree **oscillates wildly** near the endpoints
 ### Hoare Logic (Q1–Q6)
 
 **Q1.** What is the weakest precondition `wp(x := x + 3, x > 10)` ?
- A. `x > 10`   B. `x > 7`   C. `x > 13`   D. `x ≥ 10`
+A. `x > 10` B. `x > 7` C. `x > 13` D. `x ≥ 10`
 
 **Q2.** A triple `{P} S {Q}` (partial correctness) is vacuously true when:
- A. `P` is false initially
- B. `S` does not terminate
- C. `Q` is true
- D. Both A and B
+A. `P` is false initially
+B. `S` does not terminate
+C. `Q` is true
+D. Both A and B
 
 **Q3.** For `while B do S`, the three proof obligations for a candidate invariant `I` are:
- A. `P⇒I`; `{I ∧ B} S {I}`; `I ∧ ¬B ⇒ Q`
- B. `I⇒P`; `{I} S {I ∧ B}`; `I ⇒ Q`
- C. `P⇒Q`; `{I} S {Q}`; `¬B ⇒ Q`
- D. `I ∧ B ⇒ Q`; termination; `P⇒Q`
+A. `P⇒I`; `{I ∧ B} S {I}`; `I ∧ ¬B ⇒ Q`
+B. `I⇒P`; `{I} S {I ∧ B}`; `I ⇒ Q`
+C. `P⇒Q`; `{I} S {Q}`; `¬B ⇒ Q`
+D. `I ∧ B ⇒ Q`; termination; `P⇒Q`
 
 **Q4.** Which is needed for **total** but not partial correctness?
- A. An invariant
- B. A variant (well-founded decreasing measure)
- C. A postcondition
- D. The rule of consequence
+A. An invariant
+B. A variant (well-founded decreasing measure)
+C. A postcondition
+D. The rule of consequence
 
 **Q5.** Applying the assignment axiom, `{?} y := 2*x + 1 {y > 5}` gives:
- A. `x > 2`   B. `x > 3`   C. `x ≥ 2`   D. `x > 5`
+A. `x > 2` B. `x > 3` C. `x ≥ 2` D. `x > 5`
 
 **Q6.** The rule of consequence allows you to:
- A. Strengthen the post and weaken the pre
- B. Weaken the post and strengthen the pre
- C. Weaken both pre and post
- D. Replace an invariant by the postcondition
+A. Strengthen the post and weaken the pre
+B. Weaken the post and strengthen the pre
+C. Weaken both pre and post
+D. Replace an invariant by the postcondition
 
 ### Parsing / Compilers (Q7–Q12)
 
 **Q7.** Which parser family does yacc/bison use?
- A. LL(1)   B. LALR(1)   C. SLR(0)   D. Earley
+A. LL(1) B. LALR(1) C. SLR(0) D. Earley
 
 **Q8.** `A → A α | β` is problematic for LL(1) because of:
- A. Left factoring failure
- B. Left recursion (infinite descent)
- C. FOLLOW set collision only
- D. Ambiguity
+A. Left factoring failure
+B. Left recursion (infinite descent)
+C. FOLLOW set collision only
+D. Ambiguity
 
 **Q9.** FIRST(`A B C`) given `ε ∈ FIRST(A)` and `ε ∉ FIRST(B)` equals:
- A. FIRST(A)
- B. FIRST(A) ∪ FIRST(B)
- C. (FIRST(A) − {ε}) ∪ FIRST(B)
- D. FIRST(A) ∪ FIRST(B) ∪ FIRST(C)
+A. FIRST(A)
+B. FIRST(A) ∪ FIRST(B)
+C. (FIRST(A) − {ε}) ∪ FIRST(B)
+D. FIRST(A) ∪ FIRST(B) ∪ FIRST(C)
 
 **Q10.** A reduce-reduce conflict in an LALR(1) table means:
- A. Two productions' right-hand sides are candidates to reduce on the same lookahead
- B. The grammar has left recursion
- C. Two tokens can be shifted at once
- D. The lexer returned two tokens
+A. Two productions' right-hand sides are candidates to reduce on the same lookahead
+B. The grammar has left recursion
+C. Two tokens can be shifted at once
+D. The lexer returned two tokens
 
 **Q11.** Which optimization moves a computation that doesn't depend on the loop index out of the loop?
- A. Dead code elimination
- B. Common subexpression elimination
- C. Loop-invariant code motion
- D. Strength reduction
+A. Dead code elimination
+B. Common subexpression elimination
+C. Loop-invariant code motion
+D. Strength reduction
 
 **Q12.** SSA form is characterized by:
- A. Every variable is assigned at most once (with φ-nodes at merges)
- B. All variables become registers
- C. Elimination of all control flow
- D. Removing the symbol table
+A. Every variable is assigned at most once (with φ-nodes at merges)
+B. All variables become registers
+C. Elimination of all control flow
+D. Removing the symbol table
 
 ### Numerical Methods (Q13–Q18)
 
 **Q13.** Newton's method converges at what order near a simple root?
- A. Linear   B. Superlinear (≈1.618)   C. Quadratic   D. Cubic
+A. Linear B. Superlinear (≈1.618) C. Quadratic D. Cubic
 
 **Q14.** Simpson's 1/3 rule is exact for polynomials up to what degree?
- A. 1   B. 2   C. 3   D. 4
+A. 1 B. 2 C. 3 D. 4
 
 **Q15.** "Catastrophic cancellation" occurs when:
- A. Multiplying two huge numbers
- B. Subtracting two nearly equal numbers
- C. Dividing by machine epsilon
- D. Overflow in exponent
+A. Multiplying two huge numbers
+B. Subtracting two nearly equal numbers
+C. Dividing by machine epsilon
+D. Overflow in exponent
 
 **Q16.** The condition number `κ(A)` large means:
- A. The algorithm is unstable
- B. The problem itself amplifies input errors
- C. `A` is singular
- D. Pivoting is impossible
+A. The algorithm is unstable
+B. The problem itself amplifies input errors
+C. `A` is singular
+D. Pivoting is impossible
 
 **Q17.** To avoid the Runge phenomenon when interpolating with a high-degree polynomial, use:
- A. More equispaced nodes
- B. Chebyshev nodes (or splines)
- C. Lagrange instead of Newton form
- D. Higher precision arithmetic
+A. More equispaced nodes
+B. Chebyshev nodes (or splines)
+C. Lagrange instead of Newton form
+D. Higher precision arithmetic
 
 **Q18.** Bisection's convergence is:
- A. Quadratic   B. Superlinear   C. Linear (halves each step)   D. Depends on `f`
+A. Quadratic B. Superlinear C. Linear (halves each step) D. Depends on `f`
 
 ---
 
@@ -735,7 +751,7 @@ Equispaced interpolation at high degree **oscillates wildly** near the endpoints
 
 **Q1 — B.** By the axiom, `wp(x:=x+3, x>10) = (x+3 > 10) = x > 7`.
 
-**Q2 — D.** Partial correctness `{P}S{Q}` is an implication: *if* `P` holds initially *and* `S` terminates, *then* `Q`. It is vacuously true when `P` is false (antecedent false) or when `S` diverges (termination condition fails).
+**Q2 — D.** Partial correctness `{P}S{Q}` is an implication: _if_ `P` holds initially _and_ `S` terminates, _then_ `Q`. It is vacuously true when `P` is false (antecedent false) or when `S` diverges (termination condition fails).
 
 **Q3 — A.** Init `P⇒I`, preservation `{I∧B} S {I}`, usefulness `I∧¬B⇒Q`. (Termination-via-variant is extra, for total correctness.)
 

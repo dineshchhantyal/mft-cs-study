@@ -7,21 +7,25 @@ Exam: ETS Major Field Test in Computer Science, May 1, 2026.
 ## 1. Processes & Threads
 
 ### Process
+
 - A program in execution. Has its own address space (code, data, heap, stack), open files, PID, registers.
 - Created by `fork()` (UNIX) — child gets copy of parent's address space (copy-on-write in practice).
 - `exec()` replaces the process image; `wait()` blocks parent until child finishes; `exit()` terminates.
 
 ### Thread
-- Lightweight unit of execution *within* a process. Shares address space (code/data/heap/open files) with other threads in the process.
+
+- Lightweight unit of execution _within_ a process. Shares address space (code/data/heap/open files) with other threads in the process.
 - Each thread has its own: **stack, registers, program counter, thread ID**.
 - Context switch between threads of the same process is cheaper than between processes (no TLB/page-table flush).
 
 ### User-level vs Kernel-level threads
+
 - **User-level (green threads):** fast context switch, but one blocking syscall blocks all threads; no true multi-core parallelism.
 - **Kernel-level:** OS aware, can run on multiple cores, but more expensive context switch.
 - **Hybrid (M:N):** many user threads mapped to N kernel threads.
 
 ### Process States & Transitions
+
 ```
    [new] --admit--> [ready] --dispatch--> [running] --exit--> [terminated]
                       ^                      | |
@@ -29,9 +33,11 @@ Exam: ETS Major Field Test in Computer Science, May 1, 2026.
                       |                      |
                       |--timer interrupt (preempt)--
 ```
+
 Five canonical states: **new, ready, running, waiting (blocked), terminated**.
 
 Transitions:
+
 - new → ready: admitted
 - ready → running: scheduler dispatch
 - running → ready: preempted (timer)
@@ -40,6 +46,7 @@ Transitions:
 - running → terminated: exit
 
 ### PCB (Process Control Block) contents
+
 - PID, process state
 - Program counter, CPU registers
 - CPU scheduling info (priority, queue pointers)
@@ -48,6 +55,7 @@ Transitions:
 - I/O status info (open files, I/O devices)
 
 ### Context Switch Cost
+
 - Saves PCB of current process, loads PCB of next. Pure overhead (no useful work).
 - Costs: 1–100+ microseconds depending on architecture, cache/TLB cold after switch.
 - Thread switch within a process: no address-space change → cheaper.
@@ -57,6 +65,7 @@ Transitions:
 ## 2. CPU Scheduling
 
 ### Criteria
+
 - **CPU utilization** (maximize)
 - **Throughput** (jobs/unit time, maximize)
 - **Turnaround time** = completion − arrival (minimize)
@@ -66,36 +75,44 @@ Transitions:
 ### Algorithms
 
 #### FCFS (First-Come, First-Served)
+
 - Non-preemptive. Simple FIFO. **Convoy effect** — short jobs wait behind long ones.
 
 #### SJF (Shortest Job First)
+
 - Non-preemptive: pick shortest next burst.
 - **Provably optimal for average waiting time.**
-- Problem: need to *know* burst length. Use exponential averaging: τ_{n+1} = α·t_n + (1−α)·τ_n.
+- Problem: need to _know_ burst length. Use exponential averaging: τ\_{n+1} = α·t_n + (1−α)·τ_n.
 
 #### SRTF (Shortest Remaining Time First) — preemptive SJF
+
 - Whenever a new job arrives, if its burst < current remaining time, preempt.
 - Optimal avg waiting time among preemptive non-priority schedulers.
 
 #### Priority Scheduling
+
 - Highest priority runs. Can be preemptive or non-preemptive.
 - **Starvation** possible → fix with **aging** (gradually raise priority of waiting jobs).
 
 #### Round-Robin (RR)
+
 - Each process gets a time quantum q. Preempted at quantum end → back of ready queue.
 - q too large → becomes FCFS. q too small → excessive context-switch overhead.
 - Rule of thumb: q should be large compared to context-switch time, ~10–100 ms. Typically want 80% of CPU bursts < q.
 
 #### Multilevel Queue
+
 - Multiple ready queues (e.g., foreground RR, background FCFS) with fixed priorities.
 
 #### Multilevel Feedback Queue (MLFQ)
+
 - Processes move between queues based on behavior (CPU-bound demoted, I/O-bound promoted).
 - Approximates SJF without prior knowledge. Most real OSes use MLFQ variants.
 
 ### Computing waiting & turnaround time
 
 Example (all arrive at t=0): P1 burst 24, P2 burst 3, P3 burst 3.
+
 - **FCFS order P1,P2,P3:** waits = 0, 24, 27 → avg = 17
 - **SJF order P2,P3,P1:** waits = 0, 3, 6 → avg = 3
 - **RR q=4:** P1:0–4, P2:4–7, P3:7–10, P1:10–30. Waits: P1=6, P2=4, P3=7 → avg = 5.66
@@ -107,12 +124,15 @@ Example (all arrive at t=0): P1 burst 24, P2 burst 3, P3 burst 3.
 ## 3. Synchronization
 
 ### Race Condition
+
 Outcome depends on interleaving. Classic: `count++` = load, inc, store — two threads can both read old value.
 
 ### Critical Section Problem
+
 Need mutual exclusion, progress (no indefinite postponement when no one is in CS), bounded waiting.
 
 ### Primitives
+
 - **Mutex lock:** binary, owned — only the locker can unlock. `acquire()/release()`.
 - **Semaphore:** integer `S`, atomic `wait(S)` (P: decrement, block if <0) and `signal(S)` (V: increment, wake one).
   - **Binary semaphore** (0/1) ~ mutex (but not owned).
@@ -121,11 +141,13 @@ Need mutual exclusion, progress (no indefinite postponement when no one is in CS
 - **Spinlock:** busy wait; OK for very short CS on multiprocessors.
 
 ### Classic Problems
+
 - **Producer–Consumer (bounded buffer):** sema `empty=N`, `full=0`, `mutex=1`. Producer: `wait(empty); wait(mutex); put; signal(mutex); signal(full);`
 - **Readers–Writers:** multiple readers OR one writer. Reader preference can starve writers; writer preference can starve readers.
 - **Dining Philosophers:** 5 philosophers, 5 forks; prevent deadlock by: pick up lower-numbered first; or allow only 4 to sit at once; or monitor-based.
 
 ### Deadlock in synchronization
+
 Wrong ordering of `wait()`s causes deadlock: T1 `wait(A); wait(B)`; T2 `wait(B); wait(A)`. Always lock in a global order.
 
 ---
@@ -133,23 +155,28 @@ Wrong ordering of `wait()`s causes deadlock: T1 `wait(A); wait(B)`; T2 `wait(B);
 ## 4. Deadlock
 
 ### Four Necessary Conditions (ALL must hold)
+
 1. **Mutual exclusion** — at least one non-shareable resource
 2. **Hold and wait** — process holds one and requests another
 3. **No preemption** — resources released only voluntarily
 4. **Circular wait** — cycle in the wait-for graph
 
 ### Strategies
+
 - **Prevention** — negate one of the 4 conditions (e.g., impose resource ordering → no circular wait; or require all resources up front → no hold-and-wait).
 - **Avoidance** — require advance info on max needs; grant only if system stays in **safe state**. **Banker's algorithm**.
 - **Detection & Recovery** — let deadlock happen, detect via resource-allocation graph cycle + pending (for multi-instance, use matrix algorithm). Recovery: kill processes or preempt resources.
 - **Ignore** (ostrich algorithm) — what most OSes do in practice.
 
 ### Resource-Allocation Graph
+
 - Single instance per resource type: cycle ⇔ deadlock.
-- Multiple instances: cycle is *necessary* but not sufficient.
+- Multiple instances: cycle is _necessary_ but not sufficient.
 
 ### Banker's Algorithm (avoidance)
+
 Data structures for n processes, m resource types:
+
 - `Available[m]`
 - `Max[n][m]`
 - `Allocation[n][m]`
@@ -158,15 +185,16 @@ Data structures for n processes, m resource types:
 **Safety check:** find a sequence such that each process's `Need ≤ Work` (current available + released). If one exists, state is safe.
 
 **Worked example:**
+
 - Available = (3, 3, 2); Max and Allocation:
 
-| P | Alloc | Max | Need |
-|---|-------|-----|------|
-| P0 | 0,1,0 | 7,5,3 | 7,4,3 |
-| P1 | 2,0,0 | 3,2,2 | 1,2,2 |
-| P2 | 3,0,2 | 9,0,2 | 6,0,0 |
-| P3 | 2,1,1 | 2,2,2 | 0,1,1 |
-| P4 | 0,0,2 | 4,3,3 | 4,3,1 |
+| P   | Alloc | Max   | Need  |
+| --- | ----- | ----- | ----- |
+| P0  | 0,1,0 | 7,5,3 | 7,4,3 |
+| P1  | 2,0,0 | 3,2,2 | 1,2,2 |
+| P2  | 3,0,2 | 9,0,2 | 6,0,0 |
+| P3  | 2,1,1 | 2,2,2 | 0,1,1 |
+| P4  | 0,0,2 | 4,3,3 | 4,3,1 |
 
 Work = (3,3,2). P1 Need=(1,2,2) ≤ Work → run, Work=(5,3,2). P3 Need=(0,1,1) ≤ Work → Work=(7,4,3). P0 Need=(7,4,3) ≤ Work → Work=(7,5,3). P2 → Work=(10,5,5). P4 → Work=(10,5,7). Safe sequence: **P1, P3, P0, P2, P4**. → SAFE.
 
@@ -175,12 +203,14 @@ Work = (3,3,2). P1 Need=(1,2,2) ≤ Work → run, Work=(5,3,2). P3 Need=(0,1,1) 
 ## 5. Memory Management
 
 ### Contiguous Allocation
+
 - Each process gets one contiguous block. Uses base + limit registers.
 - **Fragmentation:**
   - **External:** free holes scattered, total free enough but no single block fits. Compaction fixes (expensive).
   - **Internal:** allocated block larger than requested (e.g., fixed partitions, page frames).
 
 ### Paging
+
 - Logical address = (page #, offset). Physical address = (frame #, offset).
 - Page table per process maps page → frame.
 - **Page size tradeoff:** small pages ⇒ less internal frag but bigger page table & more TLB misses. Large ⇒ more internal frag but smaller table.
@@ -188,10 +218,12 @@ Work = (3,3,2). P1 Need=(1,2,2) ≤ Work → run, Work=(5,3,2). P3 Need=(0,1,1) 
 - **TLB** — cache for page table entries; effective access time = h·(TLB+mem) + (1−h)·(TLB+2·mem).
 
 ### Segmentation
+
 - Logical addr = (segment #, offset). Variable-size segments reflect program structure (code, stack, heap).
 - Has **external** fragmentation; no internal.
 
 ### Segmented Paging (x86, Multics)
+
 - Segment table → each segment is paged. Combines protection of segmentation with frag-free paging.
 
 ---
@@ -199,10 +231,12 @@ Work = (3,3,2). P1 Need=(1,2,2) ≤ Work → run, Work=(5,3,2). P3 Need=(0,1,1) 
 ## 6. Virtual Memory
 
 ### Demand Paging
+
 - Pages loaded only on access. Page fault → trap → OS loads page from disk → restart instruction.
 - Effective access time = (1−p)·mem_time + p·page_fault_service. Even tiny p devastates performance.
 
 ### Page Replacement Algorithms
+
 - **FIFO** — evict oldest loaded. Suffers **Belady's anomaly** (more frames → more faults possible).
 - **Optimal (OPT / MIN / Belady's)** — evict page not used for the longest future time. **Unimplementable** but lower-bound benchmark.
 - **LRU** — evict least-recently used. Good approximation of OPT; expensive to implement exactly (stack or counters).
@@ -211,20 +245,26 @@ Work = (3,3,2). P1 Need=(1,2,2) ≤ Work → run, Work=(5,3,2). P3 Need=(0,1,1) 
 - **MFU** — argues page with small count probably just arrived. Rare.
 
 ### Belady's Anomaly
+
 Reference string `1,2,3,4,1,2,5,1,2,3,4,5`:
+
 - 3 frames FIFO → 9 faults
 - 4 frames FIFO → 10 faults (!). Only FIFO exhibits this; LRU and OPT are **stack algorithms** and cannot.
 
 ### Working Set Model
+
 - W(t, Δ) = set of pages referenced in last Δ accesses.
 - Sum of working-set sizes over processes > frames → **thrashing** (CPU spends all time paging).
 - OS can suspend processes when Σ|W| > frames.
 
 ### Thrashing
+
 - Symptom: CPU utilization plummets, paging I/O saturated. Naïve OS responds by adding more processes → worse. Fix: working-set or page-fault-frequency control.
 
 ### Page Replacement Example
+
 Reference: 7,0,1,2,0,3,0,4,2,3,0,3,2,1,2,0,1,7,0,1 with 3 frames:
+
 - FIFO faults = 15
 - LRU faults = 12
 - OPT faults = 9
@@ -234,17 +274,21 @@ Reference: 7,0,1,2,0,3,0,4,2,3,0,3,2,1,2,0,1,7,0,1 with 3 frames:
 ## 7. File Systems
 
 ### Directory Structures
+
 - Single-level, two-level, tree, acyclic-graph (hard links), general graph (soft/symbolic links — cycles possible, use reference counts carefully).
 
 ### File Allocation
+
 - **Contiguous:** fast sequential & random; suffers external frag; hard to grow.
 - **Linked (FAT):** no external frag; poor random access; FAT caches link table.
 - **Indexed (inode):** each file has an index block listing its data blocks. UNIX inode has direct + single/double/triple indirect pointers → supports large files with small overhead for small files.
 
 ### Inode contents
-Mode, owner, size, timestamps, link count, pointers to data blocks. File *name* is in the directory, **not** in the inode.
+
+Mode, owner, size, timestamps, link count, pointers to data blocks. File _name_ is in the directory, **not** in the inode.
 
 ### FAT
+
 File Allocation Table indexed by block #; each entry points to next block or EOF marker. Simple, used by FAT12/16/32.
 
 ---
@@ -259,7 +303,7 @@ Example: queue = 98, 183, 37, 122, 14, 124, 65, 67; head at 53; disk has cylinde
 - **SSTF (Shortest Seek Time First):** always nearest. May starve far requests. Movement = 236.
 - **SCAN (elevator):** go in one direction to end, reverse. Movement (moving up then down) = 208.
 - **C-SCAN:** like SCAN but on reaching end, jump to other end without servicing; uniform wait.
-- **LOOK / C-LOOK:** like SCAN/C-SCAN but reverse at last *request*, not at the end of disk.
+- **LOOK / C-LOOK:** like SCAN/C-SCAN but reverse at last _request_, not at the end of disk.
 
 Total movement for LOOK (head 53, up first): 53→65→67→98→122→124→183→37→14. Moves = (183−53) + (183−14) = 130 + 169 = 299.
 
@@ -295,7 +339,7 @@ Total movement for LOOK (head 53, up first): 53→65→67→98→122→124→183
 ## 11. MCQs (10+)
 
 **Q1.** Which is NOT in the PCB?
-(a) PID  (b) program counter  (c) list of open files  (d) source code of the program.
+(a) PID (b) program counter (c) list of open files (d) source code of the program.
 **Ans:** (d). PCB references memory, not the program's source.
 
 **Q2.** Processes P1, P2, P3 arrive at t=0 with bursts 8, 4, 9. Under SJF (non-preemptive), average waiting time?
@@ -307,7 +351,7 @@ Faults: 1(F),2(F),3(F),4(F evict 1),1(F evict 2),2(F evict 3),5(F evict 4),1(hit
 **Q4.** Which of the four deadlock conditions does "requesting all resources upfront" negate?
 **Ans:** Hold and wait.
 
-**Q5.** A counting semaphore initialized to 3 allows up to _ threads in the critical section.
+**Q5.** A counting semaphore initialized to 3 allows up to \_ threads in the critical section.
 **Ans:** **3**.
 
 **Q6.** Disk head at 50; queue = 82,170,43,140,24,16,190. Compute SSTF total movement.
@@ -317,7 +361,7 @@ Nearest to 50: 43 (7). Next nearest to 43: 24 (19). Next: 16 (8). Next: 82 (66).
 **Ans:** **Clock / second-chance** (LRU approximation using reference bits).
 
 **Q8.** Which of the following causes internal fragmentation?
-(a) paging  (b) pure segmentation  (c) variable partitions  (d) compaction.
+(a) paging (b) pure segmentation (c) variable partitions (d) compaction.
 **Ans:** (a) paging (last page of a process may be partially full).
 
 **Q9.** A system has 12 tape drives, 3 processes each needing max 5. Is it deadlock-free?
@@ -327,7 +371,7 @@ If each holds 4, requests 1 more → 12 allocated, 0 free → deadlock. But if e
 Timeline: P1 0–4, P2 4–8, P3 8–10, P1 10–11. P1 done at 11, P2 at 8, P3 at 10.
 
 **Q11.** Which scheduling may cause starvation?
-(a) FCFS  (b) RR  (c) SJF  (d) priority without aging.
+(a) FCFS (b) RR (c) SJF (d) priority without aging.
 **Ans:** (c) and (d). Best single answer: **priority without aging** (or SJF).
 
 **Q12.** Belady's anomaly can occur in which algorithm?
@@ -340,7 +384,7 @@ Timeline: P1 0–4, P2 4–8, P3 8–10, P1 10–11. P1 done at 11, P2 at 8, P3 
 EAT = 0.8·(20+100) + 0.2·(20+200) = 0.8·120 + 0.2·220 = 96 + 44 = **140 ns**.
 
 **Q15.** Which cannot be used to avoid deadlock?
-(a) Banker's  (b) resource ordering  (c) pre-emption of resources  (d) increasing time quantum.
+(a) Banker's (b) resource ordering (c) pre-emption of resources (d) increasing time quantum.
 **Ans:** (d). Quantum is scheduling, not deadlock.
 
 ---
@@ -407,13 +451,13 @@ BIG RULES
 ## 🧪 Try Yourself — Practice Questions
 
 **Q1.** A process executing a blocking `read()` transitions from which state to which?
-(a) running → ready   (b) running → waiting   (c) ready → waiting   (d) waiting → running
+(a) running → ready (b) running → waiting (c) ready → waiting (d) waiting → running
 
 **Q2.** Two threads of the same process share all of the following EXCEPT:
-(a) heap   (b) global variables   (c) open file descriptors   (d) stack
+(a) heap (b) global variables (c) open file descriptors (d) stack
 
 **Q3.** Which field would you NOT expect to find in a PCB?
-(a) CPU register snapshot   (b) scheduling priority   (c) cached translations from the TLB   (d) list of open files
+(a) CPU register snapshot (b) scheduling priority (c) cached translations from the TLB (d) list of open files
 
 **Q4.** Jobs arrive at t=0 in order A, B, C, D with bursts 6, 8, 7, 3. Under **FCFS**, what is the average waiting time?
 
@@ -426,22 +470,22 @@ BIG RULES
 **Q8.** A counting semaphore S is initialized to 2. Threads execute `wait(S); CS; signal(S);`. If 5 threads call `wait(S)` simultaneously, how many block?
 
 **Q9.** Which classic synchronization problem requires avoiding writer starvation?
-(a) dining philosophers   (b) readers–writers   (c) producer–consumer   (d) sleeping barber
+(a) dining philosophers (b) readers–writers (c) producer–consumer (d) sleeping barber
 
 **Q10.** A mutex differs from a binary semaphore primarily because:
-(a) mutex cannot be used between processes   (b) a mutex has ownership — only the locker can unlock   (c) binary semaphores cannot reach 0   (d) mutex operations are non-atomic
+(a) mutex cannot be used between processes (b) a mutex has ownership — only the locker can unlock (c) binary semaphores cannot reach 0 (d) mutex operations are non-atomic
 
 **Q11.** A system has 3 resource types with totals (A=10, B=5, C=7). Current allocation:
 P0: (0,1,0); P1: (2,0,0); P2: (3,0,2); P3: (2,1,1); P4: (0,0,2). Max needs: P0(7,5,3), P1(3,2,2), P2(9,0,2), P3(2,2,2), P4(4,3,3).
 Is the state safe? If yes, give one safe sequence.
 
 **Q12.** In a **single-instance** resource allocation graph, a cycle implies:
-(a) possible deadlock only   (b) definite deadlock   (c) starvation   (d) nothing
+(a) possible deadlock only (b) definite deadlock (c) starvation (d) nothing
 
 **Q13.** Logical address space = 32 bits, page size = 4 KB, each PTE = 4 B. Size of a single-level page table per process?
 
 **Q14.** Which suffers **external** fragmentation but not internal?
-(a) paging   (b) pure segmentation   (c) fixed partitions   (d) paged segmentation
+(a) paging (b) pure segmentation (c) fixed partitions (d) paged segmentation
 
 **Q15.** Reference string: 7,0,1,2,0,3,0,4,2,3,0,3,2 with **3 frames** under **LRU**. How many page faults?
 
@@ -505,4 +549,3 @@ Is the state safe? If yes, give one safe sequence.
 **A20.** LOOK toward higher first: 50→82→140→170→190 (movement 190−50=140), then reverse to 43→24→16 (190−16=174). Total = 140 + 174 = **314**.
 
 </details>
-

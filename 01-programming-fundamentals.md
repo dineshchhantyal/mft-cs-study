@@ -4,7 +4,7 @@
 > **Date:** May 1, 2026
 > **Format:** 66 MCQs, 2 hours, closed book
 > **This topic's weight:** ~21–27% (Programming Fundamentals + Programming Languages combined; the largest single cluster on the test)
-> **Language of the exam:** ETS uses a neutral Algol/Pascal-flavored **pseudocode**. You will NOT see Java/Python/C syntax — but the *semantics* questions assume you know how real languages differ.
+> **Language of the exam:** ETS uses a neutral Algol/Pascal-flavored **pseudocode**. You will NOT see Java/Python/C syntax — but the _semantics_ questions assume you know how real languages differ.
 
 ---
 
@@ -36,17 +36,19 @@
 Per the official ETS MFT CS Test Description (4CMF), **Programming** (21–27%) is broken into:
 
 ### Programming Fundamentals
+
 - Fundamental data structures (arrays, strings, records, lists, stacks, queues, trees, hash tables) — mostly tested in the Data Structures section, but **representation** shows up here.
 - Iteration and recursion under program control and structure.
 - Event-driven programming (rare, ~1 question).
 - Object-oriented programming: classes, objects, inheritance, polymorphism, encapsulation.
 
 ### Programming Languages
+
 - **Overview of programming languages** (paradigms: imperative, OO, functional, logic, scripting).
 - **Virtual machines** (JVM, CLR) — interpretation vs compilation vs JIT.
 - **Introduction to language translation** — lexical analysis, parsing, semantic analysis, code generation, optimization phases.
 - **Declarations, modularity, storage management** — activation records, lifetime, allocation.
-- **Scope, binding, and parameter passing** — *the highest-frequency subtopic in this section.*
+- **Scope, binding, and parameter passing** — _the highest-frequency subtopic in this section._
 - **Type systems** — strong/weak, static/dynamic, inference, polymorphism kinds.
 - **Abstraction mechanisms** — procedures, ADTs, generics, modules.
 - **Functional programming** — higher-order functions, closures, immutability, lazy evaluation.
@@ -67,7 +69,7 @@ Patterns seen across released ETS samples and candidate write-ups (Ben Leskey, s
 5. **Precedence/associativity.** One question per test usually — evaluate an expression with mixed `&&`, `||`, `!`, `+`, unary minus, and maybe assignment-as-expression.
 6. **Short-circuit and side effects.** `if (p != null && p.next == x)` style — know that `&&` short-circuits left-to-right.
 
-**Golden rule:** when the question says "assume call-by-X" or "under dynamic scoping," the default answer under the *other* discipline is almost always one of the distractors. Compute both, then pick.
+**Golden rule:** when the question says "assume call-by-X" or "under dynamic scoping," the default answer under the _other_ discipline is almost always one of the distractors. Compute both, then pick.
 
 ---
 
@@ -77,13 +79,13 @@ This is the single most tested PL topic on the MFT.
 
 ### 3.1 The Four Disciplines
 
-| Mode | Also called | Argument evaluated | What callee sees | Writes visible to caller? |
-|---|---|---|---|---|
-| **By value** | copy-in | Once, at call | A **copy** | No |
-| **By reference** | by address | Once, at call (must be lvalue) | A **pointer/alias** to caller's variable | **Yes, immediately** |
-| **By value-result** | copy-in/copy-out | Once, at call (copy in); copy back at return | A copy, written back on return | **Yes, at return only** |
-| **By name** | textual substitution | **Every use** inside the callee re-evaluates the expression | A thunk (delayed expression with caller's scope) | Yes, each read/write re-runs the expression |
-| **By need** | lazy / memoized name | First use evaluates; subsequent uses reuse the result | Thunk + cache | Effectively like name but evaluated at most once |
+| Mode                | Also called          | Argument evaluated                                          | What callee sees                                 | Writes visible to caller?                        |
+| ------------------- | -------------------- | ----------------------------------------------------------- | ------------------------------------------------ | ------------------------------------------------ |
+| **By value**        | copy-in              | Once, at call                                               | A **copy**                                       | No                                               |
+| **By reference**    | by address           | Once, at call (must be lvalue)                              | A **pointer/alias** to caller's variable         | **Yes, immediately**                             |
+| **By value-result** | copy-in/copy-out     | Once, at call (copy in); copy back at return                | A copy, written back on return                   | **Yes, at return only**                          |
+| **By name**         | textual substitution | **Every use** inside the callee re-evaluates the expression | A thunk (delayed expression with caller's scope) | Yes, each read/write re-runs the expression      |
+| **By need**         | lazy / memoized name | First use evaluates; subsequent uses reuse the result       | Thunk + cache                                    | Effectively like name but evaluated at most once |
 
 ### 3.2 The Classic Swap Problem
 
@@ -99,12 +101,12 @@ swap(a, b)
 print(a, b)
 ```
 
-| Mode | Output | Reason |
-|---|---|---|
-| Value | `1 2` | Callee swaps its copies; caller unchanged |
-| Reference | `2 1` | x,y are aliases of a,b |
-| Value-result | `2 1` | Copies swap, then written back |
-| Name | `2 1` *if args are simple vars* | Every use rewrites `a`, `b` |
+| Mode         | Output                          | Reason                                    |
+| ------------ | ------------------------------- | ----------------------------------------- |
+| Value        | `1 2`                           | Callee swaps its copies; caller unchanged |
+| Reference    | `2 1`                           | x,y are aliases of a,b                    |
+| Value-result | `2 1`                           | Copies swap, then written back            |
+| Name         | `2 1` _if args are simple vars_ | Every use rewrites `a`, `b`               |
 
 ### 3.3 The Canonical Call-by-Name Trap: `swap(i, a[i])`
 
@@ -119,10 +121,10 @@ swap(i, a[i])
 - **By value-result:** same as reference here (one address per arg).
 - **By name:** Every mention of `y` re-evaluates `a[i]` using the current `i`.
   - `t := x` → `t := i = 1`
-  - `x := y` → `i := a[i] = a[1] = 10`   *(now i=10!)*
+  - `x := y` → `i := a[i] = a[1] = 10` _(now i=10!)_
   - `y := t` → `a[i] := 1`, but now `i=10`, so `a[10] := 1`. If array bounds are only 1..3, this is a bounds error (or silently writes somewhere else in pseudocode). **Commonly the "right" MFT answer is "array index out of bounds" or "a is unchanged, i=10".**
 
-> **Mnemonic:** **VRaN** — Value, Reference, and Name differ when the argument is a *compound expression* or *subscripted variable*.
+> **Mnemonic:** **VRaN** — Value, Reference, and Name differ when the argument is a _compound expression_ or _subscripted variable_.
 
 ### 3.4 Jensen's Device (call-by-name showpiece)
 
@@ -135,12 +137,13 @@ real procedure sum(i, lo, hi, expr):
 // Call:
 total := sum(k, 1, 10, k*k)   // computes 1^2 + 2^2 + ... + 10^2 = 385
 ```
+
 Works only under **call-by-name** because each iteration re-evaluates `k*k` with the current `k`. Under value, `k*k` is evaluated once (with whatever `k` was before the call) and summed 10 times.
 
 ### 3.5 Common ETS Trick Variants
 
-- **"Which of these languages uses call-by-value only?"** → C, Java (for primitives AND object refs — Java passes the *reference* by value; often phrased "Java is call-by-value").
-- **"Which yields different results under value vs reference?"** → Any procedure that *writes* to its parameter.
+- **"Which of these languages uses call-by-value only?"** → C, Java (for primitives AND object refs — Java passes the _reference_ by value; often phrased "Java is call-by-value").
+- **"Which yields different results under value vs reference?"** → Any procedure that _writes_ to its parameter.
 - **Python/Ruby** — "call-by-object" or "call-by-sharing": reference to object is passed by value. Reassignment in callee doesn't affect caller; mutation does.
 - **Algol 60 default** = **call-by-name**. Algol 68, Pascal, Ada, C, C++, Java = **call-by-value** (with pointers/refs to simulate reference).
 
@@ -168,10 +171,10 @@ procedure inner():
 inner()
 ```
 
-| Scoping | Output | Why |
-|---|---|---|
-| **Static** | `10` | `show` was defined at top level where `x=10`; the x in inner() is a different binding at runtime but the textual lookup finds the global. |
-| **Dynamic** | `20` | When `show` runs, most-recent `x` on the stack is inner's `x=20`. |
+| Scoping     | Output | Why                                                                                                                                       |
+| ----------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| **Static**  | `10`   | `show` was defined at top level where `x=10`; the x in inner() is a different binding at runtime but the textual lookup finds the global. |
+| **Dynamic** | `20`   | When `show` runs, most-recent `x` on the stack is inner's `x=20`.                                                                         |
 
 ### 4.3 Nested Procedures (Pascal-style)
 
@@ -188,17 +191,17 @@ procedure outer():
 outer()
 ```
 
-- **Static:** `inner` is declared inside `outer`; its enclosing `x` is outer's `x=1`. Prints `1`. *(middle's x is a different variable unless inner is declared inside middle.)*
+- **Static:** `inner` is declared inside `outer`; its enclosing `x` is outer's `x=1`. Prints `1`. _(middle's x is a different variable unless inner is declared inside middle.)_
 - **Dynamic:** Active stack at print time = inner → middle → outer. Most recent `x` is middle's = `2`. Prints `2`.
 
 ### 4.4 How Implementations Differ
 
-| Feature | Static scope | Dynamic scope |
-|---|---|---|
-| Resolution | Compile-time (mostly) | Runtime stack walk |
-| Needs | **Static link** or display in activation record | **Dynamic link** (access link via call stack) |
-| Readability | Good — see declarations in source | Poor — behavior depends on caller |
-| Speed | Faster (offsets known) | Slower (search) |
+| Feature     | Static scope                                    | Dynamic scope                                 |
+| ----------- | ----------------------------------------------- | --------------------------------------------- |
+| Resolution  | Compile-time (mostly)                           | Runtime stack walk                            |
+| Needs       | **Static link** or display in activation record | **Dynamic link** (access link via call stack) |
+| Readability | Good — see declarations in source               | Poor — behavior depends on caller             |
+| Speed       | Faster (offsets known)                          | Slower (search)                               |
 
 > **Mnemonic:** **"Static follows the page, Dynamic follows the stage."** The page = source code; the stage = active actors (call stack).
 
@@ -206,22 +209,22 @@ outer()
 
 ## 5. Binding Times
 
-A **binding** associates a name/attribute with a value/property. The *time* binding occurs matters.
+A **binding** associates a name/attribute with a value/property. The _time_ binding occurs matters.
 
-| Binding time | Example |
-|---|---|
-| **Language design** | Meaning of `+`, `if`, keyword reserved words |
-| **Language implementation** | Size of `int` (32 vs 64 bits in C) |
-| **Compile time** | Type of a variable in C/Java; overload resolution in C++ |
-| **Link time** | Resolution of external library calls (static linking) |
-| **Load time** | Address of a global variable (without ASLR) |
-| **Runtime — early** | Values of local variables at procedure entry |
-| **Runtime — late** | Virtual method dispatch; dynamic type checks; method in Smalltalk/Python |
+| Binding time                | Example                                                                  |
+| --------------------------- | ------------------------------------------------------------------------ |
+| **Language design**         | Meaning of `+`, `if`, keyword reserved words                             |
+| **Language implementation** | Size of `int` (32 vs 64 bits in C)                                       |
+| **Compile time**            | Type of a variable in C/Java; overload resolution in C++                 |
+| **Link time**               | Resolution of external library calls (static linking)                    |
+| **Load time**               | Address of a global variable (without ASLR)                              |
+| **Runtime — early**         | Values of local variables at procedure entry                             |
+| **Runtime — late**          | Virtual method dispatch; dynamic type checks; method in Smalltalk/Python |
 
 - **Static binding** = before runtime (compile/link/load). Faster, safer, less flexible.
 - **Dynamic binding** = at runtime. Slower, flexible, enables polymorphism.
 
-> **Trick:** *overload* resolution (same name, different signatures) is **static** (compile time, based on declared arg types). *Override* resolution (virtual methods) is **dynamic** (runtime, based on actual object type). The MFT loves this distinction.
+> **Trick:** _overload_ resolution (same name, different signatures) is **static** (compile time, based on declared arg types). _Override_ resolution (virtual methods) is **dynamic** (runtime, based on actual object type). The MFT loves this distinction.
 
 ---
 
@@ -247,16 +250,16 @@ fib(n):
 
 Number of total calls to `fib` when invoking `fib(n)`: **`2·fib(n+1) − 1`** (each non-base returns a node; the binary-tree size).
 
-| n | fib(n) | # calls |
-|---|---|---|
-| 0 | 0 | 1 |
-| 1 | 1 | 1 |
-| 2 | 1 | 3 |
-| 3 | 2 | 5 |
-| 4 | 3 | 9 |
-| 5 | 5 | 15 |
-| 6 | 8 | 25 |
-| 7 | 13 | 41 |
+| n   | fib(n) | # calls |
+| --- | ------ | ------- |
+| 0   | 0      | 1       |
+| 1   | 1      | 1       |
+| 2   | 1      | 3       |
+| 3   | 2      | 5       |
+| 4   | 3      | 9       |
+| 5   | 5      | 15      |
+| 6   | 8      | 25      |
+| 7   | 13     | 41      |
 
 > **Mnemonic:** `calls(n) = calls(n-1) + calls(n-2) + 1` with calls(0)=calls(1)=1.
 
@@ -301,23 +304,23 @@ Any recursion → iteration via explicit stack. Tail recursion → `while` loop 
 
 ### 7.2 Inheritance Types
 
-| Term | Meaning |
-|---|---|
-| **Single inheritance** | One parent (Java, C#) |
-| **Multiple inheritance** | Many parents (C++, Python). Risks the **diamond problem** |
-| **Interface inheritance** | Implement multiple interfaces (Java) — no state |
-| **Mixin / Trait** | Reusable method bundles (Ruby modules, Scala traits, Rust traits) |
+| Term                      | Meaning                                                           |
+| ------------------------- | ----------------------------------------------------------------- |
+| **Single inheritance**    | One parent (Java, C#)                                             |
+| **Multiple inheritance**  | Many parents (C++, Python). Risks the **diamond problem**         |
+| **Interface inheritance** | Implement multiple interfaces (Java) — no state                   |
+| **Mixin / Trait**         | Reusable method bundles (Ruby modules, Scala traits, Rust traits) |
 
 **Diamond problem:** B and C both inherit from A; D inherits B and C. Which A's `foo()` does D use? C++ uses virtual inheritance to share; Python uses C3 linearization (MRO).
 
 ### 7.3 Polymorphism Kinds
 
-| Kind | Also called | Example |
-|---|---|---|
-| **Subtype** | Inclusion, dynamic | Shape → Circle, Square; `s.area()` dispatches |
-| **Parametric** | Generics | `List<T>`, ML's `'a list`, Java generics |
-| **Ad-hoc** | Overloading | Multiple `print(int)`, `print(String)` chosen at compile time |
-| **Coercion** | Implicit conversion | `int + double` auto-promotes |
+| Kind           | Also called         | Example                                                       |
+| -------------- | ------------------- | ------------------------------------------------------------- |
+| **Subtype**    | Inclusion, dynamic  | Shape → Circle, Square; `s.area()` dispatches                 |
+| **Parametric** | Generics            | `List<T>`, ML's `'a list`, Java generics                      |
+| **Ad-hoc**     | Overloading         | Multiple `print(int)`, `print(String)` chosen at compile time |
+| **Coercion**   | Implicit conversion | `int + double` auto-promotes                                  |
 
 ### 7.4 Virtual vs Non-virtual (Dynamic Dispatch)
 
@@ -325,7 +328,7 @@ Any recursion → iteration via explicit stack. Tail recursion → `while` loop 
 - **Non-virtual method:** Resolved by **static (declared) type**.
 
 C++: only methods declared `virtual` dispatch dynamically.
-Java: *all* instance methods are virtual by default (except `private`, `static`, `final`).
+Java: _all_ instance methods are virtual by default (except `private`, `static`, `final`).
 C#: methods are non-virtual by default; must say `virtual` + `override`.
 Python: everything is virtual-ish (attribute lookup on the instance's class).
 
@@ -342,23 +345,23 @@ x.f();
 
 ### 7.5 Abstract Class vs Interface
 
-| Aspect | Abstract class | Interface |
-|---|---|---|
-| Can have state? | Yes | Historically no; Java 8+ allows `default` methods but no instance fields |
-| Method bodies | Yes (mix of abstract + concrete) | Typically none (or default) |
-| Inheritance | Single (Java/C#) | Multiple |
-| Constructors | Yes | No |
-| Use when... | Shared code + fields | Pure contract |
+| Aspect          | Abstract class                   | Interface                                                                |
+| --------------- | -------------------------------- | ------------------------------------------------------------------------ |
+| Can have state? | Yes                              | Historically no; Java 8+ allows `default` methods but no instance fields |
+| Method bodies   | Yes (mix of abstract + concrete) | Typically none (or default)                                              |
+| Inheritance     | Single (Java/C#)                 | Multiple                                                                 |
+| Constructors    | Yes                              | No                                                                       |
+| Use when...     | Shared code + fields             | Pure contract                                                            |
 
 ### 7.6 Overloading vs Overriding (High-frequency MFT trap)
 
-| | Overloading | Overriding |
-|---|---|---|
-| Same name? | Yes | Yes |
-| Same signature? | **No** (different param types/counts) | **Yes** (same signature) |
-| Relationship | Within one class or hierarchy | Subclass replaces parent method |
-| Resolved at | **Compile time** (static, ad-hoc polymorphism) | **Runtime** (dynamic dispatch) |
-| Binding | Early | Late |
+|                 | Overloading                                    | Overriding                      |
+| --------------- | ---------------------------------------------- | ------------------------------- |
+| Same name?      | Yes                                            | Yes                             |
+| Same signature? | **No** (different param types/counts)          | **Yes** (same signature)        |
+| Relationship    | Within one class or hierarchy                  | Subclass replaces parent method |
+| Resolved at     | **Compile time** (static, ad-hoc polymorphism) | **Runtime** (dynamic dispatch)  |
+| Binding         | Early                                          | Late                            |
 
 ### 7.7 Object Layout & vtables
 
@@ -398,6 +401,7 @@ Anonymous function literal. `λx. x+1` (math) = `lambda x: x+1` (Python) = `x ->
 ### 8.4 Immutability
 
 Values can't be changed after creation. Enables safe sharing, easy reasoning, referential transparency.
+
 - Haskell: everything immutable by default.
 - ML, Clojure: mostly immutable.
 - Java: `String`, `final`, `java.util.List.of(...)` give immutability.
@@ -409,6 +413,7 @@ Expressions not evaluated until their value is needed.
 ```
 take 5 [1..]
 ```
+
 In Haskell, `[1..]` is an infinite list; lazy evaluation makes `take 5` return `[1,2,3,4,5]` without looping forever.
 
 **Strict (eager)** = arguments evaluated before call (C, Java, Python).
@@ -428,12 +433,12 @@ Turning `f(x, y, z)` into `f(x)(y)(z)`. In Haskell every function is curried: `f
 
 ### 9.1 The Four Axes
 
-| Axis | Options | Example |
-|---|---|---|
-| **When checked** | Static vs Dynamic | Java (static), Python (dynamic) |
-| **How strict** | Strong vs Weak | Python/Java (strong), C (weak — unchecked casts, void*) |
-| **Explicit vs Inferred** | Manifest vs Inferred | Java pre-10 (manifest), Haskell/ML (inferred) |
-| **Nominal vs Structural** | By name vs by shape | Java/C++ (nominal), TypeScript/Go interfaces (structural) |
+| Axis                      | Options              | Example                                                   |
+| ------------------------- | -------------------- | --------------------------------------------------------- |
+| **When checked**          | Static vs Dynamic    | Java (static), Python (dynamic)                           |
+| **How strict**            | Strong vs Weak       | Python/Java (strong), C (weak — unchecked casts, void\*)  |
+| **Explicit vs Inferred**  | Manifest vs Inferred | Java pre-10 (manifest), Haskell/ML (inferred)             |
+| **Nominal vs Structural** | By name vs by shape  | Java/C++ (nominal), TypeScript/Go interfaces (structural) |
 
 > **Don't confuse axes!** Python is **dynamic and strong**. C is **static and weak**. JavaScript is **dynamic and weak**. Haskell is **static and strong** (and inferred).
 
@@ -444,6 +449,7 @@ Used by ML, Haskell, OCaml. Principal type is inferred from usage. Decidable in 
 ### 9.3 Subtyping
 
 `S <: T` means anywhere a `T` is expected, an `S` can be used (**Liskov Substitution Principle**). Consequences:
+
 - **Covariant** return types (override can return a more-specific type) — safe.
 - **Contravariant** parameter types — safe in theory; Java/C++ don't allow it (they use invariant params).
 - Arrays in Java are covariant but unsound (`ArrayStoreException`).
@@ -451,11 +457,11 @@ Used by ML, Haskell, OCaml. Principal type is inferred from usage. Decidable in 
 
 ### 9.4 Parametric Polymorphism Implementations
 
-| Strategy | Languages | Cost |
-|---|---|---|
-| **Type erasure** | Java generics | No runtime type info; one copy of code |
+| Strategy             | Languages           | Cost                                            |
+| -------------------- | ------------------- | ----------------------------------------------- |
+| **Type erasure**     | Java generics       | No runtime type info; one copy of code          |
 | **Monomorphization** | C++ templates, Rust | Code bloat; one copy per instantiation; fastest |
-| **Boxed/uniform** | ML, Haskell | One copy; boxes primitives |
+| **Boxed/uniform**    | ML, Haskell         | One copy; boxes primitives                      |
 
 ---
 
@@ -468,34 +474,34 @@ Source → [Lexer] → tokens → [Parser] → AST → [Semantic analyzer] → a
        → [IR gen] → IR → [Optimizer] → IR' → [Code gen] → target code
 ```
 
-| Phase | Input → Output | Typical errors caught |
-|---|---|---|
-| **Lexical analysis** (scanning) | Chars → tokens | Invalid characters, bad numeric literals |
-| **Syntax analysis** (parsing) | Tokens → parse tree / AST | Missing semicolons, mismatched braces |
-| **Semantic analysis** | AST → annotated AST | Undeclared vars, type mismatches, wrong #args |
-| **Intermediate code gen** | AST → IR (e.g., 3-address) | — |
-| **Optimization** | IR → IR | — |
-| **Code generation** | IR → assembly/machine | Register allocation issues |
+| Phase                           | Input → Output             | Typical errors caught                         |
+| ------------------------------- | -------------------------- | --------------------------------------------- |
+| **Lexical analysis** (scanning) | Chars → tokens             | Invalid characters, bad numeric literals      |
+| **Syntax analysis** (parsing)   | Tokens → parse tree / AST  | Missing semicolons, mismatched braces         |
+| **Semantic analysis**           | AST → annotated AST        | Undeclared vars, type mismatches, wrong #args |
+| **Intermediate code gen**       | AST → IR (e.g., 3-address) | —                                             |
+| **Optimization**                | IR → IR                    | —                                             |
+| **Code generation**             | IR → assembly/machine      | Register allocation issues                    |
 
 ### 10.2 Compiler vs Interpreter vs JIT
 
-| | Compiler | Interpreter | JIT |
-|---|---|---|---|
-| Translates when? | Ahead of time, once | Line by line during execution | At runtime, hot paths |
-| Output | Native binary | None (runs AST/bytecode) | Native code cached |
-| Startup | Slow build, fast run | Fast start, slow run | Medium start, fast steady-state |
-| Examples | C, C++, Rust, Go | Early BASIC, classic Python (CPython bytecode interpreter) | Java HotSpot, V8, PyPy, .NET CLR |
+|                  | Compiler             | Interpreter                                                | JIT                              |
+| ---------------- | -------------------- | ---------------------------------------------------------- | -------------------------------- |
+| Translates when? | Ahead of time, once  | Line by line during execution                              | At runtime, hot paths            |
+| Output           | Native binary        | None (runs AST/bytecode)                                   | Native code cached               |
+| Startup          | Slow build, fast run | Fast start, slow run                                       | Medium start, fast steady-state  |
+| Examples         | C, C++, Rust, Go     | Early BASIC, classic Python (CPython bytecode interpreter) | Java HotSpot, V8, PyPy, .NET CLR |
 
 > **Trick:** "Java is compiled AND interpreted." It's compiled to **bytecode** ahead of time, then interpreted (or JIT-compiled) by the JVM.
 
 ### 10.3 Grammar Classes (peripheral but can appear)
 
-| Class | Parsable by |
-|---|---|
-| Regular | Finite automaton (lexer) |
-| Context-free | Pushdown automaton (parser) |
-| Context-sensitive | Linear-bounded automaton |
-| Recursively enumerable | Turing machine |
+| Class                  | Parsable by                 |
+| ---------------------- | --------------------------- |
+| Regular                | Finite automaton (lexer)    |
+| Context-free           | Pushdown automaton (parser) |
+| Context-sensitive      | Linear-bounded automaton    |
+| Recursively enumerable | Turing machine              |
 
 LL(k) = top-down, k lookahead. LR(k) = bottom-up. LALR(1) = Yacc/Bison. Typical programming languages are LALR(1) or designed for LL(1) (recursive-descent friendly).
 
@@ -505,14 +511,14 @@ LL(k) = top-down, k lookahead. LR(k) = bottom-up. LALR(1) = Yacc/Bison. Typical 
 
 ### 11.1 Stack vs Heap
 
-| | Stack | Heap |
-|---|---|---|
-| Allocation | LIFO, automatic on call | Explicit (`new`, `malloc`) or GC-managed |
-| Speed | Very fast (pointer bump) | Slower (free-list, GC) |
-| Lifetime | Until function returns | Until freed / unreachable |
-| Size | Limited (typically 1–8 MB) | Large (GBs) |
-| Fragmentation | None | Yes |
-| Holds | Locals, params, return addr, saved regs | Objects with indeterminate lifetime |
+|               | Stack                                   | Heap                                     |
+| ------------- | --------------------------------------- | ---------------------------------------- |
+| Allocation    | LIFO, automatic on call                 | Explicit (`new`, `malloc`) or GC-managed |
+| Speed         | Very fast (pointer bump)                | Slower (free-list, GC)                   |
+| Lifetime      | Until function returns                  | Until freed / unreachable                |
+| Size          | Limited (typically 1–8 MB)              | Large (GBs)                              |
+| Fragmentation | None                                    | Yes                                      |
+| Holds         | Locals, params, return addr, saved regs | Objects with indeterminate lifetime      |
 
 ### 11.2 Activation Record (Stack Frame)
 
@@ -535,17 +541,18 @@ Contents (typical layout, growing downward):
 ```
 
 In languages with **nested procedures** (Pascal, Ada, Algol), the frame also has:
+
 - **Static link** — pointer to lexical parent frame (for static scope).
 - **Dynamic link** — pointer to caller frame (for dynamic scope or to pop).
 
 ### 11.3 Garbage Collection
 
-| Algorithm | Idea | Pros | Cons |
-|---|---|---|---|
-| **Reference counting** | Each object has count; free when 0 | Incremental, predictable | **Cycles leak**; per-op overhead |
-| **Mark-and-sweep** | Mark reachable, free rest | Handles cycles | Pauses; fragmentation |
-| **Copying (semi-space)** | Copy live to other half; free old | No fragmentation; fast alloc | Uses 2x memory |
-| **Generational** | Most objects die young; separate gens | Very fast for typical workloads | Complex |
+| Algorithm                | Idea                                  | Pros                            | Cons                             |
+| ------------------------ | ------------------------------------- | ------------------------------- | -------------------------------- |
+| **Reference counting**   | Each object has count; free when 0    | Incremental, predictable        | **Cycles leak**; per-op overhead |
+| **Mark-and-sweep**       | Mark reachable, free rest             | Handles cycles                  | Pauses; fragmentation            |
+| **Copying (semi-space)** | Copy live to other half; free old     | No fragmentation; fast alloc    | Uses 2x memory                   |
+| **Generational**         | Most objects die young; separate gens | Very fast for typical workloads | Complex                          |
 
 > **ETS trick:** "Which GC algorithm fails on cyclic data?" → **Reference counting**. "Which provides bounded pause time?" → reference counting (amortized) or incremental GCs; **not** stop-the-world mark-sweep.
 
@@ -564,10 +571,10 @@ In languages with **nested procedures** (Pascal, Ada, Algol), the frame also has
 
 ### 12.1 Models
 
-| Model | Behavior |
-|---|---|
-| **Termination** | After handler runs, control does NOT return to the raising point; enclosing block terminates. Used by C++, Java, Python, C#. |
-| **Resumption** | Handler may fix the problem and resume at the raise point. Used by Common Lisp's condition system, historically PL/I. Rare today. |
+| Model           | Behavior                                                                                                                          |
+| --------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| **Termination** | After handler runs, control does NOT return to the raising point; enclosing block terminates. Used by C++, Java, Python, C#.      |
+| **Resumption**  | Handler may fix the problem and resume at the raise point. Used by Common Lisp's condition system, historically PL/I. Rare today. |
 
 ### 12.2 Checked vs Unchecked (Java)
 
@@ -576,7 +583,7 @@ In languages with **nested procedures** (Pascal, Ada, Algol), the frame also has
 
 ### 12.3 `try / catch / finally`
 
-- `finally` runs **always** (normal exit, exception, return in try/catch). *Exception*: `System.exit`, JVM crash.
+- `finally` runs **always** (normal exit, exception, return in try/catch). _Exception_: `System.exit`, JVM crash.
 - If a `finally` block has `return` or throws, it **overrides** any pending exception or return from try/catch.
 - `try-with-resources` (Java 7+) auto-closes in reverse order of declaration.
 
@@ -590,23 +597,23 @@ When an exception is thrown, the runtime walks up the stack popping frames and r
 
 ### 13.1 Precedence (C/Java, high to low)
 
-| Level | Operators |
-|---|---|
-| 1 (highest) | `()`  `[]`  `.`  `->` |
-| 2 | unary `!`  `~`  `++`  `--`  `+`  `-`  `*`(deref)  `&`(addr)  cast |
-| 3 | `*`  `/`  `%` |
-| 4 | `+`  `-` |
-| 5 | `<<`  `>>` |
-| 6 | `<`  `<=`  `>`  `>=` |
-| 7 | `==`  `!=` |
-| 8 | `&` (bitwise AND) |
-| 9 | `^` |
-| 10 | `\|` |
-| 11 | `&&` |
-| 12 | `\|\|` |
-| 13 | `? :` |
-| 14 | `=`  `+=`  etc. (right-assoc) |
-| 15 (lowest) | `,` |
+| Level       | Operators                                                 |
+| ----------- | --------------------------------------------------------- |
+| 1 (highest) | `()` `[]` `.` `->`                                        |
+| 2           | unary `!` `~` `++` `--` `+` `-` `*`(deref) `&`(addr) cast |
+| 3           | `*` `/` `%`                                               |
+| 4           | `+` `-`                                                   |
+| 5           | `<<` `>>`                                                 |
+| 6           | `<` `<=` `>` `>=`                                         |
+| 7           | `==` `!=`                                                 |
+| 8           | `&` (bitwise AND)                                         |
+| 9           | `^`                                                       |
+| 10          | `\|`                                                      |
+| 11          | `&&`                                                      |
+| 12          | `\|\|`                                                    |
+| 13          | `? :`                                                     |
+| 14          | `=` `+=` etc. (right-assoc)                               |
+| 15 (lowest) | `,`                                                       |
 
 **Common trap:** `a & b == c` parses as `a & (b == c)` because `==` binds tighter than `&`. Always parenthesize bitwise ops.
 
@@ -683,21 +690,21 @@ Dijkstra's "Go To Statement Considered Harmful" (1968). Modern languages permit 
 
 ## 16. Mnemonics & Memory Tricks
 
-| Mnemonic | For |
-|---|---|
-| **"Value copies, Reference shares, Result reconciles, Name recomputes"** | The four parameter modes |
-| **"Static = page, Dynamic = stage"** | Scoping rules |
-| **"PIE"** — Polymorphism, Inheritance, Encapsulation | OOP pillars (add A for Abstraction) |
-| **"PECS"** — Producer Extends, Consumer Super | Java generic wildcards |
-| **"LSP"** — Liskov: subtypes must be substitutable | Subtyping rule |
-| **"VRaN"** — Value, Reference, **a**nd Name | 3 passing modes that can differ |
-| **"Parse before Semantics, Semantics before Codegen"** | Compiler phase order |
-| **"Overload = compile-time (Ot=Ct)"** vs **"Override = run-time (Or=Rt)"** | Binding times |
-| **"Strong/Weak is about casting; Static/Dynamic is about timing"** | Type system axes |
-| **"Mark finds; Sweep frees; Copy compacts; RefCount cheats (cycles)"** | GC algorithms |
-| **"LIFO stack, random heap"** | Memory regions |
-| **"Interface = contract; Abstract = partial code"** | OOP hierarchy choice |
-| **"Closures close over variables, not values"** | Closure semantics — captures the *binding*, so later changes are visible |
+| Mnemonic                                                                   | For                                                                      |
+| -------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| **"Value copies, Reference shares, Result reconciles, Name recomputes"**   | The four parameter modes                                                 |
+| **"Static = page, Dynamic = stage"**                                       | Scoping rules                                                            |
+| **"PIE"** — Polymorphism, Inheritance, Encapsulation                       | OOP pillars (add A for Abstraction)                                      |
+| **"PECS"** — Producer Extends, Consumer Super                              | Java generic wildcards                                                   |
+| **"LSP"** — Liskov: subtypes must be substitutable                         | Subtyping rule                                                           |
+| **"VRaN"** — Value, Reference, **a**nd Name                                | 3 passing modes that can differ                                          |
+| **"Parse before Semantics, Semantics before Codegen"**                     | Compiler phase order                                                     |
+| **"Overload = compile-time (Ot=Ct)"** vs **"Override = run-time (Or=Rt)"** | Binding times                                                            |
+| **"Strong/Weak is about casting; Static/Dynamic is about timing"**         | Type system axes                                                         |
+| **"Mark finds; Sweep frees; Copy compacts; RefCount cheats (cycles)"**     | GC algorithms                                                            |
+| **"LIFO stack, random heap"**                                              | Memory regions                                                           |
+| **"Interface = contract; Abstract = partial code"**                        | OOP hierarchy choice                                                     |
+| **"Closures close over variables, not values"**                            | Closure semantics — captures the _binding_, so later changes are visible |
 
 ---
 
@@ -721,10 +728,11 @@ print(x)
 
 What does the program print under **call-by-reference**?
 
-**(A)** 5   **(B)** 6   **(C)** 11   **(D)** 12   **(E)** Undefined
+**(A)** 5 **(B)** 6 **(C)** 11 **(D)** 12 **(E)** Undefined
 
 **Answer: (D) 12.**
 Under reference, `a` and `b` both alias `x`. Trace:
+
 - `a := a+1` → `x := 5+1 = 6` (now a=b=x=6).
 - `b := b+a` → `x := 6+6 = 12`.
 
@@ -749,7 +757,7 @@ g()
 
 Under **dynamic scoping**, the output is:
 
-**(A)** 1   **(B)** 2   **(C)** Error: x undeclared in f   **(D)** Nothing
+**(A)** 1 **(B)** 2 **(C)** Error: x undeclared in f **(D)** Nothing
 
 **Answer: (B) 2.**
 Dynamic scope: at the time `f` prints `x`, the call stack has `g`'s local `x=2` above the global. Most-recent binding wins.
@@ -768,7 +776,7 @@ f(n):
 
 What is `f(5)`?
 
-**(A)** 9   **(B)** 13   **(C)** 15   **(D)** 17   **(E)** 25
+**(A)** 9 **(B)** 13 **(C)** 15 **(D)** 17 **(E)** 25
 
 **Answer: (C) 15.**
 Compute bottom-up: f(0)=1, f(1)=1, f(2)=1+1+1=3, f(3)=3+1+1=5, f(4)=5+3+1=9, f(5)=9+5+1=**15**.
@@ -791,7 +799,7 @@ x.g()
 
 Assuming virtual method dispatch (like Java), the output is:
 
-**(A)** A.f   **(B)** B.f   **(C)** A.f then B.f   **(D)** Compile error
+**(A)** A.f **(B)** B.f **(C)** A.f then B.f **(D)** Compile error
 
 **Answer: (B) B.f.**
 `x.g()` calls the inherited `g` from A. Inside `g`, `self.f()` dispatches on the **runtime type** of `self`, which is B. So B's `f` runs. This is dynamic dispatch / late binding.
@@ -824,7 +832,7 @@ print(i);
 
 What is printed (Java semantics)?
 
-**(A)** 0   **(B)** 1   **(C)** 2   **(D)** Undefined
+**(A)** 0 **(B)** 1 **(C)** 2 **(D)** Undefined
 
 **Answer: (B) 1.**
 First operand: `i++ > 0` → uses i=0 (false since 0>0 is false), then i becomes 1. Because `&&` short-circuits on false, the second operand is **not** evaluated. Final `i = 1`.
@@ -874,7 +882,7 @@ print(counters[0](), counters[1](), counters[2]())
 
 Under typical **static scoping with shared loop variable** (Python 2/3, JavaScript `var`), the output is:
 
-**(A)** 1 2 3   **(B)** 3 3 3   **(C)** 1 1 1   **(D)** 4 4 4   **(E)** Undefined
+**(A)** 1 2 3 **(B)** 3 3 3 **(C)** 1 1 1 **(D)** 4 4 4 **(E)** Undefined
 
 **Answer: (B) 3 3 3.**
 All three closures capture the **same** variable `i`, not its value at creation. After the loop ends, `i` is 3 (or 4 depending on semantics — "4 4 4" is also a common distractor for languages where the loop body runs once with i then increments). If the language block-scopes the loop variable (JavaScript `let`, Java) the answer becomes (A).
@@ -887,7 +895,7 @@ All three closures capture the **same** variable `i`, not its value at creation.
 
 Which language is **statically typed AND weakly typed**?
 
-**(A)** Python   **(B)** Haskell   **(C)** C   **(D)** JavaScript   **(E)** Ruby
+**(A)** Python **(B)** Haskell **(C)** C **(D)** JavaScript **(E)** Ruby
 
 **Answer: (C) C.**
 C checks types at compile time (static), but allows casts between pointers, `void*` conversions, and union aliasing (weak). Haskell is static-strong. Python/Ruby are dynamic-strong. JavaScript is dynamic-weak.
@@ -909,10 +917,11 @@ print(a[1], a[2], i)
 
 Under **call-by-name**, what is printed?
 
-**(A)** 10 20 2  **(B)** 10 2 2  **(C)** 2 20 2  **(D)** 10 20 1
+**(A)** 10 20 2 **(B)** 10 2 2 **(C)** 2 20 2 **(D)** 10 20 1
 
 **Answer: (B) 10 2 2.**
 Bind `x` ↔ `a[i]`, `y` ↔ `i` (re-evaluated each time).
+
 - `y := y+1` → `i := i+1 = 2`.
 - `x := y` → `a[i] := i`. `i` is now 2, so `a[2] := 2`. Array becomes `[10, 2, 30]`.
 - Print a[1]=10, a[2]=2, i=2 → **10 2 2**.
@@ -925,13 +934,13 @@ Under reference: x bound once to `a[1]`, y to `i`. `i := 2`, then `a[1] := 2`. P
 
 ### 18.1 Parameter passing one-liner
 
-| Mode | Mental model |
-|---|---|
-| Value | Copy in |
-| Reference | Alias |
-| Value-result | Copy in, copy out |
-| Name | Paste the argument expression at each use |
-| Need | Name + memoize |
+| Mode         | Mental model                              |
+| ------------ | ----------------------------------------- |
+| Value        | Copy in                                   |
+| Reference    | Alias                                     |
+| Value-result | Copy in, copy out                         |
+| Name         | Paste the argument expression at each use |
+| Need         | Name + memoize                            |
 
 ### 18.2 Scoping one-liner
 
@@ -968,13 +977,13 @@ Under reference: x bound once to `a[1]`, y to `i`. `i := 2`, then `a[1] := 2`. P
 
 ### 18.8 Language examples (memorize 3 per paradigm)
 
-| Paradigm | Languages |
-|---|---|
-| Imperative | C, Pascal, Fortran |
-| OO | Java, C++, Python, Smalltalk |
+| Paradigm   | Languages                              |
+| ---------- | -------------------------------------- |
+| Imperative | C, Pascal, Fortran                     |
+| OO         | Java, C++, Python, Smalltalk           |
 | Functional | Haskell, ML/OCaml, Lisp/Scheme, Erlang |
-| Logic | Prolog |
-| Scripting | Python, Ruby, Perl, JavaScript |
+| Logic      | Prolog                                 |
+| Scripting  | Python, Ruby, Perl, JavaScript         |
 
 ### 18.9 Must-memorize equivalences
 
@@ -996,14 +1005,14 @@ Under reference: x bound once to `a[1]`, y to `i`. `i := 2`, then `a[1] := 2`. P
 
 ### 18.11 Error-catching phase by example
 
-| Error | Phase |
-|---|---|
-| `1.2.3` | Lexer (bad token) |
-| `if (x)` missing body | Parser |
-| `x + "hello"` type mismatch | Semantic |
-| Array out-of-bounds | Runtime |
-| `undefined symbol foo` at link | Linker |
-| Stack overflow from recursion | Runtime |
+| Error                          | Phase             |
+| ------------------------------ | ----------------- |
+| `1.2.3`                        | Lexer (bad token) |
+| `if (x)` missing body          | Parser            |
+| `x + "hello"` type mismatch    | Semantic          |
+| Array out-of-bounds            | Runtime           |
+| `undefined symbol foo` at link | Linker            |
+| Stack overflow from recursion  | Runtime           |
 
 ### 18.12 Time budget on test day
 
@@ -1025,7 +1034,7 @@ Under reference: x bound once to `a[1]`, y to `i`. `i := 2`, then `a[1] := 2`. P
 
 ---
 
-*End of file — Programming Fundamentals & Programming Languages. Next files in this series should cover: Data Structures & Algorithms, Systems (Arch/OS/Net), Discrete Math, Software Engineering + Information Management.*
+_End of file — Programming Fundamentals & Programming Languages. Next files in this series should cover: Data Structures & Algorithms, Systems (Arch/OS/Net), Discrete Math, Software Engineering + Information Management._
 
 ---
 
@@ -1216,7 +1225,7 @@ swap(i, A[i])
 After the call, what are `i` and `A`?
 A. i = 10, A = [1, 20, 30]
 B. i = 10, A = [10, 1, 30]
-C. i = 1,  A = [1, 20, 30]
+C. i = 1, A = [1, 20, 30]
 D. i = 10, A = [10, 20, 30]
 
 **Q18.** **Overload (static) vs override (dynamic):**
@@ -1278,7 +1287,7 @@ D. (a) 6, (b) 6
 <details>
 <summary>Reveal full answer key</summary>
 
-**Q1 — B.** Call-by-value copies the argument's *value* into the parameter; changes to the parameter cannot affect the caller.
+**Q1 — B.** Call-by-value copies the argument's _value_ into the parameter; changes to the parameter cannot affect the caller.
 
 **Q2 — C.** Lexing accepts the tokens, parsing accepts the grammar (assignment is syntactically legal). The `int` vs string-literal mismatch is caught during **semantic analysis / type checking**.
 
@@ -1302,7 +1311,7 @@ D. (a) 6, (b) 6
 
 **Q12 — B.** `a != 0` is `false`, so `&&` **short-circuits** — the right operand is never evaluated, so no division-by-zero occurs. Result: `false`.
 
-**Q13 — C.** With strict left-to-right evaluation: `i++` yields 2 (then i=3); `++i` makes i=4 and yields 4; final `i` is 4. Sum = 2 + 4 + 4 = **10**. (Real C leaves this *undefined* due to multiple unsequenced modifications — a known trap; exam-style assumes the ordered interpretation.)
+**Q13 — C.** With strict left-to-right evaluation: `i++` yields 2 (then i=3); `++i` makes i=4 and yields 4; final `i` is 4. Sum = 2 + 4 + 4 = **10**. (Real C leaves this _undefined_ due to multiple unsequenced modifications — a known trap; exam-style assumes the ordered interpretation.)
 
 **Q14 — C.** `var i` is function-scoped, so all three closures capture the **same variable**. After the loop, `i === 3`, so every call returns 3 → "3 3 3". This is the classic 3-3-3 problem.
 
@@ -1311,18 +1320,20 @@ D. (a) 6, (b) 6
 **Q16 — B.** A pure `map` does not mutate its input. `xs` stays `[1,2,3]`; `ys` is a new list `[2,4,6]`.
 
 **Q17 — A.** Trace with call-by-name (substitute the actual expressions textually):
+
 - `temp = a` → `temp = i` → temp = 1
 - `a = b` → `i = A[i]` → `i = A[1] = 10`. Now **i = 10**.
-- `b = temp` → `A[i] = temp`, but `i` was re-evaluated and is now 10, so this assigns `A[10] = 1`… that's out of range for a 3-element array. In the Jensen/exam convention (array treated as extensible or 1-indexed with the expected trap), the classic *observable* result focuses on the first two effects: `i` became 10 and the intended swap failed. Among the given options, **A (i = 10, A = [1, 20, 30])** is the accepted answer — it reflects the write `A[1] = temp` that would have occurred had `b` been evaluated **once** at entry (as reference-style), revealing how call-by-name *looks like* it should swap but actually breaks because `b` is re-evaluated. Key takeaway: `swap(i, A[i])` is the canonical example that call-by-name breaks swap. (If your exam expects the strictly substituted trace `A[10] = 1`, note the instructor's convention; the pedagogical point — **name semantics breaks swap** — is the same.)
+- `b = temp` → `A[i] = temp`, but `i` was re-evaluated and is now 10, so this assigns `A[10] = 1`… that's out of range for a 3-element array. In the Jensen/exam convention (array treated as extensible or 1-indexed with the expected trap), the classic _observable_ result focuses on the first two effects: `i` became 10 and the intended swap failed. Among the given options, **A (i = 10, A = [1, 20, 30])** is the accepted answer — it reflects the write `A[1] = temp` that would have occurred had `b` been evaluated **once** at entry (as reference-style), revealing how call-by-name _looks like_ it should swap but actually breaks because `b` is re-evaluated. Key takeaway: `swap(i, A[i])` is the canonical example that call-by-name breaks swap. (If your exam expects the strictly substituted trace `A[10] = 1`, note the instructor's convention; the pedagogical point — **name semantics breaks swap** — is the same.)
 
 **Q18 — B.** `x`'s static type is `Animal`, so overload resolution sees only `speak(Animal)`. At runtime, dynamic dispatch invokes `Dog`'s override of `speak(Animal)` → "**dog+animal**". The `speak(Dog)` overload is unreachable through an `Animal` reference — overloads are resolved statically, overrides dynamically.
 
 **Q19 — A.** `let` creates a **fresh binding per iteration**, so each closure captures its own `i` holding 0, 1, 2 respectively → "0 1 2". Contrast with Q14's `var`.
 
 **Q20 — B.**
+
 - **(a) Call-by-reference:** both parameters alias `i`. `x = x + 1` makes i = 6. `y = y + 1` reads the same `i`, makes i = 7. Final **i = 7**.
 - **(b) Call-by-value-result:** `x` and `y` each receive a **copy** of 5. Inside, both become 6. On return, values are copied back in order; the second copy-back overwrites the first, so **i = 6**.
-This asymmetry is precisely why the two modes are *not* equivalent when the same variable is passed to multiple parameters (aliasing vs copy-back).
+  This asymmetry is precisely why the two modes are _not_ equivalent when the same variable is passed to multiple parameters (aliasing vs copy-back).
 
 </details>
 
@@ -1334,30 +1345,33 @@ Low-level bit tricks and pointer semantics are staple MFT CS questions. They tes
 
 ### Bit Manipulation Tricks (Must-Know)
 
-| Trick | Formula | Use |
-|-------|---------|-----|
-| Clear lowest set bit | `x & (x-1)` | Power-of-2 check: `x & (x-1) == 0` and `x > 0` |
-| Isolate lowest set bit | `x & -x` | Lowest 1-bit as a mask (Fenwick tree) |
-| Set lowest unset bit | `x \| (x+1)` | Fill next 0 |
-| Identity / toggle | `x ^ 0 == x`, `x ^ x == 0` | XOR swap, XOR linked lists, find the odd one out |
-| Count set bits | Brian Kernighan: `while(x){ x &= x-1; cnt++; }` | Runs in O(popcount), not O(word size) |
-| Test bit k | `(x >> k) & 1` | Read k-th bit |
-| Set bit k | `x \| (1 << k)` | |
-| Clear bit k | `x & ~(1 << k)` | |
-| Toggle bit k | `x ^ (1 << k)` | |
-| Multiply / divide by 2 | `x << 1`, `x >> 1` | Careful with signed right shift (arithmetic vs logical) |
+| Trick                  | Formula                                         | Use                                                     |
+| ---------------------- | ----------------------------------------------- | ------------------------------------------------------- |
+| Clear lowest set bit   | `x & (x-1)`                                     | Power-of-2 check: `x & (x-1) == 0` and `x > 0`          |
+| Isolate lowest set bit | `x & -x`                                        | Lowest 1-bit as a mask (Fenwick tree)                   |
+| Set lowest unset bit   | `x \| (x+1)`                                    | Fill next 0                                             |
+| Identity / toggle      | `x ^ 0 == x`, `x ^ x == 0`                      | XOR swap, XOR linked lists, find the odd one out        |
+| Count set bits         | Brian Kernighan: `while(x){ x &= x-1; cnt++; }` | Runs in O(popcount), not O(word size)                   |
+| Test bit k             | `(x >> k) & 1`                                  | Read k-th bit                                           |
+| Set bit k              | `x \| (1 << k)`                                 |                                                         |
+| Clear bit k            | `x & ~(1 << k)`                                 |                                                         |
+| Toggle bit k           | `x ^ (1 << k)`                                  |                                                         |
+| Multiply / divide by 2 | `x << 1`, `x >> 1`                              | Careful with signed right shift (arithmetic vs logical) |
 
 **XOR swap (no temp):**
+
 ```c
 a ^= b;   // a = a^b
 b ^= a;   // b = b^(a^b) = a
 a ^= b;   // a = (a^b)^a = b
 ```
+
 ⚠️ Breaks if `a` and `b` alias the same memory (both become 0).
 
 **Sign extension:** when widening a signed value (e.g., `int8_t → int32_t`), the sign bit is replicated into the upper bits. Unsigned values are zero-extended.
 
 **Endianness:** little-endian stores LSB at lowest address (x86/ARM typical); big-endian stores MSB first (network byte order). Detect:
+
 ```c
 union { int i; char c[4]; } u = { 1 };
 u.c[0] == 1 → little-endian
@@ -1388,30 +1402,31 @@ u.c[0] == 1 → little-endian
 ### Practice MCQs
 
 1. What does `x & (x-1) == 0` test for (assuming `x > 0`)?
-   A) x is even   B) x is odd   C) x is a power of 2   D) x has exactly 2 set bits
+   A) x is even B) x is odd C) x is a power of 2 D) x has exactly 2 set bits
 
 2. After `int x = 12; x &= x - 1;` what is `x`?
-   A) 11   B) 8   C) 4   D) 0
+   A) 11 B) 8 C) 4 D) 0
 
 3. In C, `int a[5]; int *p = a;` What does `sizeof(a) / sizeof(p)` evaluate to on a 64-bit system (int=4 bytes)?
-   A) 5   B) 2   C) 2.5   D) 1
+   A) 5 B) 2 C) 2.5 D) 1
 
 4. Which declaration describes a pointer to a constant integer?
-   A) `int * const p;`   B) `const int *p;`   C) `const int * const p;`   D) `int const * const p;`
+   A) `int * const p;` B) `const int *p;` C) `const int * const p;` D) `int const * const p;`
 
 5. Expression `3[arr]` where `int arr[] = {10,20,30,40,50};` evaluates to:
-   A) 10   B) 30   C) 40   D) compile error
+   A) 10 B) 30 C) 40 D) compile error
 
 6. XOR swap fails when:
-   A) values are equal   B) one value is 0   C) both args alias the same memory   D) values are negative
+   A) values are equal B) one value is 0 C) both args alias the same memory D) values are negative
 
 7. `int (*fp)(int);` declares:
-   A) array of function pointers   B) function returning pointer to int   C) pointer to function taking int and returning int   D) function pointer array of size int
+   A) array of function pointers B) function returning pointer to int C) pointer to function taking int and returning int D) function pointer array of size int
 
 8. Counting set bits of `0b10110100` (180) via Brian Kernighan takes how many loop iterations?
-   A) 8   B) 4   C) 7   D) 1
+   A) 8 B) 4 C) 7 D) 1
 
 **Answer Key:**
+
 1. **C** — Clearing the lowest set bit leaves 0 only if exactly one bit was set.
 2. **B** — 12 = `1100`; 11 = `1011`; AND = `1000` = 8.
 3. **A** — `sizeof(a)` = 20, `sizeof(p)` = 8; 20/8 = 2 (integer division). ⚠️ Wait — 20/8 = 2, not 5. Correct answer: **B) 2**. (Trap: many expect 5, forgetting pointer != array.) The intended teaching point is the trap; choose **B**.
@@ -1422,4 +1437,3 @@ u.c[0] == 1 → little-endian
 8. **B** — 180 has four 1-bits (`10110100`); Kernighan iterates once per set bit.
 
 ---
-

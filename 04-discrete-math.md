@@ -7,6 +7,7 @@ Exam date: **May 1, 2026**. Discrete math is one of the highest-yield sections p
 ## 1. Core Concepts (Deep Recall)
 
 ### 1.1 Propositional Logic
+
 - **Connectives:** ¬ (not), ∧ (and), ∨ (or), → (implies), ↔ (iff), ⊕ (xor).
 - **Truth table sizes:** n variables → 2^n rows.
 - **Tautology:** always true. **Contradiction:** always false. **Contingency:** neither.
@@ -19,10 +20,11 @@ Exam date: **May 1, 2026**. Discrete math is one of the highest-yield sections p
 - **Distributive:** p ∧ (q ∨ r) ≡ (p∧q) ∨ (p∧r); and dually.
 - **Absorption:** p ∨ (p ∧ q) ≡ p.
 - **Key equivalences to memorize:**
-  - ¬(p → q) ≡ p ∧ ¬q  ← MFT loves this
+  - ¬(p → q) ≡ p ∧ ¬q ← MFT loves this
   - p ↔ q ≡ (p → q) ∧ (q → p)
 
 ### 1.2 Predicate Logic
+
 - **Quantifiers:** ∀ (for all), ∃ (there exists), ∃! (exactly one).
 - **Negation of quantifiers:**
   - ¬∀x P(x) ≡ ∃x ¬P(x)
@@ -32,6 +34,7 @@ Exam date: **May 1, 2026**. Discrete math is one of the highest-yield sections p
   - ¬∀x ∃y P(x,y) ≡ ∃x ∀y ¬P(x,y).
 
 ### 1.3 Proof Techniques
+
 - **Direct:** assume p, derive q.
 - **Contrapositive:** assume ¬q, derive ¬p.
 - **Contradiction:** assume ¬(p→q) i.e. p ∧ ¬q, derive ⊥.
@@ -41,6 +44,7 @@ Exam date: **May 1, 2026**. Discrete math is one of the highest-yield sections p
 - **Pigeonhole:** n+1 pigeons into n holes ⇒ some hole has ≥2. Generalized: ⌈n/k⌉ in some hole.
 
 ### 1.4 Sets
+
 - **Operations:** ∪, ∩, \ (difference), Aᶜ (complement), A × B (Cartesian product: |A×B|=|A|·|B|).
 - **Power set:** |P(S)| = 2^|S|.
 - **Inclusion-Exclusion (2 sets):** |A∪B| = |A| + |B| − |A∩B|.
@@ -48,6 +52,7 @@ Exam date: **May 1, 2026**. Discrete math is one of the highest-yield sections p
 - **De Morgan for sets:** (A∪B)ᶜ = Aᶜ∩Bᶜ.
 
 ### 1.5 Relations
+
 - A relation R ⊆ A×A.
 - **Reflexive:** ∀a, aRa.
 - **Symmetric:** aRb → bRa.
@@ -58,6 +63,7 @@ Exam date: **May 1, 2026**. Discrete math is one of the highest-yield sections p
 - **Closures:** reflexive closure R ∪ Δ; symmetric closure R ∪ R⁻¹; transitive closure = ⋃ Rⁿ (Warshall's algorithm, O(n³)).
 
 ### 1.6 Functions
+
 - **Injection (1-1):** f(a)=f(b) → a=b.
 - **Surjection (onto):** ∀b∈B ∃a∈A f(a)=b.
 - **Bijection:** both; has inverse.
@@ -66,6 +72,7 @@ Exam date: **May 1, 2026**. Discrete math is one of the highest-yield sections p
 - **Surjections** A→B (|A|=n, |B|=k): k! · S(n,k) (Stirling 2nd kind).
 
 ### 1.7 Combinatorics
+
 - **Permutations:** P(n,r) = n!/(n−r)!.
 - **Combinations:** C(n,r) = n!/(r!(n−r)!). Symmetry: C(n,r)=C(n,n−r).
 - **Pascal's identity:** C(n,k) = C(n−1,k−1) + C(n−1,k).
@@ -75,6 +82,7 @@ Exam date: **May 1, 2026**. Discrete math is one of the highest-yield sections p
 - **Power set count:** 2ⁿ subsets; subsets of size k: C(n,k). Note Σₖ C(n,k) = 2ⁿ.
 
 ### 1.8 Probability
+
 - **Axioms:** 0 ≤ P(A) ≤ 1, P(Ω)=1, P(A∪B)=P(A)+P(B)−P(A∩B).
 - **Conditional:** P(A|B) = P(A∩B)/P(B).
 - **Independence:** P(A∩B) = P(A)P(B).
@@ -84,6 +92,7 @@ Exam date: **May 1, 2026**. Discrete math is one of the highest-yield sections p
 - **Common:** Bernoulli(p) mean p var p(1−p); Binomial(n,p) mean np var np(1−p); Geometric(p) mean 1/p; Uniform discrete mean (a+b)/2.
 
 ### 1.9 Graph Theory
+
 - **Handshaking / degree-sum:** Σ deg(v) = 2|E|. ⇒ # odd-degree vertices is even.
 - **Simple graph on n vertices:** ≤ C(n,2) edges.
 - **Complete Kₙ:** C(n,2) edges; each vertex degree n−1.
@@ -95,6 +104,7 @@ Exam date: **May 1, 2026**. Discrete math is one of the highest-yield sections p
 - **Trees:** connected acyclic. n vertices ⇒ n−1 edges. Unique path between any two vertices. Adding any edge creates exactly one cycle.
 
 ### 1.10 Number Theory
+
 - **Divisibility:** a|b means ∃k b=ak.
 - **gcd, Euclidean algorithm:** gcd(a,b) = gcd(b, a mod b). Terminates in O(log min(a,b)).
 - **Bézout:** ∃ x,y with ax + by = gcd(a,b).
@@ -104,9 +114,10 @@ Exam date: **May 1, 2026**. Discrete math is one of the highest-yield sections p
 - **CRT:** if mᵢ pairwise coprime, system x ≡ aᵢ (mod mᵢ) has unique solution mod Πmᵢ.
 
 ### 1.11 Recurrences
+
 - **Linear homogeneous, const coeff:** aₙ = c₁aₙ₋₁ + ... + c_k aₙ₋ₖ.
 - **Characteristic equation:** rᵏ − c₁rᵏ⁻¹ − ... − c_k = 0.
-- Distinct roots r₁...rₖ ⇒ solution αᵢ rᵢⁿ. Repeated root r of multiplicity m contributes (α₀ + α₁n + ... + α_{m−1}n^{m−1}) rⁿ.
+- Distinct roots r₁...rₖ ⇒ solution αᵢ rᵢⁿ. Repeated root r of multiplicity m contributes (α₀ + α₁n + ... + α\_{m−1}n^{m−1}) rⁿ.
 - **Fibonacci example:** aₙ = aₙ₋₁ + aₙ₋₂, char eq r² = r + 1, roots φ, ψ.
 - **Master theorem** (for divide-and-conquer T(n) = aT(n/b) + f(n)): compare f(n) to n^{log_b a}.
 
@@ -145,100 +156,100 @@ Exam date: **May 1, 2026**. Discrete math is one of the highest-yield sections p
 ## 4. Practice MCQs (with solutions)
 
 **Q1.** Which is logically equivalent to ¬(p → q)?
-A) ¬p ∨ q   B) p ∧ ¬q   C) ¬p ∧ q   D) p → ¬q
+A) ¬p ∨ q B) p ∧ ¬q C) ¬p ∧ q D) p → ¬q
 **Ans: B.** p→q ≡ ¬p∨q; negate to p∧¬q.
 
 **Q2.** Let S = {1,2,3,4}. How many subsets of S contain the element 1?
-A) 7   B) 8   C) 15   D) 16
+A) 7 B) 8 C) 15 D) 16
 **Ans: B.** Fix 1 as included, choose freely among the other 3: 2³ = 8.
 
 **Q3.** How many functions f: {1,2,3} → {a,b,c,d} are there? How many are injective?
-A) 64, 24   B) 12, 24   C) 81, 60   D) 64, 60
+A) 64, 24 B) 12, 24 C) 81, 60 D) 64, 60
 **Ans: A.** Functions: 4³ = 64. Injections: 4·3·2 = 24.
 
 **Q4.** In a group of 30 people, at least how many share a birth month?
-A) 2   B) 3   C) 4   D) 5
+A) 2 B) 3 C) 4 D) 5
 **Ans: B.** ⌈30/12⌉ = 3 (pigeonhole).
 
 **Q5.** Which relation on ℤ is NOT an equivalence relation?
-A) a ≡ b (mod 5)   B) a = b   C) a ≤ b   D) a − b is even
+A) a ≡ b (mod 5) B) a = b C) a ≤ b D) a − b is even
 **Ans: C.** ≤ is not symmetric.
 
 **Q6.** A simple connected graph has 10 vertices and 9 edges. Which is true?
-A) It must be a tree.   B) It must contain a cycle.   C) It cannot be planar.   D) Its chromatic number is 10.
+A) It must be a tree. B) It must contain a cycle. C) It cannot be planar. D) Its chromatic number is 10.
 **Ans: A.** Connected + n−1 edges ⇒ tree.
 
 **Q7.** ¬(∀x ∃y P(x,y)) is equivalent to:
-A) ∀x ∀y ¬P(x,y)   B) ∃x ∀y ¬P(x,y)   C) ∀x ∃y ¬P(x,y)   D) ∃x ∃y ¬P(x,y)
+A) ∀x ∀y ¬P(x,y) B) ∃x ∀y ¬P(x,y) C) ∀x ∃y ¬P(x,y) D) ∃x ∃y ¬P(x,y)
 **Ans: B.** Flip each quantifier, negate body.
 
 **Q8.** How many nonnegative integer solutions does x + y + z + w = 10 have?
-A) 220   B) 286   C) 1000   D) 715
+A) 220 B) 286 C) 1000 D) 715
 **Ans: B.** Stars and bars: C(10 + 4 − 1, 4 − 1) = C(13, 3) = 286.
 
 **Q9.** Using the recurrence aₙ = 5aₙ₋₁ − 6aₙ₋₂, a₀=1, a₁=4, find a closed form.
-A) 2ⁿ + 3ⁿ   B) 2·2ⁿ − 3ⁿ   C) 2ⁿ⁺¹ − 3ⁿ⁻¹   D) 3ⁿ − 2ⁿ
-**Ans: A.** r² − 5r + 6 = 0 ⇒ r = 2, 3. aₙ = α·2ⁿ + β·3ⁿ. a₀=α+β=1, a₁=2α+3β=4 ⇒ α=−1? Recompute: α+β=1, 2α+3β=4 ⇒ β=2, α=−1. So aₙ = 3·3ⁿ⁻¹... Let me redo: α= −1, β=2 gives a₀=1 ✓, a₁=−2+6=4 ✓. So aₙ = −2ⁿ + 2·3ⁿ. *(Correct answer in that wording isn't among options; on the real test double-check. If forced, closest is B form.)* **Takeaway:** process matters — solve char eq, fit constants.
+A) 2ⁿ + 3ⁿ B) 2·2ⁿ − 3ⁿ C) 2ⁿ⁺¹ − 3ⁿ⁻¹ D) 3ⁿ − 2ⁿ
+**Ans: A.** r² − 5r + 6 = 0 ⇒ r = 2, 3. aₙ = α·2ⁿ + β·3ⁿ. a₀=α+β=1, a₁=2α+3β=4 ⇒ α=−1? Recompute: α+β=1, 2α+3β=4 ⇒ β=2, α=−1. So aₙ = 3·3ⁿ⁻¹... Let me redo: α= −1, β=2 gives a₀=1 ✓, a₁=−2+6=4 ✓. So aₙ = −2ⁿ + 2·3ⁿ. _(Correct answer in that wording isn't among options; on the real test double-check. If forced, closest is B form.)_ **Takeaway:** process matters — solve char eq, fit constants.
 
 **Q10.** In a simple graph with 8 vertices where every vertex has degree 3, how many edges?
-A) 8   B) 12   C) 16   D) 24
+A) 8 B) 12 C) 16 D) 24
 **Ans: B.** Σ deg = 2E ⇒ 8·3 = 24 = 2E ⇒ E = 12.
 
 **Q11.** P(A)=0.5, P(B)=0.4, P(A∩B)=0.2. Are A and B independent?
-A) Yes   B) No   C) Cannot tell
+A) Yes B) No C) Cannot tell
 **Ans: A.** P(A)P(B) = 0.2 = P(A∩B) ⇒ independent.
 
 **Q12.** 7² · 11 mod 13 = ?
-A) 1   B) 7   C) 9   D) 12
-**Ans: C.** 49 mod 13 = 10; 10·11 = 110; 110 mod 13 = 110 − 104 = 6. *Recheck:* 13·8=104, 110−104=6. **Correct answer: 6** (none match — this is the kind of arithmetic slip to watch for; compute carefully on exam).
+A) 1 B) 7 C) 9 D) 12
+**Ans: C.** 49 mod 13 = 10; 10·11 = 110; 110 mod 13 = 110 − 104 = 6. _Recheck:_ 13·8=104, 110−104=6. **Correct answer: 6** (none match — this is the kind of arithmetic slip to watch for; compute carefully on exam).
 
 **Q13.** How many bit strings of length 8 contain exactly three 1s?
-A) 24   B) 56   C) 64   D) 256
+A) 24 B) 56 C) 64 D) 256
 **Ans: B.** C(8,3) = 56.
 
 **Q14.** Which graph has an Euler circuit?
-A) K₄   B) K₅   C) K₃,₃   D) Path on 4 vertices
+A) K₄ B) K₅ C) K₃,₃ D) Path on 4 vertices
 **Ans: B.** Every vertex of K₅ has degree 4 (even), connected ⇒ Euler circuit. K₄ has degree 3 (odd).
 
 **Q15.** |P({a,b,c,d,e})| = ?
-A) 10   B) 25   C) 32   D) 120
+A) 10 B) 25 C) 32 D) 120
 **Ans: C.** 2⁵ = 32.
 
 ---
 
 ## 5. Formula Cheat Sheet
 
-| Topic | Formula |
-|---|---|
-| Power set size | 2ⁿ |
-| Functions A→B | \|B\|^\|A\| |
-| Injections A→B | \|B\|·(\|B\|−1)···(\|B\|−\|A\|+1) |
-| Bijections (\|A\|=n) | n! |
-| Permutations P(n,r) | n!/(n−r)! |
-| Combinations C(n,r) | n!/(r!(n−r)!) |
-| Pascal | C(n,k)=C(n−1,k−1)+C(n−1,k) |
-| Binomial thm | (x+y)ⁿ=Σ C(n,k)xᵏyⁿ⁻ᵏ |
-| Sum subsets | Σₖ C(n,k) = 2ⁿ |
-| Stars & bars | C(n+k−1, k−1) |
-| Inclusion-exclusion (2) | \|A∪B\|=\|A\|+\|B\|−\|A∩B\| |
-| Handshaking | Σ deg(v) = 2\|E\| |
-| Tree edges | n−1 |
-| Planar edges (simple) | E ≤ 3V−6 |
-| Bipartite planar | E ≤ 2V−4 |
-| Euler's planar | V−E+F=2 |
-| Euler circuit | all degrees even, connected |
-| Euler path | exactly 2 odd-degree vertices |
-| Fermat little | a^(p−1) ≡ 1 (mod p), gcd(a,p)=1 |
-| Euler's thm | a^φ(n) ≡ 1 (mod n) |
-| Bayes | P(A\|B)=P(B\|A)P(A)/P(B) |
-| Var(X) | E[X²] − E[X]² |
-| Binomial(n,p) | mean np, var np(1−p) |
-| Geometric(p) | mean 1/p |
-| Σ 1..n | n(n+1)/2 |
-| Σ 1²..n² | n(n+1)(2n+1)/6 |
-| Σ 2⁰..2ⁿ | 2ⁿ⁺¹ − 1 |
-| Geometric series | Σ rᵏ, k=0..n = (rⁿ⁺¹−1)/(r−1) |
-| Master thm | T(n)=aT(n/b)+f(n), compare to n^{log_b a} |
+| Topic                   | Formula                                   |
+| ----------------------- | ----------------------------------------- |
+| Power set size          | 2ⁿ                                        |
+| Functions A→B           | \|B\|^\|A\|                               |
+| Injections A→B          | \|B\|·(\|B\|−1)···(\|B\|−\|A\|+1)         |
+| Bijections (\|A\|=n)    | n!                                        |
+| Permutations P(n,r)     | n!/(n−r)!                                 |
+| Combinations C(n,r)     | n!/(r!(n−r)!)                             |
+| Pascal                  | C(n,k)=C(n−1,k−1)+C(n−1,k)                |
+| Binomial thm            | (x+y)ⁿ=Σ C(n,k)xᵏyⁿ⁻ᵏ                     |
+| Sum subsets             | Σₖ C(n,k) = 2ⁿ                            |
+| Stars & bars            | C(n+k−1, k−1)                             |
+| Inclusion-exclusion (2) | \|A∪B\|=\|A\|+\|B\|−\|A∩B\|               |
+| Handshaking             | Σ deg(v) = 2\|E\|                         |
+| Tree edges              | n−1                                       |
+| Planar edges (simple)   | E ≤ 3V−6                                  |
+| Bipartite planar        | E ≤ 2V−4                                  |
+| Euler's planar          | V−E+F=2                                   |
+| Euler circuit           | all degrees even, connected               |
+| Euler path              | exactly 2 odd-degree vertices             |
+| Fermat little           | a^(p−1) ≡ 1 (mod p), gcd(a,p)=1           |
+| Euler's thm             | a^φ(n) ≡ 1 (mod n)                        |
+| Bayes                   | P(A\|B)=P(B\|A)P(A)/P(B)                  |
+| Var(X)                  | E[X²] − E[X]²                             |
+| Binomial(n,p)           | mean np, var np(1−p)                      |
+| Geometric(p)            | mean 1/p                                  |
+| Σ 1..n                  | n(n+1)/2                                  |
+| Σ 1²..n²                | n(n+1)(2n+1)/6                            |
+| Σ 2⁰..2ⁿ                | 2ⁿ⁺¹ − 1                                  |
+| Geometric series        | Σ rᵏ, k=0..n = (rⁿ⁺¹−1)/(r−1)             |
+| Master thm              | T(n)=aT(n/b)+f(n), compare to n^{log_b a} |
 
 ---
 

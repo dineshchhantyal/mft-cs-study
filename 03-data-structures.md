@@ -9,45 +9,48 @@ Format: ~66 MCQs, 2 hours, closed book
 
 ### 1.1 Arrays vs Linked Lists
 
-| Aspect | Array | Linked List |
-|---|---|---|
-| Memory | Contiguous | Scattered (nodes + pointers) |
-| Random access | O(1) | O(n) |
-| Insert/delete at end | O(1) amortized (dynamic) | O(1) if tail pointer |
-| Insert/delete at head | O(n) | O(1) |
-| Insert/delete at middle | O(n) (shift) | O(1) if node ref known; O(n) to find |
-| Cache performance | Excellent (locality) | Poor |
-| Memory overhead | Low | High (pointer per node) |
-| Size | Fixed / must resize | Dynamic |
+| Aspect                  | Array                    | Linked List                          |
+| ----------------------- | ------------------------ | ------------------------------------ |
+| Memory                  | Contiguous               | Scattered (nodes + pointers)         |
+| Random access           | O(1)                     | O(n)                                 |
+| Insert/delete at end    | O(1) amortized (dynamic) | O(1) if tail pointer                 |
+| Insert/delete at head   | O(n)                     | O(1)                                 |
+| Insert/delete at middle | O(n) (shift)             | O(1) if node ref known; O(n) to find |
+| Cache performance       | Excellent (locality)     | Poor                                 |
+| Memory overhead         | Low                      | High (pointer per node)              |
+| Size                    | Fixed / must resize      | Dynamic                              |
 
 **When array wins:** random access, read-heavy, known size, cache-sensitive.
 **When linked list wins:** frequent insertion/deletion at known positions, unknown/volatile size, no random access required.
 
 ### 1.2 Linked Lists — Operation Costs
 
-| Operation | Singly LL | Doubly LL |
-|---|---|---|
-| Search | O(n) | O(n) |
-| Insert at head | O(1) | O(1) |
-| Insert at tail | O(1) w/ tail ptr, else O(n) | O(1) w/ tail ptr |
-| Delete head | O(1) | O(1) |
-| Delete tail | O(n) (need prev) | O(1) w/ tail ptr |
-| Delete given node ptr | O(n) (scan for prev) | O(1) |
-| Reverse | O(n) | O(n) |
+| Operation             | Singly LL                   | Doubly LL        |
+| --------------------- | --------------------------- | ---------------- |
+| Search                | O(n)                        | O(n)             |
+| Insert at head        | O(1)                        | O(1)             |
+| Insert at tail        | O(1) w/ tail ptr, else O(n) | O(1) w/ tail ptr |
+| Delete head           | O(1)                        | O(1)             |
+| Delete tail           | O(n) (need prev)            | O(1) w/ tail ptr |
+| Delete given node ptr | O(n) (scan for prev)        | O(1)             |
+| Reverse               | O(n)                        | O(n)             |
 
 Doubly LL: each node has `prev` and `next`; enables O(1) delete given node pointer. Cost: extra pointer per node.
 
 ### 1.3 Stacks & Queues
 
 **Stack (LIFO):** `push`, `pop`, `peek` — all O(1).
+
 - Array impl: top = index. Overflow if full (fixed array). Dynamic array amortized O(1).
 - Linked impl: push/pop at head. No overflow (except memory).
 
 **Queue (FIFO):** `enqueue`, `dequeue` — O(1) each.
+
 - Array impl: circular buffer with `front`, `rear`, `size` (or `count`).
 - Linked impl: singly LL with `head` (dequeue) and `tail` (enqueue).
 
 **Circular queue trick:** indexing is `rear = (rear + 1) % capacity`. To distinguish full vs empty when front == rear, either:
+
 - Keep a `size` counter, OR
 - Leave one slot unused: full when `(rear + 1) % cap == front`; empty when `rear == front`.
 
@@ -56,6 +59,7 @@ Doubly LL: each node has `prev` and `next`; enables O(1) delete given node point
 **Deque (double-ended queue):** insert/remove both ends O(1). Implemented as doubly linked list or circular array.
 
 **Priority Queue:** each element has a priority; dequeue highest (or lowest) first.
+
 - Usually implemented as a **binary heap** (array-based).
 - insert: O(log n), extract-min/max: O(log n), peek: O(1).
 - Unsorted array: insert O(1), extract O(n). Sorted array: insert O(n), extract O(1).
@@ -67,11 +71,13 @@ Doubly LL: each node has `prev` and `next`; enables O(1) delete given node point
 **BST:** left < node < right (no duplicates convention). Search/insert/delete **O(h)** — O(log n) balanced, O(n) worst (degenerate to a list).
 
 **AVL Tree:** BST + balance factor (height_left − height_right) ∈ {−1, 0, +1}.
+
 - Rebalances via rotations after insert/delete.
 - Rotations: LL → right rotate; RR → left rotate; LR → left-right (double); RL → right-left (double).
 - Strictly balanced → faster lookups than RB but more rotations on modifications.
 
 **Red-Black Tree:** BST + the 5 RB properties:
+
 1. Every node is red or black.
 2. Root is black.
 3. Every NIL leaf is black.
@@ -82,10 +88,12 @@ Doubly LL: each node has `prev` and `next`; enables O(1) delete given node point
 - Used in Java TreeMap, C++ std::map, Linux CFS scheduler.
 
 **AVL vs RB — when to use:**
+
 - **AVL:** lookup-heavy workloads (stricter balance → lower height).
 - **RB:** insert/delete-heavy workloads (fewer rotations → cheaper updates).
 
 **B-trees / B+ trees:** multiway balanced trees with order m (each node has up to m children, m−1 keys).
+
 - Height O(log_m n). Very shallow — minimizes disk I/O.
 - **B+ tree:** all data in leaves; internal nodes hold only keys (routing). Leaves linked → fast range scans.
 - Used by databases and filesystems (MySQL InnoDB, PostgreSQL, NTFS) because each disk read brings one node (large block), so fewer reads than binary trees.
@@ -93,12 +101,14 @@ Doubly LL: each node has `prev` and `next`; enables O(1) delete given node point
 ### 1.6 Tree Traversals
 
 For a binary tree node N, left L, right R:
+
 - **Pre-order (NLR):** N, traverse L, traverse R.
 - **In-order (LNR):** traverse L, N, traverse R. — In BST gives sorted order.
 - **Post-order (LRN):** traverse L, traverse R, N.
 - **Level-order (BFS):** root, level 1, level 2, … (uses a queue).
 
 **Reconstruction rules:**
+
 - **In-order + Pre-order → unique tree.** Pre-order's first element is root; split in-order at root → left/right subtrees; recurse.
 - **In-order + Post-order → unique tree.** Post-order's last element is root; split similarly.
 - **Pre-order + Post-order alone → NOT unique** in general (ambiguous when only one child).
@@ -109,16 +119,19 @@ For a binary tree node N, left L, right R:
 Binary heap: complete binary tree stored in array.
 
 **Index formulas (0-indexed array):**
+
 - left child of i: **2i + 1**
 - right child of i: **2i + 2**
 - parent of i: **(i − 1) / 2** (integer division)
 
 **1-indexed version:**
+
 - left = 2i, right = 2i + 1, parent = i / 2. (MFT sometimes uses this form!)
 
 **Max-heap property:** parent ≥ both children. Min-heap: parent ≤ both children.
 
 Operations:
+
 - insert: append at end, **sift up** — O(log n).
 - extract-max (or min): swap root with last, remove last, **sift down (heapify)** — O(log n).
 - **build-heap:** from unordered array, heapify from index n/2−1 down to 0 — **O(n)** (not O(n log n)).
@@ -135,6 +148,7 @@ Operations:
   - **Double hashing:** h(k, i) = (h₁(k) + i·h₂(k)) mod m. Best distribution; h₂ must be coprime to m.
 
 **Load factor α = n / m.**
+
 - Chaining: works past α = 1.
 - Open addressing: must keep α < 1 (typically < 0.7–0.75). Resize (rehash) when α exceeds threshold.
 - **Rehashing:** allocate new larger table (often 2m), reinsert each key (must recompute hash).
@@ -143,10 +157,10 @@ Operations:
 
 ### 1.9 Graphs
 
-| Representation | Space | Edge lookup (u,v)? | Iterate neighbors |
-|---|---|---|---|
-| Adjacency matrix | O(V²) | O(1) | O(V) |
-| Adjacency list | O(V + E) | O(deg(u)) | O(deg(u)) |
+| Representation   | Space    | Edge lookup (u,v)? | Iterate neighbors |
+| ---------------- | -------- | ------------------ | ----------------- |
+| Adjacency matrix | O(V²)    | O(1)               | O(V)              |
+| Adjacency list   | O(V + E) | O(deg(u))          | O(deg(u))         |
 
 - **Matrix** better for dense graphs or when edge existence is queried often.
 - **List** better for sparse graphs (most real-world graphs).
@@ -163,6 +177,7 @@ Operations:
 Operations: `MakeSet(x)`, `Find(x)`, `Union(x, y)`.
 
 Optimizations:
+
 - **Path compression** (in Find): flatten tree during lookup.
 - **Union by rank / size:** attach smaller tree under larger.
 
@@ -173,6 +188,7 @@ Used in Kruskal's MST, cycle detection in undirected graphs, connected component
 ### 1.12 Skip Lists
 
 Probabilistic data structure; linked list with multiple forward-pointer levels.
+
 - Expected search / insert / delete: **O(log n)**.
 - Alternative to balanced BSTs with simpler code; used in Redis sorted sets, LevelDB.
 - Each node promoted to next level with probability p (usually 1/2).
@@ -200,16 +216,18 @@ e.g., h(k) = k mod 10; insert 23, 13, 33. All hash to 3. With **linear probing**
 ### 2.4 Valid heap from array?
 
 Given array [50, 30, 40, 10, 20, 35, 25] — 0-indexed:
+
 - Parent 50 at 0; children 30, 40 ✓
 - Parent 30 at 1; children 10, 20 ✓
 - Parent 40 at 2; children 35, 25 ✓
-Valid max-heap.
+  Valid max-heap.
 
 **Trap:** [50, 30, 40, 35, 20, 10, 25] — at index 1 (30), left child index 3 = 35 > 30 → NOT a valid max-heap.
 
 ### 2.5 Rotation outcome in AVL
 
 Insert 10, 20, 30 into empty AVL:
+
 - After 10, 20: fine.
 - Insert 30 → 10 becomes unbalanced (bf = −2), RR case → **left rotate** around 10 → root becomes 20 with children 10 and 30.
 
@@ -238,21 +256,21 @@ LR case example: insert 30, 10, 20 → at 30 bf = +2, left child's right-heavy �
 ## 4. 10+ MFT-Style MCQs with Solutions
 
 **Q1.** In a max-heap stored in a 0-indexed array, the parent of index 9 is:
-(a) 3   (b) 4   (c) 5   (d) 18   (e) 19
+(a) 3 (b) 4 (c) 5 (d) 18 (e) 19
 
 **A:** (b) 4. Parent = (9−1)/2 = 4.
 
 ---
 
 **Q2.** Pre-order: A B D E C F G. In-order: D B E A F C G. What is post-order?
-(a) D E B F G C A   (b) D B E F G C A   (c) A B D E C F G   (d) D E F G B C A
+(a) D E B F G C A (b) D B E F G C A (c) A B D E C F G (d) D E F G B C A
 
 **A:** (a) D E B F G C A. Root A; left subtree in-order {D,B,E} → B with children D (left), E (right); right subtree {F,C,G} → C with F left, G right. Post = D E B F G C A.
 
 ---
 
 **Q3.** You insert 10, 20, 30, 40, 50 into an initially empty BST (no balancing). Height of resulting tree?
-(a) 2   (b) 3   (c) 4   (d) log₂ 5
+(a) 2 (b) 3 (c) 4 (d) log₂ 5
 
 **A:** (c) 4. Right-skewed chain; height (edges from root to deepest leaf) = 4.
 
@@ -269,55 +287,56 @@ LR case example: insert 30, 10, 20 → at 30 bf = +2, left child's right-heavy �
 ---
 
 **Q5.** Hash table size 7, h(k) = k mod 7, linear probing. Insert 15, 11, 27, 8, 12 in order. At which index is 12?
-(a) 5   (b) 6   (c) 0   (d) 1
+(a) 5 (b) 6 (c) 0 (d) 1
 
 **A:** Compute:
+
 - 15 mod 7 = 1 → idx 1
 - 11 mod 7 = 4 → idx 4
 - 27 mod 7 = 6 → idx 6
 - 8 mod 7 = 1 → collision, probe idx 2 → idx 2
 - 12 mod 7 = 5 → idx 5
-Answer: (a) 5.
+  Answer: (a) 5.
 
 ---
 
 **Q6.** Which data structure gives O(1) amortized operations (with path compression + union by rank)?
-(a) AVL tree   (b) Skip list   (c) Disjoint set (union-find)   (d) Red-black tree
+(a) AVL tree (b) Skip list (c) Disjoint set (union-find) (d) Red-black tree
 
 **A:** (c).
 
 ---
 
 **Q7.** Time to build a heap from an unsorted array of n elements using bottom-up heapify:
-(a) O(log n)   (b) O(n)   (c) O(n log n)   (d) O(n²)
+(a) O(log n) (b) O(n) (c) O(n log n) (d) O(n²)
 
 **A:** (b) O(n). Common trap — naive insertion is O(n log n) but bottom-up is O(n).
 
 ---
 
 **Q8.** Which traversal of a BST yields keys in sorted order?
-(a) Pre-order   (b) In-order   (c) Post-order   (d) Level-order
+(a) Pre-order (b) In-order (c) Post-order (d) Level-order
 
 **A:** (b) In-order.
 
 ---
 
 **Q9.** In a singly linked list with a head pointer only, the worst-case time to delete the last node is:
-(a) O(1)   (b) O(log n)   (c) O(n)   (d) O(n log n)
+(a) O(1) (b) O(log n) (c) O(n) (d) O(n log n)
 
 **A:** (c) O(n). Must traverse to find the second-to-last node.
 
 ---
 
 **Q10.** An AVL tree currently has nodes (20 root, 10 left child, 30 right child, 5 left of 10). Inserting 3 causes which rotation?
-(a) Left   (b) Right   (c) Left-Right   (d) Right-Left
+(a) Left (b) Right (c) Left-Right (d) Right-Left
 
 **A:** (b) Right rotation at 10's grandparent (20). After inserting 3 under 5, balance factor at 20 becomes +2 (left-heavy, LL case) → single **right rotation** at 20.
 
 ---
 
 **Q11.** Array-based circular queue of capacity 5, front and rear both 0, empty. After enqueue(A), enqueue(B), enqueue(C), dequeue(), enqueue(D), enqueue(E): values of front and rear?
-(a) front=1, rear=0   (b) front=1, rear=4   (c) front=0, rear=4   (d) front=1, rear=5
+(a) front=1, rear=0 (b) front=1, rear=4 (c) front=0, rear=4 (d) front=1, rear=5
 
 **A:** (b) front=1, rear=4. After 3 enqueues: rear advanced to 3 (positions 0,1,2 filled, rear points to next free = 3). Dequeue → front=1. Enqueue D → idx 3, rear=4. Enqueue E → idx 4, rear=(4+1)%5 = 0. Actually rear=0 after E. Let me redo.
 
@@ -326,14 +345,14 @@ Depending on convention (rear = next free slot), after all ops rear = 0. Using c
 ---
 
 **Q12.** For a sparse graph with V vertices and E << V² edges, what is the space complexity of an adjacency list?
-(a) O(V)   (b) O(E)   (c) O(V + E)   (d) O(V²)
+(a) O(V) (b) O(E) (c) O(V + E) (d) O(V²)
 
 **A:** (c) O(V + E).
 
 ---
 
 **Q13.** Which hash collision resolution strategy is most susceptible to primary clustering?
-(a) Separate chaining   (b) Linear probing   (c) Quadratic probing   (d) Double hashing
+(a) Separate chaining (b) Linear probing (c) Quadratic probing (d) Double hashing
 
 **A:** (b) Linear probing.
 
@@ -343,28 +362,28 @@ Depending on convention (rear = next free slot), after all ops rear = 0. Using c
 
 Average / Expected (Worst in parentheses where different):
 
-| Structure | Access | Search | Insert | Delete | Space |
-|---|---|---|---|---|---|
-| Array (static) | O(1) | O(n) | N/A | N/A | O(n) |
-| Dynamic array | O(1) | O(n) | O(1) amort. (O(n)) | O(n) | O(n) |
-| Sorted array | O(1) | O(log n) | O(n) | O(n) | O(n) |
-| Singly linked list | O(n) | O(n) | O(1) head | O(1) head, O(n) elsewhere | O(n) |
-| Doubly linked list | O(n) | O(n) | O(1) ends | O(1) given node | O(n) |
-| Stack | O(n) | O(n) | O(1) | O(1) | O(n) |
-| Queue | O(n) | O(n) | O(1) | O(1) | O(n) |
-| Deque | O(n) | O(n) | O(1) ends | O(1) ends | O(n) |
-| Hash table | N/A | O(1) (O(n)) | O(1) (O(n)) | O(1) (O(n)) | O(n) |
-| BST (avg) | O(log n) | O(log n) | O(log n) | O(log n) | O(n) |
-| BST (worst) | O(n) | O(n) | O(n) | O(n) | O(n) |
-| AVL tree | O(log n) | O(log n) | O(log n) | O(log n) | O(n) |
-| Red-black tree | O(log n) | O(log n) | O(log n) | O(log n) | O(n) |
-| B-tree / B+ tree | O(log n) | O(log n) | O(log n) | O(log n) | O(n) |
-| Binary heap | O(1) peek | O(n) | O(log n) | O(log n) extract | O(n) |
-| Trie | O(L) | O(L) | O(L) | O(L) | O(Σ·N·L) |
-| Skip list | O(log n) | O(log n) | O(log n) | O(log n) | O(n) |
-| Disjoint set (with PC+UR) | — | O(α(n)) | O(α(n)) | — | O(n) |
-| Graph — adj. matrix | edge O(1) | — | O(1) | O(1) | O(V²) |
-| Graph — adj. list | edge O(deg) | — | O(1) add | O(deg) | O(V+E) |
+| Structure                 | Access      | Search      | Insert             | Delete                    | Space    |
+| ------------------------- | ----------- | ----------- | ------------------ | ------------------------- | -------- |
+| Array (static)            | O(1)        | O(n)        | N/A                | N/A                       | O(n)     |
+| Dynamic array             | O(1)        | O(n)        | O(1) amort. (O(n)) | O(n)                      | O(n)     |
+| Sorted array              | O(1)        | O(log n)    | O(n)               | O(n)                      | O(n)     |
+| Singly linked list        | O(n)        | O(n)        | O(1) head          | O(1) head, O(n) elsewhere | O(n)     |
+| Doubly linked list        | O(n)        | O(n)        | O(1) ends          | O(1) given node           | O(n)     |
+| Stack                     | O(n)        | O(n)        | O(1)               | O(1)                      | O(n)     |
+| Queue                     | O(n)        | O(n)        | O(1)               | O(1)                      | O(n)     |
+| Deque                     | O(n)        | O(n)        | O(1) ends          | O(1) ends                 | O(n)     |
+| Hash table                | N/A         | O(1) (O(n)) | O(1) (O(n))        | O(1) (O(n))               | O(n)     |
+| BST (avg)                 | O(log n)    | O(log n)    | O(log n)           | O(log n)                  | O(n)     |
+| BST (worst)               | O(n)        | O(n)        | O(n)               | O(n)                      | O(n)     |
+| AVL tree                  | O(log n)    | O(log n)    | O(log n)           | O(log n)                  | O(n)     |
+| Red-black tree            | O(log n)    | O(log n)    | O(log n)           | O(log n)                  | O(n)     |
+| B-tree / B+ tree          | O(log n)    | O(log n)    | O(log n)           | O(log n)                  | O(n)     |
+| Binary heap               | O(1) peek   | O(n)        | O(log n)           | O(log n) extract          | O(n)     |
+| Trie                      | O(L)        | O(L)        | O(L)               | O(L)                      | O(Σ·N·L) |
+| Skip list                 | O(log n)    | O(log n)    | O(log n)           | O(log n)                  | O(n)     |
+| Disjoint set (with PC+UR) | —           | O(α(n))     | O(α(n))            | —                         | O(n)     |
+| Graph — adj. matrix       | edge O(1)   | —           | O(1)               | O(1)                      | O(V²)    |
+| Graph — adj. list         | edge O(deg) | —           | O(1) add           | O(deg)                    | O(V+E)   |
 
 **Heap sort:** O(n log n) time, O(1) extra space, NOT stable.
 **Build-heap:** O(n).
@@ -391,68 +410,68 @@ Average / Expected (Worst in parentheses where different):
 ## 🧪 Try Yourself — Practice Questions
 
 **1.** What is the time complexity of inserting an element at the beginning of a singly linked list (head known)?
-A) O(n)  B) O(log n)  C) O(1)  D) O(n log n)
+A) O(n) B) O(log n) C) O(1) D) O(n log n)
 
 **2.** In a circular queue of capacity 8 with `front=3`, `rear=6`, how many elements are present?
-A) 2  B) 3  C) 4  D) 9
+A) 2 B) 3 C) 4 D) 9
 
 **3.** Which data structure is most appropriate for implementing function call management in recursion?
-A) Queue  B) Stack  C) Priority Queue  D) Deque
+A) Queue B) Stack C) Priority Queue D) Deque
 
 **4.** The in-order traversal of a Binary Search Tree produces:
-A) Reverse sorted order  B) Sorted order  C) Level order  D) Random order
+A) Reverse sorted order B) Sorted order C) Level order D) Random order
 
 **5.** In a min-heap stored in a 0-indexed array, the parent of index 7 is at index:
-A) 2  B) 3  C) 4  D) 14
+A) 2 B) 3 C) 4 D) 14
 
 **6.** Which hashing collision resolution technique suffers from **primary clustering**?
-A) Quadratic probing  B) Double hashing  C) Linear probing  D) Separate chaining
+A) Quadratic probing B) Double hashing C) Linear probing D) Separate chaining
 
 **7.** Space complexity of an adjacency matrix for a graph with V vertices is:
-A) O(V + E)  B) O(E)  C) O(V²)  D) O(V log V)
+A) O(V + E) B) O(E) C) O(V²) D) O(V log V)
 
 **8.** Which structure gives O(L) lookup for a string of length L independent of dictionary size?
-A) Hash table  B) Trie  C) BST  D) AVL tree
+A) Hash table B) Trie C) BST D) AVL tree
 
 ---
 
 **9.** An AVL tree with N nodes guarantees a worst-case height of:
-A) O(N)  B) O(√N)  C) O(log N)  D) O(N log N)
+A) O(N) B) O(√N) C) O(log N) D) O(N log N)
 
 **10.** A Red-Black tree with n internal nodes has height at most:
-A) log₂(n)  B) 2·log₂(n+1)  C) 1.44·log₂(n)  D) √n
+A) log₂(n) B) 2·log₂(n+1) C) 1.44·log₂(n) D) √n
 
 **11.** Given preorder = [A,B,D,E,C,F] and inorder = [D,B,E,A,C,F], the root's right child is:
-A) B  B) C  C) D  D) F
+A) B B) C C) D D) F
 
 **12.** In a B-tree of order m, each non-root internal node has at least how many children?
-A) 1  B) ⌈m/2⌉  C) m−1  D) m
+A) 1 B) ⌈m/2⌉ C) m−1 D) m
 
 **13.** Using Union-Find with union-by-rank and path compression, the amortized cost per operation is:
-A) O(log n)  B) O(α(n)) ≈ O(1)  C) O(n)  D) O(√n)
+A) O(log n) B) O(α(n)) ≈ O(1) C) O(n) D) O(√n)
 
 **14.** Which traversal of a BST can be used to delete all nodes safely (children before parent)?
-A) Preorder  B) Inorder  C) Postorder  D) Level order
+A) Preorder B) Inorder C) Postorder D) Level order
 
 **15.** In open addressing with load factor α < 1, the expected number of probes for a successful search (uniform hashing) is approximately:
-A) 1/(1−α)  B) (1/α)·ln(1/(1−α))  C) α  D) log(n)
+A) 1/(1−α) B) (1/α)·ln(1/(1−α)) C) α D) log(n)
 
 **16.** Building a max-heap from an unordered array of n elements using `heapify` bottom-up costs:
-A) O(n log n)  B) O(n)  C) O(log n)  D) O(n²)
+A) O(n log n) B) O(n) C) O(log n) D) O(n²)
 
 ---
 
 **17.** (Trap) Two binary trees have identical **preorder** and **postorder** sequences of length n > 1. Which is true?
-A) The tree is uniquely determined  B) Not unique in general — ambiguity remains when a node has only one child  C) Impossible to share both sequences  D) Determines a unique BST only
+A) The tree is uniquely determined B) Not unique in general — ambiguity remains when a node has only one child C) Impossible to share both sequences D) Determines a unique BST only
 
 **18.** (Trap) Inserting keys 10, 20, 30, 40, 50 sequentially into an initially empty AVL tree, the root after all insertions is:
-A) 10  B) 20  C) 30  D) 40
+A) 10 B) 20 C) 30 D) 40
 
 **19.** (Trap) In a hash table using linear probing with table size 10 and h(k)=k mod 10, inserting 12, 22, 32 in order places 32 at index:
-A) 2  B) 3  C) 4  D) 5
+A) 2 B) 3 C) 4 D) 5
 
 **20.** (Trap) You dequeue from a queue implemented with two stacks (`inStack`, `outStack`). What is the amortized time per dequeue across n operations?
-A) O(n)  B) O(log n)  C) O(1)  D) O(√n)
+A) O(n) B) O(log n) C) O(1) D) O(√n)
 
 ---
 
@@ -489,7 +508,7 @@ A) O(n)  B) O(log n)  C) O(1)  D) O(√n)
 
 **14. C** — Postorder processes children before their parent, letting you free a node only after its subtrees are already deleted.
 
-**15. B** — Under uniform hashing, expected probes for successful search ≈ (1/α)·ln(1/(1−α)); option A is the formula for *unsuccessful* search.
+**15. B** — Under uniform hashing, expected probes for successful search ≈ (1/α)·ln(1/(1−α)); option A is the formula for _unsuccessful_ search.
 
 **16. B** — Bottom-up heapify sums to Σ (n/2^(h+1))·h = O(n); the O(n log n) bound is a loose overestimate.
 
@@ -502,4 +521,3 @@ A) O(n)  B) O(log n)  C) O(1)  D) O(√n)
 **20. C** — Each element is pushed and popped at most twice across both stacks, so n dequeues cost O(n) total → O(1) amortized.
 
 </details>
-

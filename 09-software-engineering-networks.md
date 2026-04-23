@@ -36,15 +36,15 @@ Make this file active instead of passive reading.
 
 ### 1. SDLC Models
 
-| Model | Key Idea | When Used |
-|---|---|---|
-| **Waterfall** | Sequential, each phase complete before next. No backtracking. | Stable, well-understood requirements |
-| **Iterative** | Build in repeated cycles, refine each time | Requirements evolving |
-| **Spiral** | Risk-driven iterative; each loop = planning, risk analysis, engineering, evaluation | Large, high-risk projects |
-| **V-Model** | Waterfall + testing paired to each dev phase (verification & validation) | Safety-critical |
-| **Agile — Scrum** | Sprints (2-4 wk), backlog, daily standups, roles: PO, SM, team | Changing requirements |
-| **Agile — Kanban** | Continuous flow, WIP limits, no fixed iterations | Ops/support work |
-| **Prototyping** | Throwaway or evolutionary prototype to clarify requirements | Unclear UI/UX |
+| Model              | Key Idea                                                                            | When Used                            |
+| ------------------ | ----------------------------------------------------------------------------------- | ------------------------------------ |
+| **Waterfall**      | Sequential, each phase complete before next. No backtracking.                       | Stable, well-understood requirements |
+| **Iterative**      | Build in repeated cycles, refine each time                                          | Requirements evolving                |
+| **Spiral**         | Risk-driven iterative; each loop = planning, risk analysis, engineering, evaluation | Large, high-risk projects            |
+| **V-Model**        | Waterfall + testing paired to each dev phase (verification & validation)            | Safety-critical                      |
+| **Agile — Scrum**  | Sprints (2-4 wk), backlog, daily standups, roles: PO, SM, team                      | Changing requirements                |
+| **Agile — Kanban** | Continuous flow, WIP limits, no fixed iterations                                    | Ops/support work                     |
+| **Prototyping**    | Throwaway or evolutionary prototype to clarify requirements                         | Unclear UI/UX                        |
 
 **Trick:** V-model is NOT agile; it's waterfall-extended. Spiral is NOT linear.
 
@@ -59,6 +59,7 @@ Make this file active instead of passive reading.
 **Goal: LOW coupling, HIGH cohesion.**
 
 **Coupling (worst → best):**
+
 1. **Content** — module modifies another's internals (goto, shared memory) — WORST
 2. **Common** — modules share global data
 3. **External** — shared external format/device
@@ -68,6 +69,7 @@ Make this file active instead of passive reading.
 7. **Message (OO)** — even looser, via message passing — BEST-ish
 
 **Cohesion (worst → best):**
+
 1. **Coincidental** — unrelated activities grouped — WORST
 2. **Logical** — similar category (e.g., "all I/O") but chosen by flag
 3. **Temporal** — executed at same time (e.g., initialization)
@@ -89,6 +91,7 @@ Make this file active instead of passive reading.
 ### 5. Design Patterns (GoF)
 
 **Creational:**
+
 - **Singleton** — exactly one instance, global access
 - **Factory Method** — subclasses decide what to instantiate
 - **Abstract Factory** — families of related objects
@@ -96,6 +99,7 @@ Make this file active instead of passive reading.
 - **Prototype** — clone existing instances
 
 **Structural:**
+
 - **Adapter** — converts one interface to another (wrap incompatible class)
 - **Decorator** — adds behavior dynamically without subclassing
 - **Facade** — simplified interface over a subsystem
@@ -105,6 +109,7 @@ Make this file active instead of passive reading.
 - **Flyweight** — share fine-grained objects for memory
 
 **Behavioral:**
+
 - **Observer** — publish/subscribe; notify on state change
 - **Strategy** — interchangeable algorithms at runtime
 - **Command** — encapsulate request as object (undo, queueing)
@@ -117,6 +122,7 @@ Make this file active instead of passive reading.
 - **Memento** — capture/restore state (undo)
 
 **Common scenario cues:**
+
 - "Add logging without modifying class" → **Decorator**
 - "Notify multiple views" → **Observer**
 - "Swap sort algorithm at runtime" → **Strategy**
@@ -161,14 +167,14 @@ Make this file active instead of passive reading.
 
 ### 8. UML Class Diagram Relationships
 
-| Relationship | Symbol | Meaning |
-|---|---|---|
-| **Association** | plain line | generic "uses/knows" |
-| **Aggregation** | hollow diamond on whole side | whole-part, parts can exist independently ("has-a", weak) |
-| **Composition** | filled diamond | strong whole-part; parts die with whole |
-| **Inheritance/Generalization** | hollow triangle | "is-a" |
-| **Realization** | dashed + hollow triangle | implements interface |
-| **Dependency** | dashed arrow | uses temporarily |
+| Relationship                   | Symbol                       | Meaning                                                   |
+| ------------------------------ | ---------------------------- | --------------------------------------------------------- |
+| **Association**                | plain line                   | generic "uses/knows"                                      |
+| **Aggregation**                | hollow diamond on whole side | whole-part, parts can exist independently ("has-a", weak) |
+| **Composition**                | filled diamond               | strong whole-part; parts die with whole                   |
+| **Inheritance/Generalization** | hollow triangle              | "is-a"                                                    |
+| **Realization**                | dashed + hollow triangle     | implements interface                                      |
+| **Dependency**                 | dashed arrow                 | uses temporarily                                          |
 
 **Trick:** Composition = filled diamond = strong (car & engine lifetime-bound). Aggregation = hollow = weak (team & players).
 
@@ -189,38 +195,38 @@ Make this file active instead of passive reading.
 
 ### 1. OSI 7-Layer Model
 
-| # | Layer | Role | Units | Examples |
-|---|---|---|---|---|
-| 7 | **Application** | user-facing protocols | data | HTTP, FTP, SMTP, DNS |
-| 6 | **Presentation** | format, encrypt, compress | data | TLS, JPEG, ASCII |
-| 5 | **Session** | establish/manage sessions | data | NetBIOS, RPC |
-| 4 | **Transport** | end-to-end, reliability | segments | TCP, UDP |
-| 3 | **Network** | routing, addressing | packets | IP, ICMP, routers |
-| 2 | **Data Link** | frame, MAC, local delivery | frames | Ethernet, switches, ARP |
-| 1 | **Physical** | bits on wire | bits | cables, hubs, NIC |
+| #   | Layer            | Role                       | Units    | Examples                |
+| --- | ---------------- | -------------------------- | -------- | ----------------------- |
+| 7   | **Application**  | user-facing protocols      | data     | HTTP, FTP, SMTP, DNS    |
+| 6   | **Presentation** | format, encrypt, compress  | data     | TLS, JPEG, ASCII        |
+| 5   | **Session**      | establish/manage sessions  | data     | NetBIOS, RPC            |
+| 4   | **Transport**    | end-to-end, reliability    | segments | TCP, UDP                |
+| 3   | **Network**      | routing, addressing        | packets  | IP, ICMP, routers       |
+| 2   | **Data Link**    | frame, MAC, local delivery | frames   | Ethernet, switches, ARP |
+| 1   | **Physical**     | bits on wire               | bits     | cables, hubs, NIC       |
 
 **Mnemonic (top→bottom):** "All People Seem To Need Data Processing"
 **Bottom→top:** "Please Do Not Throw Sausage Pizza Away"
 
 ### 2. TCP/IP 4-Layer Model
 
-| TCP/IP | ≈ OSI |
-|---|---|
-| Application | 5+6+7 |
-| Transport | 4 |
-| Internet | 3 |
-| Network Access (Link) | 1+2 |
+| TCP/IP                | ≈ OSI |
+| --------------------- | ----- |
+| Application           | 5+6+7 |
+| Transport             | 4     |
+| Internet              | 3     |
+| Network Access (Link) | 1+2   |
 
 ### 3. TCP vs UDP
 
-| Feature | TCP | UDP |
-|---|---|---|
-| Connection | connection-oriented (handshake) | connectionless |
-| Reliability | reliable (ack, retransmit) | best-effort |
-| Ordering | in-order | no ordering |
-| Flow/Congestion control | yes | no |
-| Header | 20 bytes | 8 bytes |
-| Use cases | HTTP, SSH, email, file transfer | DNS, VoIP, video, DHCP, gaming |
+| Feature                 | TCP                             | UDP                            |
+| ----------------------- | ------------------------------- | ------------------------------ |
+| Connection              | connection-oriented (handshake) | connectionless                 |
+| Reliability             | reliable (ack, retransmit)      | best-effort                    |
+| Ordering                | in-order                        | no ordering                    |
+| Flow/Congestion control | yes                             | no                             |
+| Header                  | 20 bytes                        | 8 bytes                        |
+| Use cases               | HTTP, SSH, email, file transfer | DNS, VoIP, video, DHCP, gaming |
 
 ### 4. TCP 3-Way Handshake
 
@@ -239,6 +245,7 @@ Make this file active instead of passive reading.
 ### 6. IP Addressing
 
 **IPv4 classes (legacy):**
+
 - A: 0.0.0.0 – 127.255.255.255 (/8)
 - B: 128.0.0.0 – 191.255.255.255 (/16)
 - C: 192.0.0.0 – 223.255.255.255 (/24)
@@ -246,6 +253,7 @@ Make this file active instead of passive reading.
 - E: 240–255 reserved
 
 **Private ranges (RFC 1918):**
+
 - 10.0.0.0/8
 - 172.16.0.0/12
 - 192.168.0.0/16
@@ -253,6 +261,7 @@ Make this file active instead of passive reading.
 **Loopback:** 127.0.0.0/8 (usually 127.0.0.1)
 
 **CIDR:** /n means n prefix bits. Hosts per subnet = 2^(32−n) − 2 (subtract network + broadcast).
+
 - /24 → 256 addrs, 254 usable
 - /16 → 65,536 addrs
 - /30 → 4 addrs, 2 usable (point-to-point)
@@ -261,19 +270,19 @@ Make this file active instead of passive reading.
 
 ### 7. Protocol → Layer Cheat
 
-| Protocol | Layer | Port |
-|---|---|---|
-| HTTP | App (7) | 80 |
-| HTTPS | App (7) / TLS at 6 | 443 |
-| FTP | App (7) | 20/21 |
-| SMTP | App (7) | 25 |
-| DNS | App (7) | 53 (UDP mostly) |
-| DHCP | App (7) | 67/68 (UDP) |
-| SSH | App (7) | 22 |
-| TCP/UDP | Transport (4) | — |
-| IP, ICMP | Network (3) | — |
-| ARP | Data Link (2) — debated, between 2 and 3 | — |
-| Ethernet | Data Link (2) | — |
+| Protocol | Layer                                    | Port            |
+| -------- | ---------------------------------------- | --------------- |
+| HTTP     | App (7)                                  | 80              |
+| HTTPS    | App (7) / TLS at 6                       | 443             |
+| FTP      | App (7)                                  | 20/21           |
+| SMTP     | App (7)                                  | 25              |
+| DNS      | App (7)                                  | 53 (UDP mostly) |
+| DHCP     | App (7)                                  | 67/68 (UDP)     |
+| SSH      | App (7)                                  | 22              |
+| TCP/UDP  | Transport (4)                            | —               |
+| IP, ICMP | Network (3)                              | —               |
+| ARP      | Data Link (2) — debated, between 2 and 3 | —               |
+| Ethernet | Data Link (2)                            | —               |
 
 ### 8. Routing
 
@@ -283,13 +292,13 @@ Make this file active instead of passive reading.
 
 ### 9. Devices
 
-| Device | Layer | Forwards on |
-|---|---|---|
-| **Hub** | 1 | bits to all ports (obsolete) |
-| **Switch** | 2 | frames via MAC table |
-| **Router** | 3 | packets via IP routing table |
-| **Gateway** | varies | protocol translator |
-| **Firewall** | 3–7 | filters |
+| Device       | Layer  | Forwards on                  |
+| ------------ | ------ | ---------------------------- |
+| **Hub**      | 1      | bits to all ports (obsolete) |
+| **Switch**   | 2      | frames via MAC table         |
+| **Router**   | 3      | packets via IP routing table |
+| **Gateway**  | varies | protocol translator          |
+| **Firewall** | 3–7    | filters                      |
 
 ### 10. DNS / DHCP / ARP
 
@@ -304,35 +313,43 @@ Make this file active instead of passive reading.
 Try to answer first. Open each answer only after you commit.
 
 **Q1.** A module passes a flag to another module that changes its control flow. This is:
-A) Data coupling  B) Stamp coupling  C) Control coupling  D) Common coupling
+A) Data coupling B) Stamp coupling C) Control coupling D) Common coupling
+
 <details>
 <summary>Reveal answer</summary>
 
 **C.** Flag controlling behavior = control coupling.
+
 </details>
 
 **Q2.** Which cohesion is BEST?
-A) Logical  B) Temporal  C) Sequential  D) Functional
+A) Logical B) Temporal C) Sequential D) Functional
+
 <details>
 <summary>Reveal answer</summary>
 
 **D.** Functional = all parts contribute to one task.
+
 </details>
 
 **Q3.** A function has 4 `if` statements (no else), and 1 `while` loop. Cyclomatic complexity?
-A) 4  B) 5  C) 6  D) 7
+A) 4 B) 5 C) 6 D) 7
+
 <details>
 <summary>Reveal answer</summary>
 
 **C.** V(G) = decision points + 1 = 5 + 1 = 6.
+
 </details>
 
 **Q4.** "Add scrolling to a window at runtime without subclassing" - which pattern?
-A) Adapter  B) Decorator  C) Proxy  D) Strategy
+A) Adapter B) Decorator C) Proxy D) Strategy
+
 <details>
 <summary>Reveal answer</summary>
 
 **B.** Decorator adds behavior dynamically.
+
 </details>
 
 **Q5.** Liskov Substitution Principle means:
@@ -340,66 +357,82 @@ A) Classes should have one responsibility
 B) Subtypes must be usable wherever base type is expected
 C) Depend on abstractions
 D) Many small interfaces
+
 <details>
 <summary>Reveal answer</summary>
 
 **B.** Subtypes must work anywhere the base type is expected.
+
 </details>
 
 **Q6.** Which layer does a router operate at?
-A) 1  B) 2  C) 3  D) 4
+A) 1 B) 2 C) 3 D) 4
+
 <details>
 <summary>Reveal answer</summary>
 
 **C.** Network layer (IP routing).
+
 </details>
 
 **Q7.** TCP 3-way handshake order:
-A) SYN, ACK, SYN-ACK  B) SYN, SYN-ACK, ACK  C) ACK, SYN, SYN-ACK  D) SYN-ACK, SYN, ACK
+A) SYN, ACK, SYN-ACK B) SYN, SYN-ACK, ACK C) ACK, SYN, SYN-ACK D) SYN-ACK, SYN, ACK
+
 <details>
 <summary>Reveal answer</summary>
 
 **B.** SYN -> SYN-ACK -> ACK.
+
 </details>
 
 **Q8.** How many usable hosts in a /26 subnet?
-A) 62  B) 64  C) 30  D) 126
+A) 62 B) 64 C) 30 D) 126
+
 <details>
 <summary>Reveal answer</summary>
 
 **A.** $2^{(32-26)} - 2 = 64 - 2 = 62$.
+
 </details>
 
 **Q9.** Which protocol is connectionless and has 8-byte header?
-A) TCP  B) UDP  C) IP  D) ICMP
+A) TCP B) UDP C) IP D) ICMP
+
 <details>
 <summary>Reveal answer</summary>
 
 **B.** UDP.
+
 </details>
 
 **Q10.** DNS primarily uses which transport protocol and port?
-A) TCP 53  B) UDP 53  C) TCP 80  D) UDP 80
+A) TCP 53 B) UDP 53 C) TCP 80 D) UDP 80
+
 <details>
 <summary>Reveal answer</summary>
 
 **B.** UDP 53 (TCP 53 for zone transfers / large responses).
+
 </details>
 
 **Q11.** White-box testing that ensures every edge of the control flow graph is executed:
-A) Statement coverage  B) Branch coverage  C) Path coverage  D) Loop coverage
+A) Statement coverage B) Branch coverage C) Path coverage D) Loop coverage
+
 <details>
 <summary>Reveal answer</summary>
 
 **B.** Branch (decision) coverage.
+
 </details>
 
 **Q12.** In UML, a filled diamond from Car to Engine means:
-A) Aggregation  B) Composition  C) Association  D) Dependency
+A) Aggregation B) Composition C) Association D) Dependency
+
 <details>
 <summary>Reveal answer</summary>
 
 **B.** Composition - Engine lifetime bound to Car.
+
 </details>
 
 ---
@@ -407,6 +440,7 @@ A) Aggregation  B) Composition  C) Association  D) Dependency
 ## QUICK CHEAT SHEET
 
 **Software Engineering:**
+
 - LOW coupling, HIGH cohesion. Worst coupling = content; best = data/message. Worst cohesion = coincidental; best = functional.
 - SOLID: Single resp, Open/closed, Liskov, Interface seg, Dependency inversion.
 - V(G) = E − N + 2 = decisions + 1.
@@ -416,6 +450,7 @@ A) Aggregation  B) Composition  C) Association  D) Dependency
 - UML: filled diamond = composition (strong); hollow = aggregation (weak).
 
 **Networking:**
+
 - OSI (L1→L7): Physical, Data Link, Network, Transport, Session, Presentation, Application — "Please Do Not Throw Sausage Pizza Away".
 - Hub=L1, Switch=L2, Router=L3.
 - TCP = reliable, connection, 20B header. UDP = unreliable, connectionless, 8B header.
@@ -429,64 +464,64 @@ A) Aggregation  B) Composition  C) Association  D) Dependency
 ## 🧪 Try Yourself — Practice Questions
 
 1. Which SDLC model is best suited when requirements are unclear and user feedback is needed early and often?
-   - A) Waterfall  B) V-Model  C) Spiral  D) Big Bang
+   - A) Waterfall B) V-Model C) Spiral D) Big Bang
 
 2. "The system shall encrypt all passwords using bcrypt" is an example of:
-   - A) Functional requirement  B) Non-functional requirement  C) Business requirement  D) User requirement
+   - A) Functional requirement B) Non-functional requirement C) Business requirement D) User requirement
 
 3. Which coupling is the WORST (tightest)?
-   - A) Data coupling  B) Stamp coupling  C) Control coupling  D) Content coupling
+   - A) Data coupling B) Stamp coupling C) Control coupling D) Content coupling
 
 4. Which cohesion is the BEST (highest)?
-   - A) Logical  B) Temporal  C) Functional  D) Procedural
+   - A) Logical B) Temporal C) Functional D) Procedural
 
 5. A class that handles both database persistence and email notifications violates which SOLID principle?
-   - A) OCP  B) SRP  C) LSP  D) DIP
+   - A) OCP B) SRP C) LSP D) DIP
 
 6. A payment system allows plugging in Stripe, PayPal, or Razorpay without modifying existing code. Which pattern?
-   - A) Singleton  B) Strategy  C) Observer  D) Factory
+   - A) Singleton B) Strategy C) Observer D) Factory
 
 7. A logger class must have exactly one instance across the app. Which pattern?
-   - A) Prototype  B) Builder  C) Singleton  D) Adapter
+   - A) Prototype B) Builder C) Singleton D) Adapter
 
 8. When a subject's state changes, all dependents are notified automatically. Which pattern?
-   - A) Mediator  B) Observer  C) Visitor  D) Command
+   - A) Mediator B) Observer C) Visitor D) Command
 
 9. TDD cycle is:
-   - A) Code → Test → Refactor  B) Red → Green → Refactor  C) Design → Code → Test  D) Test → Debug → Deploy
+   - A) Code → Test → Refactor B) Red → Green → Refactor C) Design → Code → Test D) Test → Debug → Deploy
 
 10. For input range 1–100, Boundary Value Analysis test values are:
-    - A) 1, 50, 100  B) 0, 1, 100, 101  C) 0, 1, 2, 99, 100, 101  D) -1, 0, 101, 102
+    - A) 1, 50, 100 B) 0, 1, 100, 101 C) 0, 1, 2, 99, 100, 101 D) -1, 0, 101, 102
 
 11. A flowgraph has 10 edges, 8 nodes, and 1 connected component. Cyclomatic complexity =
-    - A) 2  B) 3  C) 4  D) 5
+    - A) 2 B) 3 C) 4 D) 5
 
 12. Statement coverage = 100% guarantees:
-    - A) All branches executed  B) All paths executed  C) Every line executed at least once  D) No bugs exist
+    - A) All branches executed B) All paths executed C) Every line executed at least once D) No bugs exist
 
 13. A "Car HAS-A Engine" relationship where the Engine cannot exist without the Car is:
-    - A) Aggregation  B) Composition  C) Association  D) Dependency
+    - A) Aggregation B) Composition C) Association D) Dependency
 
 14. Encryption and decryption occur at which OSI layer?
-    - A) Transport  B) Session  C) Presentation  D) Application
+    - A) Transport B) Session C) Presentation D) Application
 
 15. Which is TRUE about UDP?
-    - A) Connection-oriented  B) Guarantees delivery  C) Has 3-way handshake  D) Lower overhead than TCP
+    - A) Connection-oriented B) Guarantees delivery C) Has 3-way handshake D) Lower overhead than TCP
 
 16. The correct order of TCP 3-way handshake is:
-    - A) SYN → ACK → SYN-ACK  B) SYN → SYN-ACK → ACK  C) ACK → SYN → SYN-ACK  D) SYN-ACK → SYN → ACK
+    - A) SYN → ACK → SYN-ACK B) SYN → SYN-ACK → ACK C) ACK → SYN → SYN-ACK D) SYN-ACK → SYN → ACK
 
 17. IP address 192.168.5.10 belongs to which class and is it private?
-    - A) Class B, public  B) Class C, private  C) Class A, private  D) Class C, public
+    - A) Class B, public B) Class C, private C) Class A, private D) Class C, public
 
 18. A /26 subnet provides how many usable host addresses?
-    - A) 64  B) 62  C) 32  D) 30
+    - A) 64 B) 62 C) 32 D) 30
 
 19. Which protocol operates at the Network layer?
-    - A) TCP  B) HTTP  C) ICMP  D) FTP
+    - A) TCP B) HTTP C) ICMP D) FTP
 
 20. A Layer-3 device that forwards packets between different networks using IP addresses is a:
-    - A) Hub  B) Switch  C) Bridge  D) Router
+    - A) Hub B) Switch C) Bridge D) Router
 
 ### ✅ Answer Key & Explanations
 
@@ -550,10 +585,11 @@ H(X) = − Σᵢ p(xᵢ) · log₂ p(xᵢ)     (bits)
 Interpretation: the **minimum average number of bits** required to encode one outcome of X, in the limit of long sequences.
 
 **Key facts:**
+
 - H(X) ≥ 0, with equality iff X is deterministic (one outcome has probability 1).
 - H(X) is **maximized** when X is uniform: H_max = log₂ n for n equally likely outcomes.
 - **Fair coin:** H = −(0.5·log₂ 0.5 + 0.5·log₂ 0.5) = 1 bit.
-- **Biased coin** (p=0.9, 0.1): H ≈ 0.469 bits — less than 1, so you *can* compress a stream of biased flips below 1 bit/symbol on average.
+- **Biased coin** (p=0.9, 0.1): H ≈ 0.469 bits — less than 1, so you _can_ compress a stream of biased flips below 1 bit/symbol on average.
 - **Fair 8-sided die:** H = log₂ 8 = 3 bits.
 
 **Shannon's source coding theorem (informal):** for any lossless code, the expected code length L satisfies L ≥ H(X). Huffman and arithmetic coding approach this bound.
@@ -591,47 +627,52 @@ Interpretation: the **minimum average number of bits** required to encode one ou
 **Anchors:** `^` start of line, `$` end of line, `\b` word boundary, `\B` non-boundary.
 
 **Groups:**
+
 - `(abc)` — capturing group, referenceable as `\1` (backref) or `$1` (replacement).
 - `(?:abc)` — non-capturing (no group number allocated).
 - `(?P<name>abc)` — named group (Python/PCRE).
 
 **Lookarounds** (zero-width; don't consume input):
+
 - `(?=X)` positive lookahead: "followed by X"
 - `(?!X)` negative lookahead
 - `(?<=X)` positive lookbehind (fixed width in many engines)
 - `(?<!X)` negative lookbehind
 
 **Common patterns (exam-ready):**
+
 - **Email (simplified):** `^[\w.+-]+@[\w-]+\.[\w.-]+$`
 - **IPv4 octet:** `(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)`
 - **URL (rough):** `^https?://[\w.-]+(:\d+)?(/[^\s]*)?$`
 - **US phone:** `^\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$`
 
 **Engine types:**
+
 - **NFA-based** (Perl, Python, Java, JavaScript): backtracking engines. Support backreferences, lookarounds. Worst-case exponential time on pathological patterns ("catastrophic backtracking").
 - **DFA-based** (grep, RE2, lex): linear-time guaranteed. Do **not** support backreferences or most lookarounds. Use when input is untrusted or large.
 
 ### Practice MCQs
 
 1. Entropy of a fair 4-sided die is:
-   A) 1 bit   B) 2 bits   C) 4 bits   D) log₂ 3 bits
+   A) 1 bit B) 2 bits C) 4 bits D) log₂ 3 bits
 
 2. Huffman coding produces an optimal:
-   A) block code   B) fixed-length code   C) prefix code   D) arithmetic code
+   A) block code B) fixed-length code C) prefix code D) arithmetic code
 
 3. On input `<b>hi</b>`, the regex `<.*>` (greedy) matches:
-   A) `<b>`   B) `</b>`   C) `<b>hi</b>`   D) nothing
+   A) `<b>` B) `</b>` C) `<b>hi</b>` D) nothing
 
 4. Which regex feature is typically **unsupported** in pure DFA engines like RE2?
-   A) character classes   B) alternation `a|b`   C) backreferences `\1`   D) quantifier `*`
+   A) character classes B) alternation `a|b` C) backreferences `\1` D) quantifier `*`
 
 5. The entropy of a biased coin with p(Heads)=0.9 is:
-   A) exactly 1 bit   B) 0 bits   C) ≈ 0.47 bits   D) ≈ 1.47 bits
+   A) exactly 1 bit B) 0 bits C) ≈ 0.47 bits D) ≈ 1.47 bits
 
 6. `(?=\d)` in a regex is:
-   A) a capturing group matching a digit   B) a non-capturing group   C) a positive lookahead (zero-width)   D) a backreference
+   A) a capturing group matching a digit B) a non-capturing group C) a positive lookahead (zero-width) D) a backreference
 
 **Answer Key:**
+
 <details>
 <summary>Reveal Practice MCQ answers</summary>
 
@@ -645,4 +686,3 @@ Interpretation: the **minimum average number of bits** required to encode one ou
 </details>
 
 ---
-

@@ -9,26 +9,26 @@
 
 ### 1.1 Raster vs Vector
 
-| Aspect            | Raster (bitmap)                          | Vector                                   |
-| ----------------- | ---------------------------------------- | ---------------------------------------- |
-| Representation    | Grid of pixels (color per pixel)         | Mathematical primitives (lines, curves)  |
-| Scaling           | Loses quality (pixelation/aliasing)      | Scales losslessly                        |
-| File size         | Grows with resolution (W·H·bpp)          | Grows with number of primitives          |
-| Good for          | Photos, textures                         | Logos, fonts, CAD, diagrams              |
-| Examples          | PNG, JPEG, BMP, GIF, TIFF                | SVG, PDF (partly), EPS, AI               |
-| Rendering cost    | Fast display (direct to framebuffer)     | Must be rasterized for display           |
+| Aspect         | Raster (bitmap)                      | Vector                                  |
+| -------------- | ------------------------------------ | --------------------------------------- |
+| Representation | Grid of pixels (color per pixel)     | Mathematical primitives (lines, curves) |
+| Scaling        | Loses quality (pixelation/aliasing)  | Scales losslessly                       |
+| File size      | Grows with resolution (W·H·bpp)      | Grows with number of primitives         |
+| Good for       | Photos, textures                     | Logos, fonts, CAD, diagrams             |
+| Examples       | PNG, JPEG, BMP, GIF, TIFF            | SVG, PDF (partly), EPS, AI              |
+| Rendering cost | Fast display (direct to framebuffer) | Must be rasterized for display          |
 
 **MFT trap:** JPEG is **raster**, not vector. PDF can embed both. Fonts today (TrueType/OpenType) are **vector** outlines rasterized at display time (hinting).
 
 ### 1.2 Color Models
 
-| Model | Type       | Channels                  | Use                              |
-| ----- | ---------- | ------------------------- | -------------------------------- |
-| RGB   | Additive   | Red, Green, Blue          | Screens, cameras, light-emitting |
-| CMYK  | Subtractive| Cyan, Magenta, Yellow, K  | Printing (K = black)             |
-| HSV   | Perceptual | Hue, Saturation, Value    | Color pickers, intuitive editing |
-| HSL   | Perceptual | Hue, Saturation, Lightness| CSS, design tools                |
-| YUV/YCbCr | Luma/chroma | Y + 2 color diff       | Video compression (JPEG, MPEG)   |
+| Model     | Type        | Channels                   | Use                              |
+| --------- | ----------- | -------------------------- | -------------------------------- |
+| RGB       | Additive    | Red, Green, Blue           | Screens, cameras, light-emitting |
+| CMYK      | Subtractive | Cyan, Magenta, Yellow, K   | Printing (K = black)             |
+| HSV       | Perceptual  | Hue, Saturation, Value     | Color pickers, intuitive editing |
+| HSL       | Perceptual  | Hue, Saturation, Lightness | CSS, design tools                |
+| YUV/YCbCr | Luma/chroma | Y + 2 color diff           | Video compression (JPEG, MPEG)   |
 
 - **Additive** (RGB): start black, add light → white.
 - **Subtractive** (CMYK): start white paper, subtract reflected light → black.
@@ -51,6 +51,7 @@ Translate(tx,ty):   Scale(sx,sy):       Rotate(θ):
 **3D transforms use 4×4 matrices.** Homogeneous coordinates (x, y, z, **w**) with w=1 for points, w=0 for vectors/directions.
 
 **Why 4×4 / homogeneous?**
+
 1. Translation is **not linear** in 3D — can't represent as 3×3 matrix. Adding a 4th row/col lets you encode translation as matrix multiplication.
 2. Lets you **compose** translation + rotation + scale as a single matrix product.
 3. Perspective projection naturally uses w ≠ 1 (divide x,y,z by w at end — "perspective divide").
@@ -107,6 +108,7 @@ p' = M_total · p    where M_total = T · R · S  (right-to-left reading)
 **Mnemonic:** "**V**ery **P**retty **C**ats **R**un **F**ast **P**ast **F**ences" (Vertex, Primitive, Clip, Raster, Fragment, PerFragment, Framebuffer).
 
 ### Topic 1 MFT Trap Patterns
+
 - Confusing RGB/CMYK direction (additive vs subtractive).
 - Forgetting why 4×4 matrices (answer: to encode translation as multiplication).
 - Composition order questions — remember right-to-left.
@@ -120,13 +122,13 @@ p' = M_total · p    where M_total = T · R · S  (right-to-left reading)
 
 Let **b** = branching factor, **d** = depth of shallowest goal, **m** = max tree depth, **C\*** = optimal cost, **ε** = min step cost.
 
-| Algorithm | Complete?        | Optimal?            | Time       | Space      |
-| --------- | ---------------- | ------------------- | ---------- | ---------- |
-| BFS       | Yes (finite b)   | Yes (if step=1)     | O(b^d)     | O(b^d)     |
-| DFS       | No (infinite)    | No                  | O(b^m)     | O(bm)      |
-| UCS       | Yes (ε>0)        | Yes                 | O(b^(1+⌊C*/ε⌋)) | Same  |
-| IDS       | Yes              | Yes (if step=1)     | O(b^d)     | O(bd)      |
-| DLS       | No               | No                  | O(b^l)     | O(bl)      |
+| Algorithm | Complete?      | Optimal?        | Time             | Space  |
+| --------- | -------------- | --------------- | ---------------- | ------ |
+| BFS       | Yes (finite b) | Yes (if step=1) | O(b^d)           | O(b^d) |
+| DFS       | No (infinite)  | No              | O(b^m)           | O(bm)  |
+| UCS       | Yes (ε>0)      | Yes             | O(b^(1+⌊C\*/ε⌋)) | Same   |
+| IDS       | Yes            | Yes (if step=1) | O(b^d)           | O(bd)  |
+| DLS       | No             | No              | O(b^l)           | O(bl)  |
 
 - **BFS** uses a queue (FIFO). Finds shallowest goal. Massive memory.
 - **DFS** uses a stack (LIFO). Low memory. Can get stuck in infinite branches.
@@ -141,6 +143,7 @@ Let **b** = branching factor, **d** = depth of shallowest goal, **m** = max tree
 - **A\*:** f(n) = g(n) + h(n). Combines actual cost-so-far and estimated cost-to-goal.
 
 **Heuristic properties:**
+
 - **Admissible:** h(n) ≤ h\*(n) (never overestimates true cost). Guarantees **A\* optimal** on tree search.
 - **Consistent (monotone):** h(n) ≤ c(n, n') + h(n') for every successor n'. Stronger: implies admissible. Guarantees A\* optimal on **graph search**.
 - **Consistent ⇒ Admissible** (not vice versa).
@@ -158,6 +161,7 @@ Let **b** = branching factor, **d** = depth of shallowest goal, **m** = max tree
 - **Evaluation function** used at cutoff depth when game can't be searched to terminal.
 
 ### 2.4 Game Trees
+
 - **MAX nodes** (our turn): pick max child utility.
 - **MIN nodes** (opponent): pick min child utility.
 - **Utility** at terminal: +1 win, 0 draw, −1 loss (or any bounded scale).
@@ -181,11 +185,13 @@ Let **b** = branching factor, **d** = depth of shallowest goal, **m** = max tree
 **Underfitting:** model too simple; high error on both.
 
 **Bias–variance tradeoff:**
+
 - **Bias:** error from simplifying assumptions (underfitting).
 - **Variance:** error from sensitivity to training data (overfitting).
 - Total error = Bias² + Variance + Irreducible noise.
 
 **Train/Validation/Test split:**
+
 - **Train:** fit parameters.
 - **Validation:** tune hyperparameters, early stopping.
 - **Test:** final unbiased estimate. **Never tune on test.**
@@ -193,10 +199,10 @@ Let **b** = branching factor, **d** = depth of shallowest goal, **m** = max tree
 
 **Confusion Matrix (binary):**
 
-|                 | Predicted + | Predicted − |
-| --------------- | ----------- | ----------- |
-| **Actual +**    | TP          | FN          |
-| **Actual −**    | FP          | TN          |
+|              | Predicted + | Predicted − |
+| ------------ | ----------- | ----------- |
+| **Actual +** | TP          | FN          |
+| **Actual −** | FP          | TN          |
 
 - **Accuracy** = (TP+TN) / total. Misleading on imbalanced data.
 - **Precision** = TP / (TP + FP) — "of predicted positives, how many were right?"
@@ -220,6 +226,7 @@ Let **b** = branching factor, **d** = depth of shallowest goal, **m** = max tree
 - **Definite clause:** exactly one positive literal.
 
 ### Topic 2 MFT Traps
+
 - BFS optimal **only if step costs equal**. UCS is always optimal (ε>0).
 - A\* admissibility ≠ consistency. Consistency is stronger.
 - Alpha-beta **does not change answer** — same result as minimax, just faster.
@@ -232,6 +239,7 @@ Let **b** = branching factor, **d** = depth of shallowest goal, **m** = max tree
 ### 3.1 Symmetric Ciphers
 
 **Block vs Stream:**
+
 - **Block cipher:** encrypts fixed-size blocks (AES: 128-bit block). Uses modes of operation.
 - **Stream cipher:** encrypts bit/byte at a time with keystream XOR. Faster for streaming data. E.g., RC4 (broken), ChaCha20, Salsa20.
 
@@ -240,33 +248,37 @@ Let **b** = branching factor, **d** = depth of shallowest goal, **m** = max tree
 
 **Modes of operation:**
 
-| Mode | Properties                                                              |
-| ---- | ----------------------------------------------------------------------- |
-| ECB  | Same plaintext block → same ciphertext. **BAD** (patterns visible — penguin!). |
-| CBC  | XOR prev ciphertext before encrypt. Needs IV. Sequential. No tamper detect. |
-| CTR  | Encrypt counter, XOR with plaintext. Parallelizable. Acts like stream cipher. |
+| Mode | Properties                                                                        |
+| ---- | --------------------------------------------------------------------------------- |
+| ECB  | Same plaintext block → same ciphertext. **BAD** (patterns visible — penguin!).    |
+| CBC  | XOR prev ciphertext before encrypt. Needs IV. Sequential. No tamper detect.       |
+| CTR  | Encrypt counter, XOR with plaintext. Parallelizable. Acts like stream cipher.     |
 | GCM  | CTR + authentication (GMAC). **Authenticated encryption (AEAD)**. Modern default. |
-| CFB  | Like CBC but operates as stream.                                        |
-| OFB  | Feedback without plaintext dependency — stream-like.                    |
+| CFB  | Like CBC but operates as stream.                                                  |
+| OFB  | Feedback without plaintext dependency — stream-like.                              |
 
 **MFT trap:** ECB the classic "don't use" mode — images reveal structure.
 
 ### 3.2 Asymmetric (Public-Key)
 
 **RSA:**
+
 1. Pick primes p, q. n = p·q. φ(n) = (p−1)(q−1).
 2. Pick e coprime with φ(n). Compute d = e⁻¹ mod φ(n).
 3. Public key: (n, e). Private: (n, d).
 4. Encrypt: c = m^e mod n. Decrypt: m = c^d mod n.
 5. Sign: s = H(m)^d mod n. Verify: s^e mod n =? H(m).
+
 - Security: factoring n is hard.
 
 **Diffie–Hellman (DH):** key agreement, not encryption.
+
 - Public: prime p, generator g. Alice picks a, sends g^a mod p. Bob picks b, sends g^b mod p. Shared = g^(ab) mod p.
 - Security: discrete log problem.
 - **Vulnerable to MITM** unless authenticated.
 
 **ECC (Elliptic Curve Cryptography):**
+
 - Based on elliptic curve discrete log.
 - Same security as RSA with **much smaller keys** (256-bit ECC ≈ 3072-bit RSA).
 - Used in TLS (ECDHE), Bitcoin (secp256k1), SSH.
@@ -274,6 +286,7 @@ Let **b** = branching factor, **d** = depth of shallowest goal, **m** = max tree
 ### 3.3 Hash Functions
 
 **Required properties:**
+
 1. **Preimage resistance:** given h, hard to find m where H(m)=h.
 2. **Second preimage resistance:** given m₁, hard to find m₂ ≠ m₁ with H(m₁)=H(m₂).
 3. **Collision resistance:** hard to find any m₁ ≠ m₂ with H(m₁)=H(m₂).
@@ -282,23 +295,23 @@ Collision resistance implies second preimage (but not vice versa).
 
 **Birthday paradox:** collision expected after ~2^(n/2) tries for n-bit hash. So 128-bit hash only gives 64-bit collision security.
 
-| Hash    | Status                                 |
-| ------- | -------------------------------------- |
-| MD5     | **Broken** (collisions found 2004). Do not use. |
-| SHA-1   | **Broken** (SHAttered 2017).           |
-| SHA-2   | SHA-256, SHA-512. **Secure**.          |
-| SHA-3   | Keccak. **Secure**, different design (sponge). |
-| BLAKE2/3| Modern, fast, secure.                  |
+| Hash     | Status                                          |
+| -------- | ----------------------------------------------- |
+| MD5      | **Broken** (collisions found 2004). Do not use. |
+| SHA-1    | **Broken** (SHAttered 2017).                    |
+| SHA-2    | SHA-256, SHA-512. **Secure**.                   |
+| SHA-3    | Keccak. **Secure**, different design (sponge).  |
+| BLAKE2/3 | Modern, fast, secure.                           |
 
 ### 3.4 MAC vs Digital Signature
 
-| Aspect               | MAC (e.g., HMAC)                 | Digital Signature (e.g., RSA-PSS) |
-| -------------------- | -------------------------------- | --------------------------------- |
-| Key type             | Symmetric (shared secret)        | Asymmetric (private signs, public verifies) |
-| Authentication       | Yes                              | Yes                               |
-| Integrity            | Yes                              | Yes                               |
-| **Non-repudiation**  | **No** (both parties have key)   | **Yes** (only signer has priv key)|
-| Speed                | Fast                             | Slow                              |
+| Aspect              | MAC (e.g., HMAC)               | Digital Signature (e.g., RSA-PSS)           |
+| ------------------- | ------------------------------ | ------------------------------------------- |
+| Key type            | Symmetric (shared secret)      | Asymmetric (private signs, public verifies) |
+| Authentication      | Yes                            | Yes                                         |
+| Integrity           | Yes                            | Yes                                         |
+| **Non-repudiation** | **No** (both parties have key) | **Yes** (only signer has priv key)          |
+| Speed               | Fast                           | Slow                                        |
 
 ### 3.5 PKI & Certificates
 
@@ -332,6 +345,7 @@ Collision resistance implies second preimage (but not vice versa).
 Security must live in the key, **not** in secrecy of algorithm ("security through obscurity" is an anti-pattern). Shannon's maxim: "The enemy knows the system."
 
 ### Topic 3 MFT Traps
+
 - Hash is **one-way** — not encryption.
 - MAC does **NOT** provide non-repudiation.
 - DH alone is vulnerable to MITM (need cert/signature).
@@ -374,17 +388,16 @@ Security must live in the key, **not** in secrecy of algorithm ("security throug
 ### 4.4 Norman's 7 Stages of Action
 
 Execution side:
+
 1. Form goal.
 2. Form intention.
 3. Specify action sequence.
 4. Execute action.
 
-Evaluation side:
-5. Perceive state of world.
-6. Interpret perception.
-7. Evaluate outcome against goal.
+Evaluation side: 5. Perceive state of world. 6. Interpret perception. 7. Evaluate outcome against goal.
 
 Two **gulfs**:
+
 - **Gulf of Execution:** gap between user's goal and means to achieve it (hard to figure out how).
 - **Gulf of Evaluation:** gap between system state and user's understanding (hard to tell what happened).
 
@@ -419,6 +432,7 @@ Two **gulfs**:
 - **Conceptual model:** user's mental model of how system works.
 
 ### Topic 4 MFT Traps
+
 - Fitts's law: target **closer & bigger** is faster — both variables matter.
 - Heuristic evaluation uses **experts**, not end users.
 - Slip vs Mistake direction is often reversed in distractors.
@@ -444,29 +458,30 @@ Two **gulfs**:
 
 ### 5.2 IP Forms
 
-| Right          | Covers                              | Term (US)                 | Needs registration? |
-| -------------- | ----------------------------------- | ------------------------- | ------------------- |
-| **Copyright**  | Expression of ideas (code, text, art) | Life + 70 (individual); 95 yrs work-for-hire | Auto on fixation |
-| **Patent**     | Novel inventions / processes        | Utility 20 yrs from filing| Yes, USPTO          |
-| **Trademark**  | Brand identifiers (names, logos)    | Indefinite w/ use + renew | Optional (™ common-law; ® registered) |
-| **Trade secret** | Confidential business info        | As long as kept secret    | No (but requires reasonable protection) |
+| Right            | Covers                                | Term (US)                                    | Needs registration?                     |
+| ---------------- | ------------------------------------- | -------------------------------------------- | --------------------------------------- |
+| **Copyright**    | Expression of ideas (code, text, art) | Life + 70 (individual); 95 yrs work-for-hire | Auto on fixation                        |
+| **Patent**       | Novel inventions / processes          | Utility 20 yrs from filing                   | Yes, USPTO                              |
+| **Trademark**    | Brand identifiers (names, logos)      | Indefinite w/ use + renew                    | Optional (™ common-law; ® registered)   |
+| **Trade secret** | Confidential business info            | As long as kept secret                       | No (but requires reasonable protection) |
 
 - **Copyright protects expression, NOT ideas** (idea–expression dichotomy). Algorithms as abstract ideas not copyrightable (but source code text is).
 - Coca-Cola formula = trade secret, not patent (patent expires).
 
 ### 5.3 Software Licenses
 
-| License   | Type             | Must share source? | Can mix with proprietary? | Notes                              |
-| --------- | ---------------- | ------------------ | ------------------------- | ---------------------------------- |
-| **GPL** v2/v3 | Strong copyleft | Yes, if distribute | No (viral: your code becomes GPL) | GPL v3 adds patent grant, anti-Tivoization |
-| **LGPL**  | Weak copyleft    | Only LGPL-covered parts | Yes, via dynamic linking | Library-friendly                  |
-| **AGPL**  | Network copyleft | Yes, even for network-served use | No | Closes "SaaS loophole"            |
-| **MIT**   | Permissive       | No                 | Yes                       | Must preserve copyright notice     |
-| **BSD** (2/3-clause) | Permissive | No             | Yes                       | 3-clause adds no-endorsement       |
-| **Apache 2.0** | Permissive   | No                 | Yes                       | Explicit patent grant, NOTICE file |
-| **Proprietary/EULA** | Closed   | N/A                | N/A                       | Per vendor terms                   |
+| License              | Type             | Must share source?               | Can mix with proprietary?         | Notes                                      |
+| -------------------- | ---------------- | -------------------------------- | --------------------------------- | ------------------------------------------ |
+| **GPL** v2/v3        | Strong copyleft  | Yes, if distribute               | No (viral: your code becomes GPL) | GPL v3 adds patent grant, anti-Tivoization |
+| **LGPL**             | Weak copyleft    | Only LGPL-covered parts          | Yes, via dynamic linking          | Library-friendly                           |
+| **AGPL**             | Network copyleft | Yes, even for network-served use | No                                | Closes "SaaS loophole"                     |
+| **MIT**              | Permissive       | No                               | Yes                               | Must preserve copyright notice             |
+| **BSD** (2/3-clause) | Permissive       | No                               | Yes                               | 3-clause adds no-endorsement               |
+| **Apache 2.0**       | Permissive       | No                               | Yes                               | Explicit patent grant, NOTICE file         |
+| **Proprietary/EULA** | Closed           | N/A                              | N/A                               | Per vendor terms                           |
 
 **Key question pattern:** "Can you use GPL code in a commercial closed-source product?"
+
 - If you **distribute** a binary linked with GPL code → you **must** release your combined source under GPL (viral).
 - If you **use it internally** (no distribution) → generally OK (GPL isn't triggered without distribution). But AGPL triggers on network-served use.
 - LGPL via dynamic linking → keep your own code proprietary, but must allow replacing LGPL lib.
@@ -480,6 +495,7 @@ Two **gulfs**:
 ### 5.5 Privacy / GDPR
 
 **GDPR (EU, 2018) key principles (Article 5):**
+
 1. **Lawfulness, fairness, transparency.**
 2. **Purpose limitation** — collected for specified purposes.
 3. **Data minimization** — only what's necessary.
@@ -497,6 +513,7 @@ Other privacy laws: **CCPA/CPRA** (California), **HIPAA** (US health), **FERPA**
 ### 5.6 Fair Use (US Copyright Act §107)
 
 Four factors:
+
 1. **Purpose and character** of use (transformative? commercial vs educational/nonprofit).
 2. **Nature of copyrighted work** (factual more freely usable than creative fiction).
 3. **Amount and substantiality** of portion used (and whether "heart of work").
@@ -513,16 +530,17 @@ No single factor decides; courts weigh all four. EU has narrower "fair dealing" 
 
 ### 5.8 Common Scenario Judgments
 
-| Scenario | Answer |
-| -------- | ------ |
-| Found GPL library on GitHub, want to link into commercial app for sale | Must release your source under GPL (or pick LGPL/MIT/Apache lib) |
-| Using MIT-licensed code in proprietary product | OK; preserve copyright notice |
-| Running modified GPL code on your own server, never distributing binary | GPL not triggered (but AGPL would be) |
-| Storing user passwords as SHA-256 only | Fails best practice — need salted slow hash (bcrypt/Argon2) |
-| Collecting EU user emails without consent banner | GDPR violation |
-| Quoting 2 sentences of a book in a research paper | Likely fair use (small amount, educational, transformative) |
+| Scenario                                                                | Answer                                                           |
+| ----------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| Found GPL library on GitHub, want to link into commercial app for sale  | Must release your source under GPL (or pick LGPL/MIT/Apache lib) |
+| Using MIT-licensed code in proprietary product                          | OK; preserve copyright notice                                    |
+| Running modified GPL code on your own server, never distributing binary | GPL not triggered (but AGPL would be)                            |
+| Storing user passwords as SHA-256 only                                  | Fails best practice — need salted slow hash (bcrypt/Argon2)      |
+| Collecting EU user emails without consent banner                        | GDPR violation                                                   |
+| Quoting 2 sentences of a book in a research paper                       | Likely fair use (small amount, educational, transformative)      |
 
 ### Topic 5 MFT Traps
+
 - **Copyright ≠ Patent.** Copyright auto, patent must be filed.
 - GPL is **viral on distribution**, not on mere use.
 - Trade secrets last forever **if kept secret** (no fixed term).
@@ -570,7 +588,7 @@ D. Greedy best-first
 **Q6.** A heuristic h is admissible if:
 A. h(n) = h*(n) always
 B. h(n) ≥ h*(n) for all n
-C. h(n) ≤ h*(n) for all n
+C. h(n) ≤ h\*(n) for all n
 D. h satisfies the triangle inequality
 
 **Q7.** Alpha-beta pruning's best-case time complexity is:
@@ -670,28 +688,28 @@ D. LGPL
 <details>
 <summary>Reveal full answer key</summary>
 
-| # | Ans | Explanation |
-|---|-----|-------------|
-| 1 | **C** | Translation is affine, not linear in 3D. Homogeneous coords add a 4th component so translation can be encoded in matrix multiplication, enabling composition. |
-| 2 | **B** | Starting at (0,0), translate +5,0 → (5,0). Rotating (5,0) by 90° about origin gives (0,5)… wait: check. Rotation of (x,y) by 90° CCW = (−y, x) = (0, 5). So answer is **C. (0, 5)**. (Correct answer: **C**.) |
-| 3 | **C** | SVG is vector (XML-based). The others are pixel-grid raster formats. |
-| 4 | **B** | Z-buffer stores per-pixel depth; fragments closer to camera overwrite, achieving hidden surface removal. |
-| 5 | **C** | Iterative Deepening Search combines DFS's O(bd) space with BFS's completeness and optimality (under unit costs). BFS is O(b^d) space. |
-| 6 | **C** | Admissible = never overestimates true cost. h(n) ≤ h*(n). |
-| 7 | **B** | With perfect move ordering, alpha-beta effectively halves the depth → O(b^(d/2)). |
-| 8 | **A** | Precision = TP/(TP+FP) = 80/100 = 0.80. Recall = TP/(TP+FN) = 80/200 = 0.40. |
-| 9 | **C** | ECB encrypts each block independently; identical plaintext blocks yield identical ciphertext, leaking structure (e.g., ECB penguin). |
-| 10 | **B** | Plain hash → integrity only. MAC adds **authentication** (keyed). Digital signature additionally provides **non-repudiation** (only private-key holder could have signed). |
-| 11 | **B** | Unauthenticated DH: attacker performs separate exchanges with each party, relaying. Fix with cert-based authentication. |
-| 12 | **C** | Birthday bound ≈ 2^(n/2). For n=256 → 2^128 operations. |
-| 13 | **C** | T = a + b·log₂(D/W + 1) — logarithmic in distance-to-width ratio. |
-| 14 | **B** | Slip = correct intention, wrong action. Mistake = wrong intention altogether. |
-| 15 | **C** | Gestalt principles are perceptual grouping laws, not part of Nielsen's 10 usability heuristics. |
-| 16 | **B** | Perceivable, Operable, Understandable, Robust → POUR. |
-| 17 | **C** | GPL is viral on distribution: combining and distributing with GPL code obliges you to license the combined work under GPL and provide source. |
-| 18 | **B** | Source code expression = copyright (auto on fixation). Chip = patent. Secret process = trade secret. Logo = trademark. |
-| 19 | **B** | Data minimization: only collect what's necessary for the stated purpose. |
-| 20 | **C** | MIT is a permissive license with minimal obligations — basically preserve the copyright/license notice. |
+| #   | Ans   | Explanation                                                                                                                                                                                                   |
+| --- | ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | **C** | Translation is affine, not linear in 3D. Homogeneous coords add a 4th component so translation can be encoded in matrix multiplication, enabling composition.                                                 |
+| 2   | **B** | Starting at (0,0), translate +5,0 → (5,0). Rotating (5,0) by 90° about origin gives (0,5)… wait: check. Rotation of (x,y) by 90° CCW = (−y, x) = (0, 5). So answer is **C. (0, 5)**. (Correct answer: **C**.) |
+| 3   | **C** | SVG is vector (XML-based). The others are pixel-grid raster formats.                                                                                                                                          |
+| 4   | **B** | Z-buffer stores per-pixel depth; fragments closer to camera overwrite, achieving hidden surface removal.                                                                                                      |
+| 5   | **C** | Iterative Deepening Search combines DFS's O(bd) space with BFS's completeness and optimality (under unit costs). BFS is O(b^d) space.                                                                         |
+| 6   | **C** | Admissible = never overestimates true cost. h(n) ≤ h\*(n).                                                                                                                                                    |
+| 7   | **B** | With perfect move ordering, alpha-beta effectively halves the depth → O(b^(d/2)).                                                                                                                             |
+| 8   | **A** | Precision = TP/(TP+FP) = 80/100 = 0.80. Recall = TP/(TP+FN) = 80/200 = 0.40.                                                                                                                                  |
+| 9   | **C** | ECB encrypts each block independently; identical plaintext blocks yield identical ciphertext, leaking structure (e.g., ECB penguin).                                                                          |
+| 10  | **B** | Plain hash → integrity only. MAC adds **authentication** (keyed). Digital signature additionally provides **non-repudiation** (only private-key holder could have signed).                                    |
+| 11  | **B** | Unauthenticated DH: attacker performs separate exchanges with each party, relaying. Fix with cert-based authentication.                                                                                       |
+| 12  | **C** | Birthday bound ≈ 2^(n/2). For n=256 → 2^128 operations.                                                                                                                                                       |
+| 13  | **C** | T = a + b·log₂(D/W + 1) — logarithmic in distance-to-width ratio.                                                                                                                                             |
+| 14  | **B** | Slip = correct intention, wrong action. Mistake = wrong intention altogether.                                                                                                                                 |
+| 15  | **C** | Gestalt principles are perceptual grouping laws, not part of Nielsen's 10 usability heuristics.                                                                                                               |
+| 16  | **B** | Perceivable, Operable, Understandable, Robust → POUR.                                                                                                                                                         |
+| 17  | **C** | GPL is viral on distribution: combining and distributing with GPL code obliges you to license the combined work under GPL and provide source.                                                                 |
+| 18  | **B** | Source code expression = copyright (auto on fixation). Chip = patent. Secret process = trade secret. Logo = trademark.                                                                                        |
+| 19  | **B** | Data minimization: only collect what's necessary for the stated purpose.                                                                                                                                      |
+| 20  | **C** | MIT is a permissive license with minimal obligations — basically preserve the copyright/license notice.                                                                                                       |
 
 **Note on Q2:** The correct letter is **C (0, 5)**. Row 2 of the table above notes the derivation — rotation 90° CCW maps (5,0) → (0,5).
 
