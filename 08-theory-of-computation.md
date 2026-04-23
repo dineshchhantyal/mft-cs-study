@@ -558,62 +558,185 @@ L is **NP-complete** if NP-hard AND L ∈ NP.
 
 ## 🧪 Try Yourself — Practice Questions
 
-**Q1.** The minimum number of states in a DFA accepting strings over {a,b} where the third-last symbol is 'a' is:
+<details>
+<summary>Q1. Minimum DFA states where the third-last symbol is 'a'</summary>
+
 (a) 3 (b) 4 (c) 8 (d) 16
 
-**Q2.** Which of the following regular expressions is equivalent to (a+b)*?
-(a) a*b* (b) (a*b*)* (c) (a+b)(a+b)_ (d) a_+b\*
+**Answer: (c)**
 
-**Q3.** An NFA with n states is converted to an equivalent DFA. The maximum possible number of states in the DFA is:
+</details>
+
+<details>
+<summary>Q2. Regex equivalent to (a+b)*</summary>
+
+(a) a*b* (b) (a*b*)* (c) (a+b)(a+b)* (d) a*+b*
+
+**Answer: (b)**
+
+</details>
+
+<details>
+<summary>Q3. Max DFA states from NFA with n states</summary>
+
 (a) n (b) n² (c) 2ⁿ (d) n!
 
-**Q4.** Which of the following is NOT closed under intersection?
+**Answer: (c)**
+
+</details>
+
+<details>
+<summary>Q4. Not closed under intersection</summary>
+
 (a) Regular languages (b) Context-free languages (c) Decidable languages (d) Recursively enumerable languages
 
-**Q5.** The language L = {aⁿbⁿcⁿ : n ≥ 0} is:
+**Answer: (b)**
+
+</details>
+
+<details>
+<summary>Q5. L = {aⁿbⁿcⁿ : n ≥ 0}</summary>
+
 (a) Regular (b) CFL but not regular (c) Context-sensitive but not CFL (d) Not recursively enumerable
 
-**Q6.** A pushdown automaton is more powerful than a finite automaton because it has:
+**Answer: (c)**
+
+</details>
+
+<details>
+<summary>Q6. PDA is more powerful than FA because it has</summary>
+
 (a) More states (b) A stack (c) Two tapes (d) Nondeterminism only
 
-**Q7.** Which of the following is TRUE about deterministic pushdown automata (DPDA) and nondeterministic pushdown automata (NPDA)?
-(a) DPDA = NPDA in power (b) DPDA is strictly less powerful than NPDA (c) DPDA is more powerful than NPDA (d) Both accept all CFLs
+**Answer: (b)**
 
-**Q8.** Which of the following languages is context-free?
-(a) {ww : w ∈ {a,b}_} (b) {wwᴿ : w ∈ {a,b}_} (c) {aⁿbⁿcⁿ} (d) {aᵖ : p is prime}
+</details>
 
-**Q9.** The intersection of a CFL and a regular language is always:
+<details>
+<summary>Q7. DPDA vs NPDA</summary>
+
+(a) DPDA = NPDA (b) DPDA is strictly less powerful (c) DPDA is more powerful (d) Both accept all CFLs
+
+**Answer: (b)**
+
+</details>
+
+<details>
+<summary>Q8. Which language is context-free</summary>
+
+(a) {ww} (b) {wwᴿ} (c) {aⁿbⁿcⁿ} (d) {aᵖ}
+
+**Answer: (b)**
+
+</details>
+
+<details>
+<summary>Q9. CFL ∩ regular is always</summary>
+
 (a) Regular (b) Context-free (c) Context-sensitive but not CFL (d) Undecidable
 
-**Q10.** Which of the following is decidable?
-(a) Whether L(M) = ∅ for a given TM M (b) Whether a given CFG generates ε (c) Whether two TMs accept the same language (d) Whether L(M) is regular
+**Answer: (b)**
 
-**Q11.** According to Rice's theorem, which property of L(M) is decidable?
-(a) Whether L(M) is empty (b) Whether L(M) is regular (c) Whether M has exactly 10 states (d) Whether L(M) is finite
+</details>
 
-**Q12.** The complement of a recursively enumerable language is:
-(a) Always RE (b) Always decidable (c) RE iff the original is decidable (d) Never RE
+<details>
+<summary>Q10. Which is decidable</summary>
 
-**Q13.** Which is known to be in P?
+(a) L(M)=∅ (TM) (b) CFG generates ε (c) Two TMs equivalent (d) L(M) regular
+
+**Answer: (b)**
+
+</details>
+
+<details>
+<summary>Q11. Rice theorem: decidable property</summary>
+
+(a) L(M) empty (b) L(M) regular (c) M has exactly 10 states (d) L(M) finite
+
+**Answer: (c)**
+
+</details>
+
+<details>
+<summary>Q12. Complement of an RE language is</summary>
+
+(a) Always RE (b) Always decidable (c) RE iff original is decidable (d) Never RE
+
+**Answer: (c)**
+
+</details>
+
+<details>
+<summary>Q13. Known in P</summary>
+
 (a) 3-SAT (b) 2-SAT (c) Hamiltonian Cycle (d) Subset Sum
 
-**Q14.** If problem A reduces in polynomial time to problem B, and B ∈ P, then:
-(a) A ∈ NP-complete (b) A ∈ P (c) A is undecidable (d) B ∈ NP-complete
+**Answer: (b)**
 
-**Q15.** Which of the following is NP-complete?
+</details>
+
+<details>
+<summary>Q14. If A ≤p B and B ∈ P, then</summary>
+
+(a) A is NP-complete (b) A ∈ P (c) A undecidable (d) B NP-complete
+
+**Answer: (b)**
+
+</details>
+
+<details>
+<summary>Q15. NP-complete problem</summary>
+
 (a) 2-SAT (b) Sorting (c) 3-SAT (d) Matrix multiplication
 
-**Q16.** The pumping lemma for CFLs guarantees a splitting w = uvxyz such that:
-(a) |vxy| ≤ p, |vy| ≥ 1, and uvⁱxyⁱz ∈ L ∀i≥0 (b) |uv| ≤ p and uvⁱz ∈ L (c) v = y (d) |v| = |y|
+**Answer: (c)**
 
-**Q17.** Which statement is TRUE?
+</details>
+
+<details>
+<summary>Q16. Pumping lemma for CFLs condition</summary>
+
+(a) |vxy| ≤ p, |vy| ≥ 1, and uvⁱxyⁱz ∈ L ∀i≥0  
+(b) |uv| ≤ p and uvⁱz ∈ L  
+(c) v = y  
+(d) |v| = |y|
+
+**Answer: (a)**
+
+</details>
+
+<details>
+<summary>Q17. True statement</summary>
+
 (a) Every RE language is decidable (b) Every decidable language is context-free (c) Every context-free language is decidable (d) Every regular language is finite
 
-**Q18.** In the Chomsky hierarchy, Type-1 grammars correspond to:
-(a) Regular languages (b) Context-free languages (c) Context-sensitive languages (d) Recursively enumerable languages
+**Answer: (c)**
 
-**Q19.** The language {⟨M⟩ : M is a TM and L(M) is empty} is:
-(a) Decidable (b) RE but not decidable (c) co-RE but not RE (d) Neither RE nor co-RE
+</details>
 
-**Q20.** Which of the following is TRUE about the halting problem?
-(a) It is decidable (b) It is RE but not decidable (c) Its complement is RE (d) It is in P
+<details>
+<summary>Q18. Type-1 grammars correspond to</summary>
+
+(a) Regular (b) Context-free (c) Context-sensitive (d) Recursively enumerable
+
+**Answer: (c)**
+
+</details>
+
+<details>
+<summary>Q19. {⟨M⟩ : L(M) is empty} is</summary>
+
+(a) Decidable (b) RE not decidable (c) co-RE not RE (d) Neither RE nor co-RE
+
+**Answer: (c)**
+
+</details>
+
+<details>
+<summary>Q20. True about Halting problem</summary>
+
+(a) Decidable (b) RE but not decidable (c) Complement is RE (d) In P
+
+**Answer: (b)**
+
+</details>

@@ -544,122 +544,242 @@ R → R1, R2 lossless iff (R1 ∩ R2) → R1 or (R1 ∩ R2) → R2.
 
 ## 🧪 Try Yourself — Practice Questions
 
-1. **(Easy)** Which of the following is true about a _superkey_ of a relation?
-   A. It must be minimal.
-   B. It uniquely identifies every tuple but need not be minimal.
-   C. It can contain NULL values in any attribute.
-   D. Every relation has exactly one superkey.
+<details>
+<summary>Q1. Superkey definition</summary>
 
-2. **(Easy)** The relational-algebra operator that returns tuples appearing in R but not in S (both union-compatible) is:
-   A. σ
-   B. π
-   C. R − S
-   D. R ⋈ S
+A. It must be minimal.  
+B. It uniquely identifies every tuple but need not be minimal.  
+C. It can contain NULL values in any attribute.  
+D. Every relation has exactly one superkey.
 
-3. **(Easy)** In SQL, which clause is evaluated _before_ `SELECT`?
-   A. ORDER BY
-   B. DISTINCT
-   C. HAVING
-   D. LIMIT
+**Answer: B**
 
-4. **(Easy)** Given FDs {A → B, B → C}, by Armstrong's axioms we can derive:
-   A. C → A
-   B. A → C (transitivity)
-   C. B → A
-   D. AC → B only
+</details>
 
-5. **(Easy)** A relation is in **1NF** if:
-   A. It has no partial dependencies.
-   B. It has no transitive dependencies.
-   C. All attribute values are atomic (no repeating groups).
-   D. Every determinant is a candidate key.
+<details>
+<summary>Q2. Relational algebra difference operator</summary>
 
-6. **(Easy)** In an ER diagram, a _weak entity_ is characterized by:
-   A. Having no attributes.
-   B. Being identified only in combination with its identifying (owner) entity via a partial key.
-   C. Participating only in unary relationships.
-   D. Always having a total primary key of its own.
+A. σ  
+B. π  
+C. R − S  
+D. R ⋈ S
 
-7. **(Easy)** The "D" in ACID guarantees:
-   A. Transactions appear to execute serially.
-   B. Committed changes survive crashes.
-   C. Concurrent transactions don't see each other's writes.
-   D. All-or-nothing execution.
+**Answer: C**
 
-8. **(Easy)** Write-Ahead Logging (WAL) requires:
-   A. Data pages be flushed to disk before log records.
-   B. Log records describing a change be flushed to disk _before_ the corresponding data page.
-   C. Logs be written only at commit time.
-   D. Checkpoints replace the need for logs.
+</details>
 
-9. **(Medium)** Consider `SELECT COUNT(*) - COUNT(salary) FROM emp;` over a table of 10 rows where 3 rows have `salary IS NULL`. The result is:
-   A. 0
-   B. 3
-   C. 7
-   D. 10
+<details>
+<summary>Q3. Clause evaluated before SELECT</summary>
 
-10. **(Medium)** Schedule S has edges T1→T2 and T2→T1 in its precedence graph. S is:
-    A. Conflict-serializable.
-    B. View-serializable only.
-    C. Not conflict-serializable (cycle).
-    D. Always recoverable.
+A. ORDER BY  
+B. DISTINCT  
+C. HAVING  
+D. LIMIT
 
-11. **(Medium)** Strict 2PL guarantees:
-    A. Serializability only.
-    B. Serializability + recoverability, and avoids cascading aborts by holding X-locks till commit/abort.
-    C. No deadlocks.
-    D. Phantom-free reads without index locking.
+**Answer: C**
 
-12. **(Medium)** `R(A,B,C,D)` with FDs {AB → C, C → D, D → A}. A candidate key is:
-    A. {A,B}
-    B. {B,C}
-    C. {A,D}
-    D. Both A and B (AB and BC are both candidate keys)
+</details>
 
-13. **(Medium)** Which index is _best_ for the query `WHERE salary BETWEEN 50000 AND 70000`?
-    A. Hash index on salary.
-    B. B+-tree index on salary.
-    C. Bitmap index on department.
-    D. No index (full scan always wins).
+<details>
+<summary>Q4. From A→B and B→C, derive</summary>
 
-14. **(Medium)** In SQL, `SELECT dept, AVG(salary) FROM emp GROUP BY dept HAVING COUNT(*) > 5;` returns:
-    A. Each employee's salary if their dept has > 5 people.
-    B. Average salary per department, only for departments with more than 5 employees.
-    C. Departments with more than 5 distinct salaries.
-    D. Error: HAVING cannot use COUNT(\*).
+A. C → A  
+B. A → C  
+C. B → A  
+D. AC → B only
 
-15. **(Medium)** A left outer join `R LEFT JOIN S ON R.x = S.x` on 10 R-rows where only 4 match S will produce:
-    A. 4 rows.
-    B. 10 rows, with NULLs in S's columns for the 6 non-matching R-rows.
-    C. 14 rows.
-    D. An error if S has NULLs in x.
+**Answer: B**
 
-16. **(Medium)** Under isolation level **READ COMMITTED**, which anomaly is _still possible_?
-    A. Dirty read.
-    B. Non-repeatable read.
-    C. Lost update on the same row within one statement.
-    D. Reading uncommitted data.
+</details>
 
-17. **(Trap)** `SELECT * FROM emp WHERE commission <> 1000;` on a table where some rows have `commission = NULL`. Those NULL rows are:
-    A. Returned (NULL ≠ 1000).
-    B. Not returned — the predicate evaluates to UNKNOWN, which `WHERE` filters out.
-    C. Returned only if `ANSI_NULLS` is OFF.
-    D. Cause a runtime error.
+<details>
+<summary>Q5. 1NF means</summary>
 
-18. **(Trap)** Relation R(A,B,C) with FDs {A → B, B → C, C → A}. The highest normal form R satisfies is:
-    A. 2NF only.
-    B. 3NF but not BCNF.
-    C. BCNF (every determinant A, B, C is a superkey since all are candidate keys).
-    D. Not even 1NF.
+A. No partial dependencies.  
+B. No transitive dependencies.  
+C. Atomic values only.  
+D. Every determinant is a candidate key.
 
-19. **(Trap)** A transaction T1 runs `SELECT COUNT(*) FROM orders WHERE total > 100;` twice. Between the reads, T2 _inserts_ a new qualifying row and commits. T1 sees different counts. This is:
-    A. A dirty read.
-    B. A non-repeatable read (same row changed).
-    C. A phantom read — prevented only by SERIALIZABLE (or predicate/range locks).
-    D. A lost update.
+**Answer: C**
 
-20. **(Trap)** R(A,B,C,D) with FDs {A → B, C → D}. R is:
-    A. In BCNF.
-    B. In 3NF but not BCNF (neither A nor C is a superkey).
-    C. Not in 2NF (and thus not in 3NF/BCNF) — partial dependencies on the only candidate key {A,C}.
-    D. In 1NF only because of transitive dependencies.
+</details>
+
+<details>
+<summary>Q6. Weak entity characteristic</summary>
+
+A. No attributes.  
+B. Identified with owner + partial key.  
+C. Unary only.  
+D. Full key of its own.
+
+**Answer: B**
+
+</details>
+
+<details>
+<summary>Q7. ACID D stands for</summary>
+
+A. Serializable behavior.  
+B. Committed data survives crashes.  
+C. No visibility across txns.  
+D. All-or-nothing.
+
+**Answer: B**
+
+</details>
+
+<details>
+<summary>Q8. WAL requires</summary>
+
+A. Flush data page first.  
+B. Flush log record first.  
+C. Log only at commit.  
+D. Checkpoint replaces logs.
+
+**Answer: B**
+
+</details>
+
+<details>
+<summary>Q9. COUNT(*) - COUNT(salary) with 10 rows, 3 NULL salary</summary>
+
+A. 0  
+B. 3  
+C. 7  
+D. 10
+
+**Answer: B**
+
+</details>
+
+<details>
+<summary>Q10. Precedence graph has T1→T2 and T2→T1</summary>
+
+A. Conflict-serializable  
+B. View-serializable only  
+C. Not conflict-serializable  
+D. Always recoverable
+
+**Answer: C**
+
+</details>
+
+<details>
+<summary>Q11. Strict 2PL guarantees</summary>
+
+A. Serializability only  
+B. Serializability + recoverability + no cascading aborts  
+C. No deadlocks  
+D. Phantom-free without range locks
+
+**Answer: B**
+
+</details>
+
+<details>
+<summary>Q12. Candidate key for R(A,B,C,D), FDs {AB→C, C→D, D→A}</summary>
+
+A. {A,B}  
+B. {B,C}  
+C. {A,D}  
+D. Both AB and BC
+
+**Answer: D**
+
+</details>
+
+<details>
+<summary>Q13. Best index for salary BETWEEN query</summary>
+
+A. Hash on salary  
+B. B+-tree on salary  
+C. Bitmap on department  
+D. No index
+
+**Answer: B**
+
+</details>
+
+<details>
+<summary>Q14. GROUP BY + HAVING query returns</summary>
+
+A. Employee rows  
+B. Avg salary per dept with count > 5  
+C. Depts with >5 distinct salaries  
+D. HAVING error
+
+**Answer: B**
+
+</details>
+
+<details>
+<summary>Q15. LEFT JOIN with 10 left rows and 4 matches produces</summary>
+
+A. 4 rows  
+B. 10 rows with NULLs on unmatched right side  
+C. 14 rows  
+D. Error
+
+**Answer: B**
+
+</details>
+
+<details>
+<summary>Q16. READ COMMITTED still allows</summary>
+
+A. Dirty read  
+B. Non-repeatable read  
+C. Lost update in one statement  
+D. Reading uncommitted data
+
+**Answer: B**
+
+</details>
+
+<details>
+<summary>Q17. commission <> 1000 when commission is NULL</summary>
+
+A. Returned  
+B. Not returned (UNKNOWN)  
+C. Returned only with ANSI_NULLS OFF  
+D. Runtime error
+
+**Answer: B**
+
+</details>
+
+<details>
+<summary>Q18. Highest NF for R(A,B,C), FDs {A→B, B→C, C→A}</summary>
+
+A. 2NF only  
+B. 3NF not BCNF  
+C. BCNF  
+D. Not 1NF
+
+**Answer: C**
+
+</details>
+
+<details>
+<summary>Q19. Count query changes after insert between reads</summary>
+
+A. Dirty read  
+B. Non-repeatable read  
+C. Phantom read  
+D. Lost update
+
+**Answer: C**
+
+</details>
+
+<details>
+<summary>Q20. R(A,B,C,D) with FDs {A→B, C→D} is</summary>
+
+A. BCNF  
+B. 3NF not BCNF  
+C. Not in 2NF (thus not 3NF/BCNF)  
+D. 1NF due to transitive dependencies
+
+**Answer: C**
+
+</details>
