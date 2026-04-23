@@ -32,4 +32,8 @@ I put this repo together while preparing for CS exams. The notes are short, prac
 
 ## Notes
 
+## Caution
+
+Some parts of these notes are AI-generated. Please double-check important facts, formulas, and examples with trusted sources before using them for exams.
+
 If this helps you, feel free to use it and improve it.
