@@ -479,23 +479,72 @@ A) Compulsory B) Capacity C) Conflict D) Coherence
 1. In 8-bit two's complement, the decimal value of `11110001` is:
    - A) −15 B) −14 C) −113 D) 241
 
+   <details>
+   <summary>Reveal answer</summary>
+
+   **A** — Invert `11110001` → `00001110` (=14), add 1 → 15. Sign negative ⇒ **−15**.
+
+   </details>
+
 2. Which gate is functionally complete by itself?
    - A) AND B) OR C) NAND D) XOR
+
+   <details>
+   <summary>Reveal answer</summary>
+
+   **C** — NAND (and NOR) are functionally complete; AND/OR/XOR alone are not.
+
+   </details>
 
 3. How many flip-flops are required to build a modulo-16 counter?
    - A) 2 B) 3 C) 4 D) 16
 
+   <details>
+   <summary>Reveal answer</summary>
+
+   **C** — 2⁴ = 16 states ⇒ **4** flip-flops.
+
+   </details>
+
 4. In a classic 5-stage MIPS pipeline, which hazard is fully resolved by forwarding alone (no stall)?
    - A) Load-use B) Branch mis-prediction C) ALU-result-to-next-ALU RAW D) Structural on single memory port
+
+   <details>
+   <summary>Reveal answer</summary>
+
+   **C** — EX-to-EX forwarding handles back-to-back ALU RAW with no stall. Load-use still needs 1 bubble.
+
+   </details>
 
 5. Which addressing mode places the operand value inside the instruction itself?
    - A) Register direct B) Immediate C) Register indirect D) Indexed
 
+   <details>
+   <summary>Reveal answer</summary>
+
+   **B** — Immediate: operand value is embedded in the instruction field.
+
+   </details>
+
 6. DMA improves performance primarily by:
    - A) Reducing memory size B) Removing per-word CPU involvement in I/O C) Widening the bus D) Reducing cache misses
 
+   <details>
+   <summary>Reveal answer</summary>
+
+   **B** — DMA transfers bulk data without per-word CPU cycles, freeing the CPU for compute.
+
+   </details>
+
 7. Increasing associativity (with capacity and block size fixed) mainly eliminates which miss type?
    - A) Compulsory B) Capacity C) Conflict D) Coherence
+
+   <details>
+   <summary>Reveal answer</summary>
+
+   **C** — Conflict misses disappear as associativity grows; compulsory/capacity do not.
+
+   </details>
 
 8. A hallmark of RISC (vs CISC) is:
    - A) Variable-length instructions with memory operands on most ops
@@ -503,79 +552,160 @@ A) Compulsory B) Capacity C) Conflict D) Coherence
    - C) Heavy microcode for complex instructions
    - D) Very few general-purpose registers
 
+   <details>
+   <summary>Reveal answer</summary>
+
+   **B** — RISC = fixed-length, load/store, many GP registers, hardwired control.
+
+   </details>
+
 9. Add the 8-bit two's complement numbers `01100100 + 00110010` (100 + 50). The result bit pattern and overflow status are:
    - A) `10010110`, signed overflow
    - B) `10010110`, no overflow
    - C) `01010110`, signed overflow
    - D) `10010110`, carry-out only, no overflow
 
+   <details>
+   <summary>Reveal answer</summary>
+
+   **A** — 100 + 50 = 150 = `10010110`. Both operands positive, result MSB=1 ⇒ **signed overflow**.
+
+   </details>
+
 10. Decode the IEEE-754 single-precision number `0 10000001 01000000000000000000000`.
-    - A) 2.5 B) 5.0 C) 1.25 D) 10.0
+
+- A) 2.5 B) 5.0 C) 1.25 D) 10.0
+
+   <details>
+   <summary>Reveal answer</summary>
+
+**B** — Sign 0, exp `10000001` = 129, E = 129 − 127 = 2. Mantissa `1.01`₂ = 1.25. Value = 1.25 × 2² = **5.0**.
+
+   </details>
 
 11. A direct-mapped cache: 32 KiB capacity, 64-byte blocks, 32-bit addresses. How many tag bits per line?
-    - A) 15 B) 16 C) 17 D) 18
+
+- A) 15 B) 16 C) 17 D) 18
+
+   <details>
+   <summary>Reveal answer</summary>
+
+**C** — Offset = log₂ 64 = 6. Lines = 32 KiB / 64 B = 512 ⇒ index = 9. Tag = 32 − 9 − 6 = **17**.
+
+   </details>
 
 12. Given L1 hit = 1 ns, L1 miss rate = 5%, L2 hit = 10 ns, L2 miss rate = 40%, memory = 100 ns, what is AMAT?
-    - A) 3.0 ns B) 3.5 ns C) 3.75 ns D) 4.5 ns
+
+- A) 3.0 ns B) 3.5 ns C) 3.75 ns D) 4.5 ns
+
+   <details>
+   <summary>Reveal answer</summary>
+
+**B** — AMAT = 1 + 0.05·(10 + 0.40·100) = 1 + 0.05·50 = 1 + 2.5 = **3.5 ns**.
+
+   </details>
 
 13. A program is 80% parallelizable. With 8 processors, Amdahl's speedup is approximately:
-    - A) 2.58 B) 3.33 C) 4.00 D) 5.00
+
+- A) 2.58 B) 3.33 C) 4.00 D) 5.00
+
+   <details>
+   <summary>Reveal answer</summary>
+
+**B** — 1 / (0.20 + 0.80/8) = 1 / (0.20 + 0.10) = 1 / 0.30 ≈ **3.33**.
+
+   </details>
 
 14. Simplify `F = A·B + A·B' + A'·B`.
-    - A) `A` B) `B` C) `A + B` D) `A·B`
+
+- A) `A` B) `B` C) `A + B` D) `A·B`
+
+   <details>
+   <summary>Reveal answer</summary>
+
+**C** — Minterms A'B, AB', AB ⇒ everything except A'B' ⇒ **A + B**.
+
+   </details>
 
 15. A 4-stage pipeline at 2 ns/stage vs an 8 ns non-pipelined design. Speedup for 1000 instructions:
-    - A) 2.00× B) 3.33× C) 3.99× D) 4.00×
+
+- A) 2.00× B) 3.33× C) 3.99× D) 4.00×
+
+   <details>
+   <summary>Reveal answer</summary>
+
+**C** — Pipelined = (1000 + 4 − 1) · 2 = 2006 ns; non-pipelined = 1000 · 8 = 8000 ns. 8000 / 2006 ≈ **3.99×**.
+
+   </details>
 
 16. TLB access = 1 ns, memory access = 100 ns, TLB hit rate = 95%, page-table walk = 1 memory access. Effective memory access time (no page faults):
-    - A) 101 ns B) 106 ns C) 111 ns D) 201 ns
+
+- A) 101 ns B) 106 ns C) 111 ns D) 201 ns
+
+   <details>
+   <summary>Reveal answer</summary>
+
+**B** — EAT = 0.95·(1 + 100) + 0.05·(1 + 100 + 100) = 0.95·101 + 0.05·201 = 95.95 + 10.05 = **106 ns**.
+
+   </details>
 
 17. Which write policy updates main memory on every store (higher bus traffic, simpler consistency)?
-    - A) Write-back + write-allocate B) Write-through C) Write-back + no-write-allocate D) Copy-on-write
+
+- A) Write-back + write-allocate B) Write-through C) Write-back + no-write-allocate D) Copy-on-write
+
+   <details>
+   <summary>Reveal answer</summary>
+
+**B** — Write-through writes to memory on every store; simpler consistency, higher bandwidth.
+
+   </details>
 
 18. _(Trap)_ The IEEE-754 single-precision bit pattern `0 00000000 00000000000000000000000` represents:
-    - A) +0 (distinct from −0) B) The smallest positive _normal_ number C) NaN D) +∞
+
+- A) +0 (distinct from −0) B) The smallest positive _normal_ number C) NaN D) +∞
+
+   <details>
+   <summary>Reveal answer</summary>
+
+**A** — All-zero = +0. IEEE-754 has distinct +0 and −0 (only sign bit differs). Trap: not the smallest _normal_ (that requires exp ≠ 0; all-zero exp is subnormal/zero).
+
+   </details>
 
 19. _(Trap)_ In 8-bit two's complement, taking the two's complement of `10000000` yields:
-    - A) `01111111` (+127) B) `10000000` (stays −128; overflow) C) `00000000` (+0) D) `11111111` (−1)
+
+- A) `01111111` (+127) B) `10000000` (stays −128; overflow) C) `00000000` (+0) D) `11111111` (−1)
+
+   <details>
+   <summary>Reveal answer</summary>
+
+**B** — −128 has no positive counterpart in 8-bit two's complement. Invert `10000000` → `01111111`, +1 → `10000000`. Stays −128; operation overflows.
+
+   </details>
 
 20. _(Trap)_ A 5-stage pipeline supposedly yields 5× speedup. With 20% branches and a 3-cycle branch penalty (no prediction, no forwarding from branches), the effective CPI is:
-    - A) 1.0 B) 1.3 C) 1.6 D) 1.9
+
+- A) 1.0 B) 1.3 C) 1.6 D) 1.9
+
+   <details>
+   <summary>Reveal answer</summary>
+
+**C** — CPI = 1 + 0.20 · 3 = 1 + 0.6 = **1.6**. Branch stalls crush the 5× ideal.
+
+   </details>
 
 21. _(Trap)_ Which statement about NAND being "universal" is **false**?
-    - A) Any Boolean function can be built using only NAND gates
-    - B) `NOT A = A NAND A`
-    - C) `A AND B = (A NAND B) NAND (A NAND B)`
-    - D) NAND is associative: `(A NAND B) NAND C = A NAND (B NAND C)`
 
-### ✅ Answer Key & Explanations
+- A) Any Boolean function can be built using only NAND gates
+- B) `NOT A = A NAND A`
+- C) `A AND B = (A NAND B) NAND (A NAND B)`
+- D) NAND is associative: `(A NAND B) NAND C = A NAND (B NAND C)`
 
-<details>
-<summary>Reveal full answer key</summary>
+   <details>
+   <summary>Reveal answer</summary>
 
-1. **A** — Invert `11110001` → `00001110` (=14), add 1 → 15. Sign negative ⇒ **−15**.
-2. **C** — NAND (and NOR) are functionally complete; AND/OR/XOR alone are not.
-3. **C** — 2⁴ = 16 states ⇒ **4** flip-flops.
-4. **C** — EX-to-EX forwarding handles back-to-back ALU RAW with no stall. Load-use still needs 1 bubble.
-5. **B** — Immediate: operand value is embedded in the instruction field.
-6. **B** — DMA transfers bulk data without per-word CPU cycles, freeing the CPU for compute.
-7. **C** — Conflict misses disappear as associativity grows; compulsory/capacity do not.
-8. **B** — RISC = fixed-length, load/store, many GP registers, hardwired control.
-9. **A** — 100 + 50 = 150 = `10010110`. Both operands positive, result MSB=1 ⇒ **signed overflow**.
-10. **B** — Sign 0, exp `10000001` = 129, E = 129 − 127 = 2. Mantissa `1.01`₂ = 1.25. Value = 1.25 × 2² = **5.0**.
-11. **C** — Offset = log₂ 64 = 6. Lines = 32 KiB / 64 B = 512 ⇒ index = 9. Tag = 32 − 9 − 6 = **17**.
-12. **B** — AMAT = 1 + 0.05·(10 + 0.40·100) = 1 + 0.05·50 = 1 + 2.5 = **3.5 ns**.
-13. **B** — 1 / (0.20 + 0.80/8) = 1 / (0.20 + 0.10) = 1 / 0.30 ≈ **3.33**.
-14. **C** — Minterms A'B, AB', AB ⇒ everything except A'B' ⇒ **A + B**.
-15. **C** — Pipelined = (1000 + 4 − 1) · 2 = 2006 ns; non-pipelined = 1000 · 8 = 8000 ns. 8000 / 2006 ≈ **3.99×**.
-16. **B** — EAT = 0.95·(1 + 100) + 0.05·(1 + 100 + 100) = 0.95·101 + 0.05·201 = 95.95 + 10.05 = **106 ns**.
-17. **B** — Write-through writes to memory on every store; simpler consistency, higher bandwidth.
-18. **A** — All-zero = +0. IEEE-754 has distinct +0 and −0 (only sign bit differs). Trap: not the smallest _normal_ (that requires exp ≠ 0; all-zero exp is subnormal/zero).
-19. **B** — −128 has no positive counterpart in 8-bit two's complement. Invert `10000000` → `01111111`, +1 → `10000000`. Stays −128; operation overflows.
-20. **C** — CPI = 1 + 0.20 · 3 = 1 + 0.6 = **1.6**. Branch stalls crush the 5× ideal.
-21. **D** — NAND is **not** associative. Counter-example: `(1 NAND 1) NAND 0 = 0 NAND 0 = 1`, but `1 NAND (1 NAND 0) = 1 NAND 1 = 0`. All other options are true.
+**D** — NAND is **not** associative. Counter-example: `(1 NAND 1) NAND 0 = 0 NAND 0 = 1`, but `1 NAND (1 NAND 0) = 1 NAND 1 = 0`. All other options are true.
 
-</details>
+   </details>
 
 ---
 
@@ -646,33 +776,61 @@ Two threads on different cores write to **different variables** that happen to l
 1. A GPU executing the same kernel across 1024 data elements is best classified as:
    A) SISD B) SIMD C) MISD D) MIMD
 
+   <details>
+   <summary>Reveal answer</summary>
+
+   **B** — single instruction stream, many data elements = SIMD (GPUs, vector units).
+
+   </details>
+
 2. In MESI, a cache line transitions from **E** to **M** on:
    A) a remote read B) a local write C) a local read D) a remote write
+
+   <details>
+   <summary>Reveal answer</summary>
+
+   **B** — a local write on an exclusive line just dirties it in place; no bus traffic needed because no one else has a copy.
+
+   </details>
 
 3. Two threads updating adjacent `int` counters in an array see terrible performance. Most likely cause:
    A) Thread starvation B) False sharing C) Deadlock D) Write-through overhead
 
+   <details>
+   <summary>Reveal answer</summary>
+
+   **B** — adjacent ints live in the same cache line; each write invalidates the other core's copy.
+
+   </details>
+
 4. Amdahl's Law with 10% serial portion, p=∞ predicts max speedup:
    A) 5 B) 10 C) 100 D) unbounded
+
+   <details>
+   <summary>Reveal answer</summary>
+
+   **B** — `1 / 0.10 = 10`. Serial fraction is the hard ceiling as p → ∞.
+
+   </details>
 
 5. Which memory model guarantees loads and stores appear in program order to all threads?
    A) x86 TSO B) ARM C) Sequential consistency D) Release consistency
 
+   <details>
+   <summary>Reveal answer</summary>
+
+   **C** — SC is the strongest; TSO and ARM allow reorderings.
+
+   </details>
+
 6. Directory-based coherence is preferred over snooping when:
    A) there are few cores B) the system has many cores and a non-bus interconnect C) memory is small D) caches are write-through
 
-**Answer Key:**
+   <details>
+   <summary>Reveal answer</summary>
 
-<details>
-<summary>Reveal Practice MCQ answers</summary>
+   **B** — shared buses saturate; directories use point-to-point messages and scale to large core counts.
 
-1. **B** — single instruction stream, many data elements = SIMD (GPUs, vector units).
-2. **B** — a local write on an exclusive line just dirties it in place; no bus traffic needed because no one else has a copy.
-3. **B** — adjacent ints live in the same cache line; each write invalidates the other core's copy.
-4. **B** — `1 / 0.10 = 10`. Serial fraction is the hard ceiling as p → ∞.
-5. **C** — SC is the strongest; TSO and ARM allow reorderings.
-6. **B** — shared buses saturate; directories use point-to-point messages and scale to large core counts.
-
-</details>
+   </details>
 
 ---

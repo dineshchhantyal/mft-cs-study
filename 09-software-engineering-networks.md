@@ -466,109 +466,213 @@ A) Aggregation B) Composition C) Association D) Dependency
 1. Which SDLC model is best suited when requirements are unclear and user feedback is needed early and often?
    - A) Waterfall B) V-Model C) Spiral D) Big Bang
 
+   <details>
+   <summary>Reveal answer</summary>
+
+   **C) Spiral** — Iterative with risk analysis; ideal for evolving requirements. Waterfall needs fixed specs upfront.
+
+   </details>
+
 2. "The system shall encrypt all passwords using bcrypt" is an example of:
    - A) Functional requirement B) Non-functional requirement C) Business requirement D) User requirement
+
+   <details>
+   <summary>Reveal answer</summary>
+
+   **B) Non-functional requirement** — Describes a quality/constraint (security), not a behavior the system performs for users.
+
+   </details>
 
 3. Which coupling is the WORST (tightest)?
    - A) Data coupling B) Stamp coupling C) Control coupling D) Content coupling
 
+   <details>
+   <summary>Reveal answer</summary>
+
+   **D) Content coupling** — One module directly modifies/accesses another's internals. Hierarchy (worst→best): Content > Common > External > Control > Stamp > Data > Message.
+
+   </details>
+
 4. Which cohesion is the BEST (highest)?
    - A) Logical B) Temporal C) Functional D) Procedural
+
+   <details>
+   <summary>Reveal answer</summary>
+
+   **C) Functional cohesion** — All elements contribute to a single well-defined task. Hierarchy (best→worst): Functional > Sequential > Communicational > Procedural > Temporal > Logical > Coincidental.
+
+   </details>
 
 5. A class that handles both database persistence and email notifications violates which SOLID principle?
    - A) OCP B) SRP C) LSP D) DIP
 
+   <details>
+   <summary>Reveal answer</summary>
+
+   **B) SRP** — Single Responsibility Principle: a class should have only one reason to change. Persistence and notifications are two responsibilities.
+
+   </details>
+
 6. A payment system allows plugging in Stripe, PayPal, or Razorpay without modifying existing code. Which pattern?
    - A) Singleton B) Strategy C) Observer D) Factory
+
+   <details>
+   <summary>Reveal answer</summary>
+
+   **B) Strategy** — Encapsulates interchangeable algorithms/behaviors selected at runtime without altering clients. (Factory creates objects; Strategy chooses behavior.)
+
+   </details>
 
 7. A logger class must have exactly one instance across the app. Which pattern?
    - A) Prototype B) Builder C) Singleton D) Adapter
 
+   <details>
+   <summary>Reveal answer</summary>
+
+   **C) Singleton** — Ensures a single instance with global access.
+
+   </details>
+
 8. When a subject's state changes, all dependents are notified automatically. Which pattern?
    - A) Mediator B) Observer C) Visitor D) Command
+
+   <details>
+   <summary>Reveal answer</summary>
+
+   **B) Observer** — One-to-many dependency; subject notifies observers on state change.
+
+   </details>
 
 9. TDD cycle is:
    - A) Code → Test → Refactor B) Red → Green → Refactor C) Design → Code → Test D) Test → Debug → Deploy
 
+   <details>
+   <summary>Reveal answer</summary>
+
+   **B) Red → Green → Refactor** — Write failing test (red), make it pass (green), then clean up (refactor).
+
+   </details>
+
 10. For input range 1–100, Boundary Value Analysis test values are:
-    - A) 1, 50, 100 B) 0, 1, 100, 101 C) 0, 1, 2, 99, 100, 101 D) -1, 0, 101, 102
+
+- A) 1, 50, 100 B) 0, 1, 100, 101 C) 0, 1, 2, 99, 100, 101 D) -1, 0, 101, 102
+
+   <details>
+   <summary>Reveal answer</summary>
+
+**C) 0, 1, 2, 99, 100, 101** — BVA tests just-below, boundary, and just-above on both ends (min−1, min, min+1, max−1, max, max+1).
+
+   </details>
 
 11. A flowgraph has 10 edges, 8 nodes, and 1 connected component. Cyclomatic complexity =
-    - A) 2 B) 3 C) 4 D) 5
+
+- A) 2 B) 3 C) 4 D) 5
+
+   <details>
+   <summary>Reveal answer</summary>
+
+**C) 4** — V(G) = E − N + 2P = 10 − 8 + 2(1) = 4.
+
+   </details>
 
 12. Statement coverage = 100% guarantees:
-    - A) All branches executed B) All paths executed C) Every line executed at least once D) No bugs exist
+
+- A) All branches executed B) All paths executed C) Every line executed at least once D) No bugs exist
+
+   <details>
+   <summary>Reveal answer</summary>
+
+**C) Every line executed at least once** — Statement coverage does NOT guarantee branch/path coverage or bug-free code (trap).
+
+   </details>
 
 13. A "Car HAS-A Engine" relationship where the Engine cannot exist without the Car is:
-    - A) Aggregation B) Composition C) Association D) Dependency
+
+- A) Aggregation B) Composition C) Association D) Dependency
+
+   <details>
+   <summary>Reveal answer</summary>
+
+**B) Composition** — Strong "part-of" with lifecycle dependency (part dies with whole). Aggregation is weaker — part can exist independently.
+
+   </details>
 
 14. Encryption and decryption occur at which OSI layer?
-    - A) Transport B) Session C) Presentation D) Application
+
+- A) Transport B) Session C) Presentation D) Application
+
+   <details>
+   <summary>Reveal answer</summary>
+
+**C) Presentation** — Layer 6 handles encryption, compression, and translation/formatting. (Common trap: people guess Session or Application.)
+
+   </details>
 
 15. Which is TRUE about UDP?
-    - A) Connection-oriented B) Guarantees delivery C) Has 3-way handshake D) Lower overhead than TCP
+
+- A) Connection-oriented B) Guarantees delivery C) Has 3-way handshake D) Lower overhead than TCP
+
+   <details>
+   <summary>Reveal answer</summary>
+
+**D) Lower overhead than TCP** — UDP is connectionless, no handshake, no delivery guarantee; hence smaller header and less overhead.
+
+   </details>
 
 16. The correct order of TCP 3-way handshake is:
-    - A) SYN → ACK → SYN-ACK B) SYN → SYN-ACK → ACK C) ACK → SYN → SYN-ACK D) SYN-ACK → SYN → ACK
+
+- A) SYN → ACK → SYN-ACK B) SYN → SYN-ACK → ACK C) ACK → SYN → SYN-ACK D) SYN-ACK → SYN → ACK
+
+   <details>
+   <summary>Reveal answer</summary>
+
+**B) SYN → SYN-ACK → ACK** — Client sends SYN, server replies SYN-ACK, client confirms with ACK.
+
+   </details>
 
 17. IP address 192.168.5.10 belongs to which class and is it private?
-    - A) Class B, public B) Class C, private C) Class A, private D) Class C, public
+
+- A) Class B, public B) Class C, private C) Class A, private D) Class C, public
+
+   <details>
+   <summary>Reveal answer</summary>
+
+**B) Class C, private** — 192.x is Class C (192–223). Private ranges: 10.0.0.0/8, 172.16–31.0.0/12, 192.168.0.0/16.
+
+   </details>
 
 18. A /26 subnet provides how many usable host addresses?
-    - A) 64 B) 62 C) 32 D) 30
+
+- A) 64 B) 62 C) 32 D) 30
+
+   <details>
+   <summary>Reveal answer</summary>
+
+**B) 62** — /26 → 6 host bits → 2^6 − 2 = 62 usable (subtract network + broadcast). Trap: 64 forgets the −2.
+
+   </details>
 
 19. Which protocol operates at the Network layer?
-    - A) TCP B) HTTP C) ICMP D) FTP
+
+- A) TCP B) HTTP C) ICMP D) FTP
+
+   <details>
+   <summary>Reveal answer</summary>
+
+**C) ICMP** — ICMP (ping, traceroute) runs at Layer 3 (Network). TCP=L4, HTTP/FTP=L7.
+
+   </details>
 
 20. A Layer-3 device that forwards packets between different networks using IP addresses is a:
-    - A) Hub B) Switch C) Bridge D) Router
 
-### ✅ Answer Key & Explanations
+- A) Hub B) Switch C) Bridge D) Router
 
-<details>
-<summary>Reveal full answer key</summary>
+   <details>
+   <summary>Reveal answer</summary>
 
-1. **C) Spiral** — Iterative with risk analysis; ideal for evolving requirements. Waterfall needs fixed specs upfront.
+**D) Router** — Layer 3 device using IP for inter-network forwarding. Switch=L2 (MAC), Hub=L1, Bridge=L2.
 
-2. **B) Non-functional requirement** — Describes a quality/constraint (security), not a behavior the system performs for users.
-
-3. **D) Content coupling** — One module directly modifies/accesses another's internals. Hierarchy (worst→best): Content > Common > External > Control > Stamp > Data > Message.
-
-4. **C) Functional cohesion** — All elements contribute to a single well-defined task. Hierarchy (best→worst): Functional > Sequential > Communicational > Procedural > Temporal > Logical > Coincidental.
-
-5. **B) SRP** — Single Responsibility Principle: a class should have only one reason to change. Persistence and notifications are two responsibilities.
-
-6. **B) Strategy** — Encapsulates interchangeable algorithms/behaviors selected at runtime without altering clients. (Factory creates objects; Strategy chooses behavior.)
-
-7. **C) Singleton** — Ensures a single instance with global access.
-
-8. **B) Observer** — One-to-many dependency; subject notifies observers on state change.
-
-9. **B) Red → Green → Refactor** — Write failing test (red), make it pass (green), then clean up (refactor).
-
-10. **C) 0, 1, 2, 99, 100, 101** — BVA tests just-below, boundary, and just-above on both ends (min−1, min, min+1, max−1, max, max+1).
-
-11. **C) 4** — V(G) = E − N + 2P = 10 − 8 + 2(1) = 4.
-
-12. **C) Every line executed at least once** — Statement coverage does NOT guarantee branch/path coverage or bug-free code (trap).
-
-13. **B) Composition** — Strong "part-of" with lifecycle dependency (part dies with whole). Aggregation is weaker — part can exist independently.
-
-14. **C) Presentation** — Layer 6 handles encryption, compression, and translation/formatting. (Common trap: people guess Session or Application.)
-
-15. **D) Lower overhead than TCP** — UDP is connectionless, no handshake, no delivery guarantee; hence smaller header and less overhead.
-
-16. **B) SYN → SYN-ACK → ACK** — Client sends SYN, server replies SYN-ACK, client confirms with ACK.
-
-17. **B) Class C, private** — 192.x is Class C (192–223). Private ranges: 10.0.0.0/8, 172.16–31.0.0/12, 192.168.0.0/16.
-
-18. **B) 62** — /26 → 6 host bits → 2^6 − 2 = 62 usable (subtract network + broadcast). Trap: 64 forgets the −2.
-
-19. **C) ICMP** — ICMP (ping, traceroute) runs at Layer 3 (Network). TCP=L4, HTTP/FTP=L7.
-
-20. **D) Router** — Layer 3 device using IP for inter-network forwarding. Switch=L2 (MAC), Hub=L1, Bridge=L2.
-
-</details>
+   </details>
 
 ---
 
@@ -656,33 +760,61 @@ Interpretation: the **minimum average number of bits** required to encode one ou
 1. Entropy of a fair 4-sided die is:
    A) 1 bit B) 2 bits C) 4 bits D) log₂ 3 bits
 
+   <details>
+   <summary>Reveal answer</summary>
+
+   **B** — log₂ 4 = 2 bits; uniform distribution achieves max entropy.
+
+   </details>
+
 2. Huffman coding produces an optimal:
    A) block code B) fixed-length code C) prefix code D) arithmetic code
+
+   <details>
+   <summary>Reveal answer</summary>
+
+   **C** — Huffman is optimal among **prefix** codes; arithmetic coding can do slightly better but is not a prefix code.
+
+   </details>
 
 3. On input `<b>hi</b>`, the regex `<.*>` (greedy) matches:
    A) `<b>` B) `</b>` C) `<b>hi</b>` D) nothing
 
+   <details>
+   <summary>Reveal answer</summary>
+
+   **C** — `.*` greedily extends to the last `>`; use `<.*?>` for minimal match.
+
+   </details>
+
 4. Which regex feature is typically **unsupported** in pure DFA engines like RE2?
    A) character classes B) alternation `a|b` C) backreferences `\1` D) quantifier `*`
+
+   <details>
+   <summary>Reveal answer</summary>
+
+   **C** — backrefs make regex equivalence NP-hard; DFA engines deliberately omit them to keep O(n) matching.
+
+   </details>
 
 5. The entropy of a biased coin with p(Heads)=0.9 is:
    A) exactly 1 bit B) 0 bits C) ≈ 0.47 bits D) ≈ 1.47 bits
 
+   <details>
+   <summary>Reveal answer</summary>
+
+   **C** — H = −(0.9·log₂ 0.9 + 0.1·log₂ 0.1) ≈ 0.469 bits.
+
+   </details>
+
 6. `(?=\d)` in a regex is:
    A) a capturing group matching a digit B) a non-capturing group C) a positive lookahead (zero-width) D) a backreference
 
-**Answer Key:**
+   <details>
+   <summary>Reveal answer</summary>
 
-<details>
-<summary>Reveal Practice MCQ answers</summary>
+   **C** — `(?=...)` is a positive lookahead; matches zero characters but asserts the following text matches the inner pattern.
 
-1. **B** — log₂ 4 = 2 bits; uniform distribution achieves max entropy.
-2. **C** — Huffman is optimal among **prefix** codes; arithmetic coding can do slightly better but is not a prefix code.
-3. **C** — `.*` greedily extends to the last `>`; use `<.*?>` for minimal match.
-4. **C** — backrefs make regex equivalence NP-hard; DFA engines deliberately omit them to keep O(n) matching.
-5. **C** — H = −(0.9·log₂ 0.9 + 0.1·log₂ 0.1) ≈ 0.469 bits.
-6. **C** — `(?=...)` is a positive lookahead; matches zero characters but asserts the following text matches the inner pattern.
-
-</details>
+   </details>
 
 ---

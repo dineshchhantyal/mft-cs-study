@@ -88,6 +88,7 @@ Both branches must establish `Q`; each gets to assume `B` (or its negation).
 A loop invariant `I` for `while B do S` must satisfy **three conditions**:
 
 1. **Initialization** — `I` holds when the loop is first reached (`P ⇒ I`).
+
 2. **Preservation** — one iteration keeps `I` true: `{I ∧ B} S {I}`.
 3. **Usefulness** — on exit, `I ∧ ¬B ⇒ Q` (the invariant plus loop-exit implies postcondition).
 
@@ -100,9 +101,11 @@ A loop invariant `I` for `while B do S` must satisfy **three conditions**:
 ```c
 // Precondition: n ≥ 0
 s := 0;
+
 i := 0;
 while (i < n) {
     i := i + 1;
+
     s := s + i;
 }
 // Postcondition: s = n*(n+1)/2
@@ -120,6 +123,7 @@ while (i < n) {
 // Pre: n ≥ 0
 f := 1; k := 0;
 while (k < n) { k := k+1; f := f * k; }
+
 // Post: f = n!
 ```
 
@@ -132,6 +136,7 @@ while (k < n) { k := k+1; f := f * k; }
 i := 0;
 while (i < n ∧ A[i] ≠ x) i := i+1;
 // Post: (i < n ∧ A[i]=x) ∨ (i = n ∧ x ∉ A)
+
 ```
 
 **Invariant:** `0 ≤ i ≤ n  ∧  ∀ j. 0 ≤ j < i ⇒ A[j] ≠ x`.
@@ -144,6 +149,7 @@ lo := 0; hi := n;
 while (lo < hi) {
     m := (lo + hi) / 2;
     if (A[m] < x) lo := m+1;
+
     else          hi := m;
 }
 // Post: lo is least index with A[lo] ≥ x (insertion point)
@@ -156,13 +162,14 @@ while (lo < hi) {
 
 Dijkstra's **predicate transformer**. `wp(S, Q)` is the weakest (most permissive) precondition ensuring `S` terminates with `Q`.
 
-| Statement `S`          | `wp(S, Q)`                                              |
-| ---------------------- | ------------------------------------------------------- |
-| `skip`                 | `Q`                                                     |
-| `x := E`               | `Q[E/x]`                                                |
-| `S1; S2`               | `wp(S1, wp(S2, Q))`                                     |
-| `if B then S1 else S2` | `(B ∧ wp(S1,Q)) ∨ (¬B ∧ wp(S2,Q))`                      |
-| `while B do S`         | least fixpoint; in practice, supply invariant + variant |
+| Statement `S` | `wp(S, Q)` |
+| ------------- | ---------- |
+
+| `skip` | `Q` |
+| `x := E` | `Q[E/x]` |
+| `S1; S2` | `wp(S1, wp(S2, Q))` |
+| `if B then S1 else S2` | `(B ∧ wp(S1,Q)) ∨ (¬B ∧ wp(S2,Q))` |
+| `while B do S` | least fixpoint; in practice, supply invariant + variant |
 
 `{P} S {Q}` is valid iff `P ⇒ wp(S, Q)`. Weakest precondition is **backwards**: start from `Q`, push through `S` in reverse.
 
@@ -173,48 +180,6 @@ To prove a loop terminates, exhibit a **variant (ranking) function** `V` such th
 1. `V` maps states to a **well-founded set** (typically ℕ; no infinite descending chains).
 2. Each iteration strictly **decreases** `V`: `{I ∧ B} V₀ := V; S {V < V₀}`.
 3. `V ≥ 0` (or in general, bounded below) while loop runs.
-
-A well-founded order on ℕ means the sequence of `V` values must eventually hit the floor → exit.
-
-**Examples of variants:**
-
-- Sum / factorial loops: `V = n − i`.
-- Binary search: `V = hi − lo`.
-- Euclid's algorithm: `V = min(a,b)`.
-
-### 1.7 Design by Contract
-
-Introduced by Bertrand Meyer (Eiffel). Each routine has:
-
-- **Precondition** — obligation of caller.
-- **Postcondition** — obligation of callee.
-- **Class invariant** — must hold before/after every public method.
-
-Languages: Eiffel (native), Java (JML), C# (Code Contracts), Ada/SPARK, Python (`icontract`), Racket (`contract-out`). Assertions (`assert`) are a lightweight runtime form.
-
-### 1.8 Cheat-Sheet
-
-| Concept                | One-liner                                                 |
-| ---------------------- | --------------------------------------------------------- |
-| `{P}S{Q}`              | partial correctness                                       |
-| `[P]S[Q]`              | total correctness = partial + termination                 |
-| Assignment             | `{Q[E/x]} x:=E {Q}` — substitute into post                |
-| Loop proof obligations | init, preservation, `I ∧ ¬B ⇒ Q`, variant for termination |
-| `wp(x:=E, Q)`          | `Q[E/x]`                                                  |
-| Consequence            | strengthen pre, weaken post                               |
-| Variant                | decreasing well-founded measure                           |
-
----
-
-## Topic 2 — Parsing & Compiler Front-End (Deeper)
-
-Compilation pipeline:
-
-```
-Source ─► Lexer ─► Parser ─► AST ─► Semantic Analysis ─► IR ─► Optimizer ─► Code Gen ─► Target
-```
-
-### 2.1 Grammar Hierarchy (for parsing)
 
 ```
 Regular  ⊊  LL(k)  ⊊  LR(k)  ⊊  Deterministic CFG  ⊊  CFG  ⊊  CSG  ⊊  Rec. Enum.
@@ -651,11 +616,25 @@ Equispaced interpolation at high degree **oscillates wildly** near the endpoints
 **Q1.** What is the weakest precondition `wp(x := x + 3, x > 10)` ?
 A. `x > 10` B. `x > 7` C. `x > 13` D. `x ≥ 10`
 
+<details>
+<summary>Reveal answer</summary>
+
+**Answer: B.** By the axiom, `wp(x := x + 3, x > 10) = (x + 3 > 10) = x > 7`.
+
+</details>
+
 **Q2.** A triple `{P} S {Q}` (partial correctness) is vacuously true when:
 A. `P` is false initially
 B. `S` does not terminate
 C. `Q` is true
 D. Both A and B
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer: D.** Partial correctness `{P} S {Q}` is an implication: _if_ `P` holds initially _and_ `S` terminates, _then_ `Q`. It is vacuously true when `P` is false (antecedent false) or when `S` diverges (termination condition fails).
+
+</details>
 
 **Q3.** For `while B do S`, the three proof obligations for a candidate invariant `I` are:
 A. `P⇒I`; `{I ∧ B} S {I}`; `I ∧ ¬B ⇒ Q`
@@ -663,14 +642,35 @@ B. `I⇒P`; `{I} S {I ∧ B}`; `I ⇒ Q`
 C. `P⇒Q`; `{I} S {Q}`; `¬B ⇒ Q`
 D. `I ∧ B ⇒ Q`; termination; `P⇒Q`
 
+<details>
+<summary>Reveal answer</summary>
+
+**Answer: A.** Init `P⇒I`, preservation `{I ∧ B} S {I}`, usefulness `I ∧ ¬B ⇒ Q`. (Termination-via-variant is extra, for total correctness.)
+
+</details>
+
 **Q4.** Which is needed for **total** but not partial correctness?
 A. An invariant
 B. A variant (well-founded decreasing measure)
 C. A postcondition
 D. The rule of consequence
 
+<details>
+<summary>Reveal answer</summary>
+
+**Answer: B.** Partial correctness doesn't require termination; total correctness adds a well-founded variant.
+
+</details>
+
 **Q5.** Applying the assignment axiom, `{?} y := 2*x + 1 {y > 5}` gives:
 A. `x > 2` B. `x > 3` C. `x ≥ 2` D. `x > 5`
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer: A.** Substitute: `(2x+1) > 5 ⇔ 2x > 4 ⇔ x > 2`.
+
+</details>
 
 **Q6.** The rule of consequence allows you to:
 A. Strengthen the post and weaken the pre
@@ -678,10 +678,24 @@ B. Weaken the post and strengthen the pre
 C. Weaken both pre and post
 D. Replace an invariant by the postcondition
 
+<details>
+<summary>Reveal answer</summary>
+
+**Answer: B.** You can **strengthen the precondition** (demand more of caller) and **weaken the postcondition** (promise less). Think: `P ⇒ P'`, `Q' ⇒ Q`.
+
+</details>
+
 ### Parsing / Compilers (Q7–Q12)
 
 **Q7.** Which parser family does yacc/bison use?
 A. LL(1) B. LALR(1) C. SLR(0) D. Earley
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer: B.** Yacc and bison generate LALR(1) parsers — LR-class tables with merged states, giving compact tables while handling almost all practical grammars.
+
+</details>
 
 **Q8.** `A → A α | β` is problematic for LL(1) because of:
 A. Left factoring failure
@@ -689,11 +703,25 @@ B. Left recursion (infinite descent)
 C. FOLLOW set collision only
 D. Ambiguity
 
+<details>
+<summary>Reveal answer</summary>
+
+**Answer: B.** `A → A α | β` is immediate left recursion; a predictive top-down parser trying `A` would call `A` again with no input consumed and loop forever. Must be rewritten.
+
+</details>
+
 **Q9.** FIRST(`A B C`) given `ε ∈ FIRST(A)` and `ε ∉ FIRST(B)` equals:
 A. FIRST(A)
 B. FIRST(A) ∪ FIRST(B)
 C. (FIRST(A) − {ε}) ∪ FIRST(B)
 D. FIRST(A) ∪ FIRST(B) ∪ FIRST(C)
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer: C.** Since `ε ∈ FIRST(A)`, you look past `A` to `B`. Because `ε ∉ FIRST(B)`, you stop there. Result: `(FIRST(A) − {ε}) ∪ FIRST(B)`.
+
+</details>
 
 **Q10.** A reduce-reduce conflict in an LALR(1) table means:
 A. Two productions' right-hand sides are candidates to reduce on the same lookahead
@@ -701,11 +729,25 @@ B. The grammar has left recursion
 C. Two tokens can be shifted at once
 D. The lexer returned two tokens
 
+<details>
+<summary>Reveal answer</summary>
+
+**Answer: A.** Reduce-reduce: on the same lookahead in the same state, two different productions are candidates for reduction. Usually signals grammar ambiguity for the parser class.
+
+</details>
+
 **Q11.** Which optimization moves a computation that doesn't depend on the loop index out of the loop?
 A. Dead code elimination
 B. Common subexpression elimination
 C. Loop-invariant code motion
 D. Strength reduction
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer: C.** LICM hoists loop-invariant expressions. DCE removes unused; CSE reuses repeats; strength reduction replaces costly ops with cheaper ones.
+
+</details>
 
 **Q12.** SSA form is characterized by:
 A. Every variable is assigned at most once (with φ-nodes at merges)
@@ -713,13 +755,34 @@ B. All variables become registers
 C. Elimination of all control flow
 D. Removing the symbol table
 
+<details>
+<summary>Reveal answer</summary>
+
+**Answer: A.** SSA = each variable assigned exactly once; at control-flow joins, φ-functions pick the version. Enables precise dataflow.
+
+</details>
+
 ### Numerical Methods (Q13–Q18)
 
 **Q13.** Newton's method converges at what order near a simple root?
 A. Linear B. Superlinear (≈1.618) C. Quadratic D. Cubic
 
+<details>
+<summary>Reveal answer</summary>
+
+**Answer: C.** Newton has quadratic convergence near a simple root with non-zero derivative. (Secant is superlinear ≈ 1.618; bisection is linear.)
+
+</details>
+
 **Q14.** Simpson's 1/3 rule is exact for polynomials up to what degree?
 A. 1 B. 2 C. 3 D. 4
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer: C.** Simpson's 1/3 integrates cubics exactly (one degree higher than its derivation suggests, due to symmetry). Error `O(h⁴)`.
+
+</details>
 
 **Q15.** "Catastrophic cancellation" occurs when:
 A. Multiplying two huge numbers
@@ -727,11 +790,25 @@ B. Subtracting two nearly equal numbers
 C. Dividing by machine epsilon
 D. Overflow in exponent
 
+<details>
+<summary>Reveal answer</summary>
+
+**Answer: B.** Catastrophic cancellation: `x − y` when `x ≈ y` loses the leading significant digits, leaving only noise.
+
+</details>
+
 **Q16.** The condition number `κ(A)` large means:
 A. The algorithm is unstable
 B. The problem itself amplifies input errors
 C. `A` is singular
 D. Pivoting is impossible
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer: B.** `κ(A)` is a property of the **problem**: it bounds how much relative input error can be amplified in the solution. An unstable algorithm is separate; a stable algorithm on an ill-conditioned problem still gives a poor answer.
+
+</details>
 
 **Q17.** To avoid the Runge phenomenon when interpolating with a high-degree polynomial, use:
 A. More equispaced nodes
@@ -739,51 +816,20 @@ B. Chebyshev nodes (or splines)
 C. Lagrange instead of Newton form
 D. Higher precision arithmetic
 
+<details>
+<summary>Reveal answer</summary>
+
+**Answer: B.** Runge phenomenon is tied to equispaced nodes. Chebyshev nodes cluster near endpoints and avoid the oscillation; piecewise (splines) also fixes it.
+
+</details>
+
 **Q18.** Bisection's convergence is:
 A. Quadratic B. Superlinear C. Linear (halves each step) D. Depends on `f`
 
----
-
-### ✅ Answer Key & Explanations
-
 <details>
-<summary>Reveal full answer key</summary>
+<summary>Reveal answer</summary>
 
-**Q1 — B.** By the axiom, `wp(x:=x+3, x>10) = (x+3 > 10) = x > 7`.
-
-**Q2 — D.** Partial correctness `{P}S{Q}` is an implication: _if_ `P` holds initially _and_ `S` terminates, _then_ `Q`. It is vacuously true when `P` is false (antecedent false) or when `S` diverges (termination condition fails).
-
-**Q3 — A.** Init `P⇒I`, preservation `{I∧B} S {I}`, usefulness `I∧¬B⇒Q`. (Termination-via-variant is extra, for total correctness.)
-
-**Q4 — B.** Partial correctness doesn't require termination; total correctness adds a well-founded variant.
-
-**Q5 — A.** Substitute: `(2x+1) > 5 ⇔ 2x > 4 ⇔ x > 2`.
-
-**Q6 — B.** You can **strengthen the precondition** (demand more of caller) and **weaken the postcondition** (promise less). Think: `P ⇒ P'`, `Q' ⇒ Q`.
-
-**Q7 — B.** Yacc and bison generate LALR(1) parsers — LR-class tables with merged states, giving compact tables while handling almost all practical grammars.
-
-**Q8 — B.** `A → A α | β` is immediate left recursion; a predictive top-down parser trying `A` would call `A` again with no input consumed and loop forever. Must be rewritten.
-
-**Q9 — C.** Since `ε ∈ FIRST(A)`, you look past `A` to `B`. Because `ε ∉ FIRST(B)`, you stop there. Result: `(FIRST(A) − {ε}) ∪ FIRST(B)`.
-
-**Q10 — A.** Reduce-reduce: on the same lookahead in the same state, two different productions are candidates for reduction. Usually signals grammar ambiguity for the parser class.
-
-**Q11 — C.** LICM hoists loop-invariant expressions. DCE removes unused; CSE reuses repeats; strength reduction replaces costly ops with cheaper ones.
-
-**Q12 — A.** SSA = each variable assigned exactly once; at control-flow joins, φ-functions pick the version. Enables precise dataflow.
-
-**Q13 — C.** Newton has quadratic convergence near a simple root with non-zero derivative. (Secant is superlinear ≈ 1.618; bisection is linear.)
-
-**Q14 — C.** Simpson's 1/3 integrates cubics exactly (one degree higher than its derivation suggests, due to symmetry). Error `O(h⁴)`.
-
-**Q15 — B.** Catastrophic cancellation: `x − y` when `x ≈ y` loses the leading significant digits, leaving only noise.
-
-**Q16 — B.** `κ(A)` is a property of the **problem**: it bounds how much relative input error can be amplified in the solution. An unstable algorithm is separate; a stable algorithm on an ill-conditioned problem still gives a poor answer.
-
-**Q17 — B.** Runge phenomenon is tied to equispaced nodes. Chebyshev nodes cluster near endpoints and avoid the oscillation; piecewise (splines) also fixes it.
-
-**Q18 — C.** Each bisection step halves the bracket: `|eₙ₊₁| = ½ |eₙ|`. Linear with rate ½, always converges under sign-change + continuity.
+**Answer: C.** Each bisection step halves the bracket: `|eₙ₊₁| = ½ |eₙ|`. Linear with rate ½, always converges under sign-change + continuity.
 
 </details>
 

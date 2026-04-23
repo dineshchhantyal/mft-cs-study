@@ -11,172 +11,266 @@
 
 - **Alphabet (Σ):** finite non-empty set of symbols (e.g., {0,1}).
 - **String:** finite sequence over Σ. Empty string = **ε** (|ε| = 0).
-- **Σ\*** = set of all finite strings over Σ (including ε). Always **countably infinite**.
-- **Σ⁺** = Σ\* \ {ε}.
-- **Language:** any subset L ⊆ Σ\*. Number of possible languages over Σ is **uncountable** (2^ℵ₀) — so most languages are not describable by any finite machine.
-- **Kleene star:** A\* = ⋃\_{i≥0} Aⁱ. Note A⁰ = {ε} always, so ε ∈ A\* for every A (even A = ∅; ∅\* = {ε}).
 
-### String operations
+1. **(Easy)** Which of the following is true about a _superkey_ of a relation?
+   A. It must be minimal.
+   B. It uniquely identifies every tuple but need not be minimal.
+   C. It can contain NULL values in any attribute.
+   D. Every relation has exactly one superkey.
 
-- Concatenation: |xy| = |x|+|y|; associative, not commutative.
-- Reverse: (xy)ᴿ = yᴿxᴿ.
+   <details>
+   <summary>Reveal answer</summary>
 
----
+   **Answer:** B. A superkey uniquely identifies tuples, but a candidate key adds the minimality requirement.
 
-## 2. Regular Languages
+   </details>
 
-### Regular Expressions
+2. **(Easy)** The relational-algebra operator that returns tuples appearing in R but not in S (both union-compatible) is:
+   A. σ
+   B. π
+   C. R − S
+   D. R ⋈ S
 
-**Operators** (precedence high→low): **\* (Kleene)** > **concatenation** > **| (union)**.
+   <details>
+   <summary>Reveal answer</summary>
 
-**Identities:**
+   **Answer:** C. Set difference `R − S` returns tuples in R but not in S.
 
-- R | R = R (idempotent)
-- (R\*)\* = R\*
-- ε | RR\* = R\*
-- (R|S)\* = (R\*S\*)\* = (R\* | S\*)\*
-- ∅R = R∅ = ∅; εR = Rε = R
-- ∅\* = ε\* = ε (denotes {ε})
+   </details>
 
-### DFA — Deterministic Finite Automaton
+3. **(Easy)** In SQL, which clause is evaluated _before_ `SELECT`?
+   A. ORDER BY
+   B. DISTINCT
+   C. HAVING
+   D. LIMIT
 
-**5-tuple:** M = (Q, Σ, δ, q₀, F)
+   <details>
+   <summary>Reveal answer</summary>
 
-- Q: finite states
-- Σ: input alphabet
-- δ: Q × Σ → Q (**total** function — exactly one transition per symbol)
-- q₀ ∈ Q: start state
-- F ⊆ Q: accept states
+   **Answer:** C. Order: FROM → WHERE → GROUP BY → HAVING → SELECT → DISTINCT → ORDER BY → LIMIT. HAVING runs before SELECT.
 
-Accepts w iff δ̂(q₀, w) ∈ F.
+   </details>
 
-### NFA (with ε-transitions)
+4. **(Easy)** Given FDs {A → B, B → C}, by Armstrong's axioms we can derive:
+   A. C → A
+   B. A → C (transitivity)
+   C. B → A
+   D. AC → B only
 
-- δ: Q × (Σ ∪ {ε}) → 2^Q (power set).
-- Accepts if **some** computation ends in F.
-- **Equivalence:** every NFA has an equivalent DFA (subset construction).
-  - DFA states = subsets of NFA states → worst-case **2ⁿ** blowup.
-  - Some languages genuinely need 2ⁿ DFA states (e.g., "n-th from end is 1").
+   <details>
+   <summary>Reveal answer</summary>
 
-### Equivalences (all equally powerful)
+   **Answer:** B. Transitivity: A → B and B → C imply A → C.
 
-**Regex ⇔ NFA ⇔ DFA ⇔ Regular Grammar (right-linear)**
+   </details>
 
-- **Thompson's construction:** regex → ε-NFA (linear size).
-- **Subset construction:** NFA → DFA (exponential).
-- **State elimination** / Arden's lemma: DFA → regex.
+5. **(Easy)** A relation is in **1NF** if:
+   A. It has no partial dependencies.
+   B. It has no transitive dependencies.
+   C. All attribute values are atomic (no repeating groups).
+   D. Every determinant is a candidate key.
 
-### Closure Properties (Regular Languages — all CLOSED)
+   <details>
+   <summary>Reveal answer</summary>
 
-| Operation            | Regular? |
-| -------------------- | -------- |
-| Union                | Yes      |
-| Intersection         | Yes      |
-| Complement           | Yes      |
-| Concatenation        | Yes      |
-| Kleene star          | Yes      |
-| Reverse              | Yes      |
-| Homomorphism         | Yes      |
-| Inverse homomorphism | Yes      |
-| Difference (L1 \ L2) | Yes      |
+   **Answer:** C. 1NF means atomic values and no repeating groups. Partial and transitive dependency rules belong to higher normal forms.
 
-### Pumping Lemma (Regular)
+   </details>
 
-If L is regular, ∃ pumping length **p** such that every w ∈ L with |w| ≥ p can be split w = xyz with:
+6. **(Easy)** In an ER diagram, a _weak entity_ is characterized by:
+   A. Having no attributes.
+   B. Being identified only in combination with its identifying (owner) entity via a partial key.
+   C. Participating only in unary relationships.
+   D. Always having a total primary key of its own.
 
-1. |xy| ≤ p
-2. |y| ≥ 1
-3. ∀ i ≥ 0, xyⁱz ∈ L
+   <details>
+   <summary>Reveal answer</summary>
 
-**Use:** Prove non-regular by contradiction. Adversary picks p; you pick w; adversary picks split; you pick i.
+   **Answer:** B. Weak entities lack a full key of their own and depend on an identifying relationship plus a partial key.
 
-**Classic non-regular examples:**
+   </details>
 
-- {aⁿbⁿ : n ≥ 0}
-- {aⁿbⁿcⁿ}
-- {wwᴿ : w ∈ {a,b}\*} (palindromes)
-- {aᵖ : p prime}
-- {aⁿ² : n ≥ 0}
-- {w : #a(w) = #b(w)}
-- {aⁿbᵐ : n ≠ m} (careful — its complement w.r.t. a\*b\* isn't regular either)
+7. **(Easy)** The "D" in ACID guarantees:
+   A. Transactions appear to execute serially.
+   B. Committed changes survive crashes.
+   C. Concurrent transactions don't see each other's writes.
+   D. All-or-nothing execution.
 
-### Myhill–Nerode Theorem
+   <details>
+   <summary>Reveal answer</summary>
 
-L is regular **iff** the relation "x ≡_L y iff ∀z: xz ∈ L ⇔ yz ∈ L" has **finitely many equivalence classes**. The number of classes = size of the minimum DFA. Gives:
+   **Answer:** B. Durability means committed changes persist through crashes.
 
-- Lower bounds on DFA size.
-- A non-regularity proof technique (exhibit infinitely many distinguishable prefixes).
+   </details>
 
-### DFA Minimization
+8. **(Easy)** Write-Ahead Logging (WAL) requires:
+   A. Data pages be flushed to disk before log records.
+   B. Log records describing a change be flushed to disk _before_ the corresponding data page.
+   C. Logs be written only at commit time.
+   D. Checkpoints replace the need for logs.
 
-- Remove unreachable states.
-- Merge equivalent states via **table-filling (partition refinement)**: start with {F, Q\F}; split if any symbol leads to different classes. Result is **unique** up to renaming.
+   <details>
+   <summary>Reveal answer</summary>
 
----
+   **Answer:** B. WAL requires the log record to be on stable storage before the dirty data page.
 
-## 3. Context-Free Languages
+   </details>
 
-### CFG — Context-Free Grammar
+9. **(Medium)** Consider `SELECT COUNT(*) - COUNT(salary) FROM emp;` over a table of 10 rows where 3 rows have `salary IS NULL`. The result is:
+   A. 0
+   B. 3
+   C. 7
+   D. 10
 
-G = (V, Σ, R, S) where rules look like A → α with A ∈ V, α ∈ (V ∪ Σ)\*.
+   <details>
+   <summary>Reveal answer</summary>
 
-- **Leftmost / rightmost derivation:** always expand leftmost / rightmost nonterminal.
-- **Parse tree:** yields equivalent derivation up to order.
-- **Ambiguous:** some string has ≥2 parse trees. Some CFLs are **inherently ambiguous** (e.g., {aⁱbʲcᵏ : i=j or j=k}).
+   **Answer:** B. `COUNT(*)` = 10 counts all rows; `COUNT(salary)` = 7 ignores NULLs; the difference is 3.
 
-### PDA — Pushdown Automaton
+   </details>
 
-CFG ≡ **nondeterministic** PDA. **DPDA < NPDA** (deterministic is strictly weaker).
+10. **(Medium)** Schedule S has edges T1→T2 and T2→T1 in its precedence graph. S is:
+    A. Conflict-serializable.
+    B. View-serializable only.
+    C. Not conflict-serializable (cycle).
+    D. Always recoverable.
 
-- Example CFL not accepted by any DPDA: {wwᴿ : w ∈ {a,b}\*} (even-length palindromes).
-- DCFLs are closed under complement; CFLs are NOT.
+  <details>
+  <summary>Reveal answer</summary>
 
-### Normal Forms
+**Answer:** C. A cycle in the precedence graph means the schedule is not conflict-serializable.
 
-- **Chomsky Normal Form (CNF):** A → BC or A → a (plus S → ε if ε ∈ L). Enables **CYK parsing** in O(n³).
-- **Greibach Normal Form (GNF):** A → aα where α ∈ V\*. Derivations have length = |string|.
+  </details>
 
-### Pumping Lemma for CFLs
+11. **(Medium)** Strict 2PL guarantees:
+    A. Serializability only.
+    B. Serializability + recoverability, and avoids cascading aborts by holding X-locks till commit/abort.
+    C. No deadlocks.
+    D. Phantom-free reads without index locking.
 
-If L is CFL, ∃ p such that every w with |w| ≥ p can be split w = uvxyz with:
+  <details>
+  <summary>Reveal answer</summary>
 
-1. |vxy| ≤ p
-2. |vy| ≥ 1
-3. ∀ i ≥ 0, uvⁱxyⁱz ∈ L
+**Answer:** B. Strict 2PL holds exclusive locks until commit/abort, giving serializability plus recoverability and no cascading aborts. It does not prevent deadlocks.
 
-**Classic non-CFLs:**
+  </details>
 
-- {aⁿbⁿcⁿ}
-- {ww : w ∈ {a,b}\*} (note: wwᴿ IS CFL, but ww is not)
-- {aⁱbʲcᵏ : i ≤ j ≤ k}
-- {aᵖ : p prime}
+12. **(Medium)** `R(A,B,C,D)` with FDs {AB → C, C → D, D → A}. A candidate key is:
+    A. {A,B}
+    B. {B,C}
+    C. {A,D}
+    D. Both A and B (AB and BC are both candidate keys)
 
-### Closure Properties (CFLs)
+  <details>
+  <summary>Reveal answer</summary>
 
-| Operation        | CFL closed?                        |
-| ---------------- | ---------------------------------- |
-| Union            | **Yes**                            |
-| Concatenation    | **Yes**                            |
-| Kleene star      | **Yes**                            |
-| Reverse          | **Yes**                            |
-| Homomorphism     | **Yes**                            |
-| **Intersection** | **NO**                             |
-| **Complement**   | **NO**                             |
-| CFL ∩ Regular    | **YES** (special case — memorize!) |
-| Difference       | NO                                 |
+**Answer:** D. AB → C → D → A, so AB determines all. Also BC → D → A, so BC is also a candidate key.
 
-**Proof sketch that CFLs not closed under ∩:** {aⁿbⁿcᵐ} and {aᵐbⁿcⁿ} are both CFL; their intersection is {aⁿbⁿcⁿ}, which is not.
+  </details>
 
----
+13. **(Medium)** Which index is _best_ for the query `WHERE salary BETWEEN 50000 AND 70000`?
+    A. Hash index on salary.
+    B. B+-tree index on salary.
+    C. Bitmap index on department.
+    D. No index (full scan always wins).
 
-## 4. Chomsky Hierarchy
+  <details>
+  <summary>Reveal answer</summary>
 
-| Type  | Name                        | Grammar form        | Accepting machine              | Example         |
-| ----- | --------------------------- | ------------------- | ------------------------------ | --------------- |
-| **3** | Regular                     | A → aB, A → a       | DFA / NFA                      | a\*b\*          |
-| **2** | Context-Free                | A → α (α ∈ (V∪Σ)\*) | NPDA                           | aⁿbⁿ            |
-| **1** | Context-Sensitive           | αAβ → αγβ, \|γ\|≥1  | Linear-Bounded Automaton (LBA) | aⁿbⁿcⁿ          |
-| **0** | Recursively Enumerable (RE) | any α → β           | Turing Machine                 | halting problem |
+**Answer:** B. Range queries need ordered traversal; B+-trees support ranges, hash indexes do not.
+
+  </details>
+
+14. **(Medium)** In SQL, `SELECT dept, AVG(salary) FROM emp GROUP BY dept HAVING COUNT(*) > 5;` returns:
+    A. Each employee's salary if their dept has > 5 people.
+    B. Average salary per department, only for departments with more than 5 employees.
+    C. Departments with more than 5 distinct salaries.
+    D. Error: HAVING cannot use COUNT(\*).
+
+  <details>
+  <summary>Reveal answer</summary>
+
+**Answer:** B. GROUP BY forms one row per department, and HAVING filters those groups by aggregate condition.
+
+  </details>
+
+15. **(Medium)** A left outer join `R LEFT JOIN S ON R.x = S.x` on 10 R-rows where only 4 match S will produce:
+    A. 4 rows.
+    B. 10 rows, with NULLs in S's columns for the 6 non-matching R-rows.
+    C. 14 rows.
+    D. An error if S has NULLs in x.
+
+  <details>
+  <summary>Reveal answer</summary>
+
+**Answer:** B. LEFT OUTER JOIN preserves all left rows and fills unmatched right-side columns with NULL.
+
+  </details>
+
+16. **(Medium)** Under isolation level **READ COMMITTED**, which anomaly is _still possible_?
+    A. Dirty read.
+    B. Non-repeatable read.
+    C. Lost update on the same row within one statement.
+    D. Reading uncommitted data.
+
+  <details>
+  <summary>Reveal answer</summary>
+
+**Answer:** B. READ COMMITTED blocks dirty reads but still allows non-repeatable reads and phantoms.
+
+  </details>
+
+17. **(Trap)** `SELECT * FROM emp WHERE commission <> 1000;` on a table where some rows have `commission = NULL`. Those NULL rows are:
+    A. Returned (NULL ≠ 1000).
+    B. Not returned — the predicate evaluates to UNKNOWN, which `WHERE` filters out.
+    C. Returned only if `ANSI_NULLS` is OFF.
+    D. Cause a runtime error.
+
+  <details>
+  <summary>Reveal answer</summary>
+
+**Answer:** B. `NULL <> 1000` is UNKNOWN, not TRUE, so WHERE drops those rows.
+
+  </details>
+
+18. **(Trap)** Relation R(A,B,C) with FDs {A → B, B → C, C → A}. The highest normal form R satisfies is:
+    A. 2NF only.
+    B. 3NF but not BCNF.
+    C. BCNF (every determinant A, B, C is a superkey since all are candidate keys).
+    D. Not even 1NF.
+
+  <details>
+  <summary>Reveal answer</summary>
+
+**Answer:** C. Each attribute is a candidate key in the cyclic FDs, so every determinant is a superkey and the relation is in BCNF.
+
+  </details>
+
+19. **(Trap)** A transaction T1 runs `SELECT COUNT(*) FROM orders WHERE total > 100;` twice. Between the reads, T2 _inserts_ a new qualifying row and commits. T1 sees different counts. This is:
+    A. A dirty read.
+    B. A non-repeatable read (same row changed).
+    C. A phantom read — prevented only by SERIALIZABLE (or predicate/range locks).
+    D. A lost update.
+
+  <details>
+  <summary>Reveal answer</summary>
+
+**Answer:** C. An inserted matching row between two predicate reads is a phantom. It requires SERIALIZABLE or predicate/range locks.
+
+  </details>
+
+20. **(Trap)** R(A,B,C,D) with FDs {A → B, C → D}. R is:
+    A. In BCNF.
+    B. In 3NF but not BCNF (neither A nor C is a superkey).
+    C. Not in 2NF (and thus not in 3NF/BCNF) — partial dependencies on the only candidate key {A,C}.
+    D. In 1NF only because of transitive dependencies.
+
+  <details>
+  <summary>Reveal answer</summary>
+
+**Answer:** C. The only candidate key is {A,C}. A → B and C → D are partial dependencies on that key, so the relation violates 2NF and is only in 1NF.
+
+  </details>
 
 Strict inclusions: **Type 3 ⊊ Type 2 ⊊ Type 1 ⊊ Type 0**.
 Also: **Decidable (recursive)** sits strictly between Type 1 and Type 0.
@@ -298,63 +392,153 @@ L is **NP-complete** if NP-hard AND L ∈ NP.
 
 **Q1.** Which of the following is NOT closed under intersection?
 (a) Regular languages (b) CFLs (c) Decidable languages (d) RE languages
-**Answer: (b).** CFLs are notoriously not closed under intersection.
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** (b). CFLs are notoriously not closed under intersection.
+
+</details>
 
 **Q2.** The language L = {aⁿbⁿcⁿ : n ≥ 0} is:
 (a) Regular (b) CFL but not regular (c) Decidable but not CFL (d) Undecidable
-**Answer: (c).** Pumping lemma for CFL shows it's not CFL; a TM can easily decide it.
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** (c). Pumping lemma for CFLs shows it's not CFL, and a TM can easily decide it.
+
+</details>
 
 **Q3.** Converting an NFA with n states to a DFA, the DFA has at most how many states?
 (a) n (b) n² (c) 2ⁿ (d) n!
-**Answer: (c).** Subset construction.
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** (c). Subset construction.
+
+</details>
 
 **Q4.** Which problem is decidable?
 (a) Does TM M halt on input w? (b) Is L(M) = ∅? (c) Is L(M) regular? (d) Does DFA D accept any string?
-**Answer: (d).** DFA emptiness = reachability of an accept state (BFS). The others are undecidable (a: halting; b,c: by Rice).
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** (d). DFA emptiness is reachability of an accept state (BFS). The others are undecidable (a: halting; b,c: by Rice).
+
+</details>
 
 **Q5.** If A ≤ₘ B and B is decidable, then:
 (a) A is decidable (b) A is RE only (c) A is undecidable (d) nothing can be said
-**Answer: (a).** Fundamental property of many-one reductions.
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** (a). Fundamental property of many-one reductions.
+
+</details>
 
 **Q6.** Which is NOT known to be NP-complete?
 (a) 3-SAT (b) CLIQUE (c) 2-SAT (d) VERTEX-COVER
-**Answer: (c).** 2-SAT ∈ P (Aspvall–Plass–Tarjan, linear time via SCC).
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** (c). 2-SAT ∈ P (Aspvall–Plass–Tarjan, linear time via SCC).
+
+</details>
 
 **Q7.** Regular expression (a|b)\*a(a|b) denotes strings over {a,b} such that:
 (a) end in 'a' (b) contain 'ab' (c) have 'a' as second-to-last symbol (d) start with 'a'
-**Answer: (c).** Matches ...a? where ?∈{a,b}, i.e., 'a' in position |w|−1.
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** (c). Matches ...a? where ?∈{a,b}, i.e., 'a' in position |w|−1.
+
+</details>
 
 **Q8.** Complement of the halting problem is:
 (a) Decidable (b) RE but not decidable (c) co-RE but not RE (d) Both RE and co-RE
-**Answer: (c).** HALT is RE; if HALTᶜ were also RE, HALT would be decidable — contradiction.
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** (c). HALT is RE; if HALTᶜ were also RE, HALT would be decidable, which is impossible.
+
+</details>
 
 **Q9.** Let L1 be CFL and L2 be regular. Which is guaranteed to be CFL?
 (a) L1 ∩ L2 (b) L1 ∪ L2 (c) Complement of L1 (d) Both (a) and (b)
-**Answer: (d).** CFL ∩ Regular = CFL; CFL ∪ CFL = CFL. Complement of CFL might not be CFL.
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** (d). CFL ∩ Regular = CFL; CFL ∪ CFL = CFL. Complement of a CFL might not be CFL.
+
+</details>
 
 **Q10.** Rice's theorem implies that:
 (a) All TM problems are undecidable (b) All nontrivial semantic properties of RE languages are undecidable (c) Syntactic properties are undecidable (d) Halting is decidable
-**Answer: (b).**
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** (b).
+
+</details>
 
 **Q11.** Myhill–Nerode: minimum DFA for L has k states, where k =
 (a) size of any DFA accepting L (b) number of equivalence classes of ≡_L (c) 2^|Σ| (d) always 1
-**Answer: (b).**
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** (b).
+
+</details>
 
 **Q12.** Pumping lemma for regular languages states there exists p such that every string w ∈ L with |w| ≥ p:
 (a) is not in L (b) can be split w=xyz with |xy|≤p, |y|≥1, and xyⁱz ∈ L ∀i≥0 (c) has length exactly p (d) is unique
-**Answer: (b).**
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** (b).
+
+</details>
 
 **Q13.** Which inclusion is PROVEN strict?
 (a) P ⊊ NP (b) NP ⊊ PSPACE (c) P ⊊ EXPTIME (d) PSPACE ⊊ EXPTIME
-**Answer: (c).** Time hierarchy theorem. The others are open.
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** (c). Time hierarchy theorem. The others are open.
+
+</details>
 
 **Q14.** Which language is NOT context-free?
 (a) {aⁿbⁿ} (b) {wwᴿ} (c) {ww} (d) {aⁿbᵐ : n≠m}
-**Answer: (c).** {ww} requires matching arbitrary string to itself — needs more than a stack.
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** (c). {ww} requires matching an arbitrary string to itself, which needs more than a stack.
+
+</details>
 
 **Q15.** The set of all languages over Σ = {0,1} is:
 (a) Finite (b) Countably infinite (c) Uncountable (d) Empty
-**Answer: (c).** 2^Σ\* is uncountable; hence most languages are not recognizable.
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** (c). 2^Σ\* is uncountable; hence most languages are not recognizable.
+
+</details>
 
 ---
 
@@ -433,50 +617,3 @@ L is **NP-complete** if NP-hard AND L ∈ NP.
 
 **Q20.** Which of the following is TRUE about the halting problem?
 (a) It is decidable (b) It is RE but not decidable (c) Its complement is RE (d) It is in P
-
-### ✅ Answer Key & Explanations
-
-<details>
-<summary>Reveal full answer key</summary>
-
-**Q1. (c) 8.** For the k-th last symbol condition, a DFA needs 2ᵏ states; here k=3 → 2³ = 8.
-
-**Q2. (b) (a*b*)\*.** Generates all strings over {a,b}. (a) misses 'ba'; (c) misses ε; (d) misses mixed strings.
-
-**Q3. (c) 2ⁿ.** Subset construction — each DFA state is a subset of NFA states.
-
-**Q4. (b) CFLs.** Classic trap: CFLs are NOT closed under intersection or complement. All others are closed under intersection.
-
-**Q5. (c).** {aⁿbⁿcⁿ} is the canonical non-CFL but is context-sensitive (and decidable).
-
-**Q6. (b) A stack.** The defining feature of a PDA.
-
-**Q7. (b) DPDA strictly < NPDA.** Unlike DFAs/NFAs, determinism reduces power for PDAs (e.g., {wwᴿ} is CFL but not DCFL).
-
-**Q8. (b) {wwᴿ}.** Classic palindrome-like CFL accepted by NPDA. {ww} is NOT a CFL — the stack can't match a string to itself in order.
-
-**Q9. (b) Context-free.** CFL ∩ Regular = CFL — standard closure property and common MFT trap.
-
-**Q10. (b).** Checking if a CFG generates ε is decidable. All others are undecidable by Rice's theorem or reduction from halting.
-
-**Q11. (c).** Number of states is a syntactic property of M, not a semantic property of L(M), so Rice doesn't apply. All others are nontrivial semantic properties → undecidable.
-
-**Q12. (c).** L is decidable iff both L and Lᶜ are RE (by the RE ∩ co-RE = decidable theorem).
-
-**Q13. (b) 2-SAT.** 2-SAT is in P (via implication graph / SCCs); 3-SAT is NP-complete — key trap.
-
-**Q14. (b) A ∈ P.** Polynomial-time reductions preserve P membership downward.
-
-**Q15. (c) 3-SAT.** Cook–Levin theorem; 2-SAT is in P; sorting and matrix multiplication are in P.
-
-**Q16. (a).** Standard CFL pumping lemma statement — |vxy| ≤ p, |vy| ≥ 1.
-
-**Q17. (c).** Every CFL is decidable (CYK algorithm, O(n³)). (a) false (halting is RE not decidable), (b) false, (d) false.
-
-**Q18. (c) Context-sensitive.** Chomsky hierarchy: Type-0 RE, Type-1 CSL, Type-2 CFL, Type-3 Regular.
-
-**Q19. (c) co-RE but not RE.** E_TM is co-RE (can enumerate non-empty witnesses) but not RE — reduction from HALT complement.
-
-**Q20. (b).** HALT is the canonical RE-but-undecidable language. Its complement is NOT RE (it's co-RE only).
-
-</details>

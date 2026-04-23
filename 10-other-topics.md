@@ -559,11 +559,29 @@ B. Because rotation requires 4 parameters
 C. To represent translation as matrix multiplication using homogeneous coordinates
 D. To speed up GPU memory access
 
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** C
+
+Translation is affine, not linear in 3D. Homogeneous coords add a 4th component so translation can be encoded in matrix multiplication, enabling composition.
+
+</details>
+
 **Q2.** You first translate a 2D object by (5, 0), then rotate 90° about the origin. Where does a point initially at (0, 0) end up?
 A. (0, 0)
 B. (5, 0)
 C. (0, 5)
 D. (−5, 0)
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** C
+
+Starting at (0,0), translate +5,0 → (5,0). Rotating (5,0) by 90° about origin gives (0,5). The correct answer is **C. (0, 5)**.
+
+</details>
 
 **Q3.** Which of the following is NOT a raster format?
 A. JPEG
@@ -571,11 +589,29 @@ B. PNG
 C. SVG
 D. GIF
 
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** C
+
+SVG is vector (XML-based). The others are pixel-grid raster formats.
+
+</details>
+
 **Q4.** What does the Z-buffer algorithm solve?
 A. Anti-aliasing
 B. Hidden surface removal
 C. Texture mapping
 D. Color quantization
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** B
+
+Z-buffer stores per-pixel depth; fragments closer to the camera overwrite farther ones, achieving hidden surface removal.
+
+</details>
 
 **Topic 2 — AI**
 
@@ -585,11 +621,29 @@ B. DFS
 C. IDS
 D. Greedy best-first
 
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** C
+
+Iterative Deepening Search combines DFS's O(bd) space with BFS's completeness and optimality under unit costs. BFS is O(b^d) space.
+
+</details>
+
 **Q6.** A heuristic h is admissible if:
 A. h(n) = h*(n) always
 B. h(n) ≥ h*(n) for all n
 C. h(n) ≤ h\*(n) for all n
 D. h satisfies the triangle inequality
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** C
+
+Admissible means never overestimates true cost: h(n) ≤ h\*(n).
+
+</details>
 
 **Q7.** Alpha-beta pruning's best-case time complexity is:
 A. O(b^d)
@@ -597,11 +651,29 @@ B. O(b^(d/2))
 C. O(d^b)
 D. O(bd)
 
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** B
+
+With perfect move ordering, alpha-beta effectively halves the depth, giving O(b^(d/2)).
+
+</details>
+
 **Q8.** A classifier predicts 100 positives, 80 of which are correct. There are 200 actual positives in the dataset. What are precision and recall?
 A. P=0.80, R=0.40
 B. P=0.40, R=0.80
 C. P=0.80, R=0.80
 D. P=0.50, R=0.50
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** A
+
+Precision = TP/(TP+FP) = 80/100 = 0.80. Recall = TP/(TP+FN) = 80/200 = 0.40.
+
+</details>
 
 **Topic 3 — Cryptography**
 
@@ -611,11 +683,29 @@ B. It requires a long IV
 C. Identical plaintext blocks produce identical ciphertext blocks, revealing patterns
 D. It cannot be parallelized
 
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** C
+
+ECB encrypts each block independently, so identical plaintext blocks yield identical ciphertext blocks and leak structure.
+
+</details>
+
 **Q10.** Which service does a MAC provide that a plain hash does not, and which does a digital signature provide that a MAC does not?
 A. Confidentiality; Integrity
 B. Authentication; Non-repudiation
 C. Non-repudiation; Authentication
 D. Integrity; Confidentiality
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** B
+
+Plain hash provides integrity only. MAC adds authentication. Digital signature additionally provides non-repudiation because only the private-key holder could have signed.
+
+</details>
 
 **Q11.** Diffie–Hellman key exchange, used alone, is vulnerable to:
 A. Brute force on 128-bit keys
@@ -623,11 +713,29 @@ B. Man-in-the-middle attack
 C. Collision attack
 D. Timing attack
 
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** B
+
+Unauthenticated DH allows an attacker to perform separate exchanges with each party and relay traffic. Fix with certificate-based authentication.
+
+</details>
+
 **Q12.** For a 256-bit hash function, approximately how many hashes must be computed to find a collision with 50% probability (birthday bound)?
 A. 2^32
 B. 2^64
 C. 2^128
 D. 2^256
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** C
+
+Birthday bound is approximately 2^(n/2). For n = 256, that is 2^128 operations.
+
+</details>
 
 **Topic 4 — HCI**
 
@@ -637,11 +745,29 @@ B. Proportional to target width
 C. Increases logarithmically with distance/width ratio
 D. Decreases linearly with distance
 
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** C
+
+T = a + b·log₂(D/W + 1), so pointing time grows logarithmically with the distance-to-width ratio.
+
+</details>
+
 **Q14.** A user means to click "Save" but clicks "Save As" by accident. This error is best classified as a:
 A. Mistake
 B. Slip
 C. Lapse
 D. Violation
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** B
+
+Slip means correct intention, wrong action. Mistake means wrong intention altogether.
+
+</details>
 
 **Q15.** Which is NOT one of Nielsen's 10 heuristics?
 A. Visibility of system status
@@ -649,11 +775,29 @@ B. Aesthetic and minimalist design
 C. Gestalt principle of similarity
 D. Match between system and real world
 
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** C
+
+Gestalt principles are perceptual grouping laws, not part of Nielsen's 10 usability heuristics.
+
+</details>
+
 **Q16.** WCAG's four principles are summarized by the acronym:
 A. RACI
 B. POUR
 C. SOLID
 D. CRUD
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** B
+
+Perceivable, Operable, Understandable, Robust -> POUR.
+
+</details>
 
 **Topic 5 — Ethics & Licensing**
 
@@ -663,11 +807,29 @@ B. Pay the FSF a license fee
 C. Release your combined application's source under GPL when you distribute
 D. Only attribute the authors in a NOTICE file
 
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** C
+
+GPL is viral on distribution: combining and distributing with GPL code obliges you to license the combined work under GPL and provide source.
+
+</details>
+
 **Q18.** Which of the following is covered by **copyright**, not patent?
 A. A new hardware chip design
 B. The expression of a program's source code
 C. A secret manufacturing process kept internal
 D. A company logo
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** B
+
+Source code expression is covered by copyright. Chip design is patent, secret process is trade secret, logo is trademark.
+
+</details>
 
 **Q19.** A GDPR principle requiring collection of only the data needed for a stated purpose is called:
 A. Purpose limitation
@@ -675,43 +837,27 @@ B. Data minimization
 C. Storage limitation
 D. Accountability
 
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** B
+
+Data minimization means only collecting what's necessary for the stated purpose.
+
+</details>
+
 **Q20.** Which license permits use in closed-source commercial software with minimal obligations (essentially preserve copyright notice)?
 A. GPL v3
 B. AGPL
 C. MIT
 D. LGPL
 
----
-
-### ✅ Answer Key & Explanations
-
 <details>
-<summary>Reveal full answer key</summary>
+<summary>Reveal answer</summary>
 
-| #   | Ans   | Explanation                                                                                                                                                                                                   |
-| --- | ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1   | **C** | Translation is affine, not linear in 3D. Homogeneous coords add a 4th component so translation can be encoded in matrix multiplication, enabling composition.                                                 |
-| 2   | **B** | Starting at (0,0), translate +5,0 → (5,0). Rotating (5,0) by 90° about origin gives (0,5)… wait: check. Rotation of (x,y) by 90° CCW = (−y, x) = (0, 5). So answer is **C. (0, 5)**. (Correct answer: **C**.) |
-| 3   | **C** | SVG is vector (XML-based). The others are pixel-grid raster formats.                                                                                                                                          |
-| 4   | **B** | Z-buffer stores per-pixel depth; fragments closer to camera overwrite, achieving hidden surface removal.                                                                                                      |
-| 5   | **C** | Iterative Deepening Search combines DFS's O(bd) space with BFS's completeness and optimality (under unit costs). BFS is O(b^d) space.                                                                         |
-| 6   | **C** | Admissible = never overestimates true cost. h(n) ≤ h\*(n).                                                                                                                                                    |
-| 7   | **B** | With perfect move ordering, alpha-beta effectively halves the depth → O(b^(d/2)).                                                                                                                             |
-| 8   | **A** | Precision = TP/(TP+FP) = 80/100 = 0.80. Recall = TP/(TP+FN) = 80/200 = 0.40.                                                                                                                                  |
-| 9   | **C** | ECB encrypts each block independently; identical plaintext blocks yield identical ciphertext, leaking structure (e.g., ECB penguin).                                                                          |
-| 10  | **B** | Plain hash → integrity only. MAC adds **authentication** (keyed). Digital signature additionally provides **non-repudiation** (only private-key holder could have signed).                                    |
-| 11  | **B** | Unauthenticated DH: attacker performs separate exchanges with each party, relaying. Fix with cert-based authentication.                                                                                       |
-| 12  | **C** | Birthday bound ≈ 2^(n/2). For n=256 → 2^128 operations.                                                                                                                                                       |
-| 13  | **C** | T = a + b·log₂(D/W + 1) — logarithmic in distance-to-width ratio.                                                                                                                                             |
-| 14  | **B** | Slip = correct intention, wrong action. Mistake = wrong intention altogether.                                                                                                                                 |
-| 15  | **C** | Gestalt principles are perceptual grouping laws, not part of Nielsen's 10 usability heuristics.                                                                                                               |
-| 16  | **B** | Perceivable, Operable, Understandable, Robust → POUR.                                                                                                                                                         |
-| 17  | **C** | GPL is viral on distribution: combining and distributing with GPL code obliges you to license the combined work under GPL and provide source.                                                                 |
-| 18  | **B** | Source code expression = copyright (auto on fixation). Chip = patent. Secret process = trade secret. Logo = trademark.                                                                                        |
-| 19  | **B** | Data minimization: only collect what's necessary for the stated purpose.                                                                                                                                      |
-| 20  | **C** | MIT is a permissive license with minimal obligations — basically preserve the copyright/license notice.                                                                                                       |
+**Answer:** C
 
-**Note on Q2:** The correct letter is **C (0, 5)**. Row 2 of the table above notes the derivation — rotation 90° CCW maps (5,0) → (0,5).
+MIT is a permissive license with minimal obligations, essentially preserving the copyright/license notice.
 
 </details>
 

@@ -181,35 +181,78 @@ Key consequence: column **aliases defined in SELECT** cannot be used in `WHERE`/
 - **Rigorous 2PL**: hold all locks (S and X) until commit.
 - **Deadlock**: cycle in wait-for graph. Handle via detection (abort victim), prevention (wait-die, wound-wait), timeouts, or lock ordering.
 
+   <details>
+   <summary>Reveal answer</summary>
+
+  **Answer:** B. A superkey uniquely identifies tuples, but a candidate key adds the minimality requirement.
+
+   </details>
+
 ### Timestamp Ordering
 
 - Each txn gets TS at start. For each item: `readTS`, `writeTS`.
 - On read/write, if it would violate timestamp order → abort. No deadlocks, but cascading aborts possible.
 
+   <details>
+   <summary>Reveal answer</summary>
+
+  **Answer:** C. Set difference `R − S` returns tuples in R but not in S.
+
+   </details>
+
 ---
 
 ## 8. Isolation Levels (SQL Standard)
 
-| Level            | Dirty Read | Non-repeatable Read | Phantom Read |
-| ---------------- | ---------- | ------------------- | ------------ |
+| Level | Dirty Read | Non-repeatable Read | Phantom Read |
+| ----- | ---------- | ------------------- | ------------ |
+
+   <details>
+   <summary>Reveal answer</summary>
+
+**Answer:** C. Order: FROM → WHERE → GROUP BY → HAVING → SELECT → DISTINCT → ORDER BY → LIMIT. HAVING runs before SELECT.
+
+   </details>
 | READ UNCOMMITTED | Possible   | Possible            | Possible     |
 | READ COMMITTED   | **No**     | Possible            | Possible     |
 | REPEATABLE READ  | **No**     | **No**              | Possible     |
 | SERIALIZABLE     | **No**     | **No**              | **No**       |
 
 - **Dirty read**: read uncommitted data.
+
+   <details>
+   <summary>Reveal answer</summary>
+
+  **Answer:** B. Transitivity: A → B and B → C imply A → C.
+
+   </details>
+
 - **Non-repeatable read**: re-read a row → different value.
 - **Phantom read**: re-run a range query → different set of rows. Prevented only by **predicate/range locks** or serializable isolation.
 - Snapshot isolation (MVCC) prevents dirty/non-repeatable/phantom but allows **write skew** (not fully serializable).
 
 ---
 
+   <details>
+   <summary>Reveal answer</summary>
+
+**Answer:** C. 1NF means atomic values and no repeating groups. Partial and transitive dependency rules belong to higher normal forms.
+
+   </details>
 ## 9. Indexing
 
 - **B+ tree**: balanced, all data in leaves, leaves linked → great for range queries and equality. O(log n).
 - **Hash index**: O(1) equality, **no range support**.
 - **Clustered index**: table rows physically ordered by key (one per table).
 - **Non-clustered (secondary)**: separate structure pointing to rows; can have many.
+
+   <details>
+   <summary>Reveal answer</summary>
+
+  **Answer:** B. Weak entities lack a full key of their own and depend on an identifying relationship plus a partial key.
+
+   </details>
+
 - **Dense** (entry per record) vs **sparse** (entry per block, must be clustered).
 - **Covering index**: includes all needed columns → avoids table lookup.
 - Indexes speed up reads, slow down writes (maintenance cost).
@@ -217,23 +260,52 @@ Key consequence: column **aliases defined in SELECT** cannot be used in `WHERE`/
 
 ---
 
+   <details>
+   <summary>Reveal answer</summary>
+
+**Answer:** B. Durability means committed changes persist through crashes.
+
+   </details>
+
 ## 10. Recovery
 
 - **WAL (write-ahead logging)**: log record flushed to stable storage **before** corresponding data page.
 - **Log record**: `<Ti, X, old, new>`.
 - **Undo**: revert uncommitted txns (use old value).
+
+   <details>
+   <summary>Reveal answer</summary>
+
+  **Answer:** B. WAL requires the log record to be on stable storage before the dirty data page.
+
+   </details>
+
 - **Redo**: reapply committed txns that didn't make it to disk (use new value).
 - **Checkpoint**: flush dirty pages + write checkpoint record → limits recovery scan.
 - **ARIES**: analysis → redo (from earliest dirty page LSN) → undo (losers). Uses LSN, PageLSN, DPT, TT.
 
 ---
 
+   <details>
+   <summary>Reveal answer</summary>
+
+**Answer:** B. `COUNT(*)` = 10 counts all rows; `COUNT(salary)` = 7 ignores NULLs; the difference is 3.
+
+   </details>
 ## 11. MFT Trick Patterns
 
 1. **Candidate key**: attribute that's **never on RHS** of any FD must be in every candidate key.
 2. **`COUNT(*)` vs `COUNT(col)`**: only `COUNT(*)` includes NULL rows.
 3. **`NOT IN` + NULL** in subquery → returns nothing. Prefer `NOT EXISTS`.
 4. **BCNF decomposition**: might lose dependency preservation. 3NF always preserves.
+
+   <details>
+   <summary>Reveal answer</summary>
+
+   **Answer:** C. A cycle in the precedence graph means the schedule is not conflict-serializable.
+
+   </details>
+
 5. **Phantoms** need range/predicate locks; row locks alone don't prevent them.
 6. **Conflict-serializable test**: precedence graph acyclicity.
 7. **Lossless decomposition test**: R1 ∩ R2 is a superkey of R1 or R2.
@@ -241,67 +313,177 @@ Key consequence: column **aliases defined in SELECT** cannot be used in `WHERE`/
 9. **`GROUP BY`**: every non-aggregated SELECT column must appear in GROUP BY (standard SQL).
 10. **Outer join cardinality**: `|LEFT JOIN|` ≥ `|INNER JOIN|`.
 
+   <details>
+   <summary>Reveal answer</summary>
+
+**Answer:** B. Strict 2PL holds exclusive locks until commit/abort, giving serializability plus recoverability and no cascading aborts. It does not prevent deadlocks.
+
+   </details>
+
 ---
 
 ## 12. Practice MCQs
 
 **Q1.** R(A,B,C,D) with FDs: A→B, B→C, C→D. Candidate keys?
 
+   <details>
+   <summary>Reveal answer</summary>
+
+**Answer:** D. AB → C → D → A, so AB determines all. Also BC → D → A, so BC is also a candidate key.
+
+   </details>
+
 - (a) A (b) AB (c) AC (d) ABCD
-  **A: (a) A.** A⁺ = ABCD. B,C,D each appear on RHS, A never does → A must be in every key. A alone suffices → only candidate key.
+
+<details>
+<summary>Reveal answer</summary>
+
+   <details>
+   <summary>Reveal answer</summary>
+
+**Answer:** B. Range queries need ordered traversal; B+-trees support ranges, hash indexes do not.
+
+   </details>
+**Answer:** (a) A. A⁺ = ABCD. B, C, D each appear on RHS, A never does, so A must be in every key. A alone suffices, so it is the only candidate key.
+
+</details>
 
 **Q2.** Table T(id, val) has rows (1,10), (2,NULL), (3,20). What's `SELECT COUNT(*), COUNT(val), SUM(val), AVG(val) FROM T;`?
 
-- **A:** 3, 2, 30, 15. (AVG = 30/2, not 30/3.)
+   <details>
+   <summary>Reveal answer</summary>
+
+**Answer:** B. GROUP BY forms one row per department, and HAVING filters those groups by aggregate condition.
+
+   </details>
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** 3, 2, 30, 15. AVG = 30/2, not 30/3.
+
+</details>
+
+   <details>
+   <summary>Reveal answer</summary>
+
+**Answer:** B. LEFT OUTER JOIN preserves all left rows and fills unmatched right-side columns with NULL.
+
+   </details>
 
 **Q3.** R(A,B,C) with FDs A→B, B→C. Highest normal form?
 
 - (a) 1NF (b) 2NF (c) 3NF (d) BCNF
-  **A: (b) 2NF.** Key is A. B→C is transitive (B not superkey, C not prime) → violates 3NF.
 
+<details>
+
+   <details>
+   <summary>Reveal answer</summary>
+
+**Answer:** B. READ COMMITTED blocks dirty reads but still allows non-repeatable reads and phantoms.
+
+   </details>
+<summary>Reveal answer</summary>
+
+**Answer:** (b) 2NF. Key is A. B→C is transitive (B not superkey, C not prime), so it violates 3NF.
+
+</details>
+
+   <details>
+   <summary>Reveal answer</summary>
+
+**Answer:** B. `NULL <> 1000` is UNKNOWN, not TRUE, so WHERE drops those rows.
+
+   </details>
 **Q4.** Schedule: T1:R(A); T2:W(A); T1:W(A); T2:Commit; T1:Commit. Conflict serializable?
 
-- Conflicts: T1.R(A)–T2.W(A) ⇒ T1→T2. T2.W(A)–T1.W(A) ⇒ T2→T1. **Cycle ⇒ NOT conflict serializable.**
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** No. T1.R(A)–T2.W(A) gives T1→T2, and T2.W(A)–T1.W(A) gives T2→T1. The cycle means the schedule is not conflict serializable.
+
+   <details>
+   <summary>Reveal answer</summary>
+
+**Answer:** C. Each attribute is a candidate key in the cyclic FDs, so every determinant is a superkey and the relation is in BCNF.
+
+   </details>
+
+</details>
 
 **Q5.** Which isolation level allows phantoms but not non-repeatable reads?
 
-- **A: REPEATABLE READ.**
+<details>
 
-**Q6.** `SELECT * FROM A LEFT JOIN B ON A.x = B.x WHERE B.y = 5;` — Issue?
+   <details>
+   <summary>Reveal answer</summary>
 
-- **A:** The WHERE on B effectively turns it into an inner join (NULLs from unmatched A rows fail `B.y = 5`). Move predicate to `ON` clause to preserve.
+**Answer:** C. An inserted matching row between two predicate reads is a phantom. It requires SERIALIZABLE or predicate/range locks.
 
-**Q7.** R(A,B,C,D), FDs: AB→C, C→D, D→A. Is R in BCNF?
+   </details>
+<summary>Reveal answer</summary>
 
-- Candidate keys: AB, BC, BD (check closures). C→D violates BCNF (C not a superkey). **Not BCNF; it is 3NF** (D is prime since BD is a key, A is prime since AB is a key).
+**Answer:** REPEATABLE READ.
 
-**Q8.** Which operator expresses "customers who bought **every** product"?
+</details>
 
-- **A: Division (÷).**
+   <details>
+   <summary>Reveal answer</summary>
 
-**Q9.** 100 rows in A, 50 in B, `A CROSS JOIN B`?
+**Answer:** C. The only candidate key is {A,C}. A → B and C → D are partial dependencies on that key, so the relation violates 2NF and is only in 1NF.
 
-- **A: 5000.**
+   </details>
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** 5000.
+
+</details>
 
 **Q10.** `SELECT dept, COUNT(*) FROM emp GROUP BY dept HAVING COUNT(*) > 5 ORDER BY dept;` — if `emp` is empty?
 
-- **A:** Zero rows (no groups formed). Note: a query with no GROUP BY and aggregates only would return one row even on empty input.
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** Zero rows, because no groups are formed. A query with no GROUP BY and only aggregates would return one row even on empty input.
+
+</details>
 
 **Q11.** Which property does strict 2PL guarantee beyond plain 2PL?
 
-- **A:** Avoids **cascading aborts** and ensures recoverability/strictness by holding X-locks until commit.
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** It avoids cascading aborts and ensures recoverability/strictness by holding X-locks until commit.
+
+</details>
 
 **Q12.** `WHERE col NOT IN (SELECT x FROM T)` returns nothing. Why?
 
-- **A:** Subquery returned a NULL; `col <> NULL` is UNKNOWN for every row → all filtered out. Use `NOT EXISTS`.
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** The subquery returned a NULL; `col <> NULL` is UNKNOWN for every row, so all rows are filtered out. Use `NOT EXISTS`.
+
+</details>
 
 **Q13.** R1 ⋈ R2 where R1 has schema (A,B), R2 has (B,C). Lossless guarantee when decomposing R(A,B,C)?
 
-- **A:** Lossless iff B → A or B → C (common attr B is a key in one side).
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** Lossless iff B → A or B → C, since the common attribute B must be a key in one side.
+
+</details>
 
 **Q14.** B+ tree vs hash index — which supports `WHERE salary BETWEEN 1000 AND 2000`?
 
-- **A: B+ tree** (ordered leaves). Hash cannot do range.
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** B+ tree, because its ordered leaves support range scans. Hash indexes cannot do range queries.
+
+</details>
 
 ---
 
@@ -481,31 +663,3 @@ R → R1, R2 lossless iff (R1 ∩ R2) → R1 or (R1 ∩ R2) → R2.
     B. In 3NF but not BCNF (neither A nor C is a superkey).
     C. Not in 2NF (and thus not in 3NF/BCNF) — partial dependencies on the only candidate key {A,C}.
     D. In 1NF only because of transitive dependencies.
-
-### ✅ Answer Key & Explanations
-
-<details>
-<summary>Reveal full answer key</summary>
-
-1. **B** — A superkey uniquely identifies tuples; a _candidate_ key adds the minimality requirement.
-2. **C** — Set difference `R − S` returns tuples in R but not S.
-3. **C** — Order: FROM → WHERE → GROUP BY → HAVING → **SELECT** → DISTINCT → ORDER BY → LIMIT. HAVING runs before SELECT.
-4. **B** — Transitivity: A → B and B → C ⇒ A → C.
-5. **C** — 1NF = atomic values / no repeating groups. No partial (2NF) or transitive (3NF) dependency constraints yet.
-6. **B** — Weak entities lack a full key of their own and depend on an identifying relationship + partial (discriminator) key.
-7. **B** — Durability = committed changes persist through crashes.
-8. **B** — WAL's core rule: log record on stable storage _before_ the dirty data page.
-9. **B** — `COUNT(*)` = 10 counts all rows; `COUNT(salary)` = 7 ignores NULLs; difference = 3 (the NULL count).
-10. **C** — A cycle in the precedence graph means the schedule is **not** conflict-serializable.
-11. **B** — Strict 2PL holds exclusive locks until commit/abort, giving serializability + recoverability + no cascading aborts. It does _not_ prevent deadlocks.
-12. **D** — AB → C → D → A, so AB determines all; also BC → (via C→D→A) → all, so BC is also a candidate key.
-13. **B** — Range queries need ordered traversal; B+-trees support ranges, hash indexes don't.
-14. **B** — Standard GROUP BY + HAVING semantics: aggregate per group, filter groups by aggregate predicate.
-15. **B** — LEFT OUTER JOIN preserves all left rows; unmatched right side becomes NULL.
-16. **B** — READ COMMITTED blocks dirty reads but _allows_ non-repeatable reads and phantoms.
-17. **B** — NULL <> 1000 is UNKNOWN, not TRUE; `WHERE` drops UNKNOWN rows. Classic NULL trap.
-18. **C** — When every attribute is a candidate key (cyclic FDs A→B→C→A make {A},{B},{C} all keys), every determinant is a superkey ⇒ BCNF.
-19. **C** — New _inserted_ rows matching a predicate between two reads = phantom. Requires SERIALIZABLE or predicate/range locks (standard 2PL on existing rows won't stop it).
-20. **C** — The only candidate key is {A,C}. A → B and C → D are _partial_ dependencies on the key ⇒ violates 2NF. So R is only in 1NF. (Trap: looks like a 3NF-vs-BCNF question but fails earlier at 2NF.)
-
-</details>

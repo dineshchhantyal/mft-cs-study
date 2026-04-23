@@ -155,65 +155,140 @@ Exam date: **May 1, 2026**. Discrete math is one of the highest-yield sections p
 
 ## 4. Practice MCQs (with solutions)
 
-**Q1.** Which is logically equivalent to ¬(p → q)?
+<details>
+<summary>Q1. Which is logically equivalent to ¬(p → q)?</summary>
+
 A) ¬p ∨ q B) p ∧ ¬q C) ¬p ∧ q D) p → ¬q
+
 **Ans: B.** p→q ≡ ¬p∨q; negate to p∧¬q.
 
-**Q2.** Let S = {1,2,3,4}. How many subsets of S contain the element 1?
+</details>
+
+<details>
+<summary>Q2. Let S = {1,2,3,4}. How many subsets of S contain the element 1?</summary>
+
 A) 7 B) 8 C) 15 D) 16
+
 **Ans: B.** Fix 1 as included, choose freely among the other 3: 2³ = 8.
 
-**Q3.** How many functions f: {1,2,3} → {a,b,c,d} are there? How many are injective?
+</details>
+
+<details>
+<summary>Q3. How many functions f: {1,2,3} → {a,b,c,d} are there? How many are injective?</summary>
+
 A) 64, 24 B) 12, 24 C) 81, 60 D) 64, 60
+
 **Ans: A.** Functions: 4³ = 64. Injections: 4·3·2 = 24.
 
-**Q4.** In a group of 30 people, at least how many share a birth month?
+</details>
+
+<details>
+<summary>Q4. In a group of 30 people, at least how many share a birth month?</summary>
+
 A) 2 B) 3 C) 4 D) 5
+
 **Ans: B.** ⌈30/12⌉ = 3 (pigeonhole).
 
-**Q5.** Which relation on ℤ is NOT an equivalence relation?
+</details>
+
+<details>
+<summary>Q5. Which relation on ℤ is NOT an equivalence relation?</summary>
+
 A) a ≡ b (mod 5) B) a = b C) a ≤ b D) a − b is even
+
 **Ans: C.** ≤ is not symmetric.
 
-**Q6.** A simple connected graph has 10 vertices and 9 edges. Which is true?
+</details>
+
+<details>
+<summary>Q6. A simple connected graph has 10 vertices and 9 edges. Which is true?</summary>
+
 A) It must be a tree. B) It must contain a cycle. C) It cannot be planar. D) Its chromatic number is 10.
+
 **Ans: A.** Connected + n−1 edges ⇒ tree.
 
-**Q7.** ¬(∀x ∃y P(x,y)) is equivalent to:
+</details>
+
+<details>
+<summary>Q7. ¬(∀x ∃y P(x,y)) is equivalent to:</summary>
+
 A) ∀x ∀y ¬P(x,y) B) ∃x ∀y ¬P(x,y) C) ∀x ∃y ¬P(x,y) D) ∃x ∃y ¬P(x,y)
+
 **Ans: B.** Flip each quantifier, negate body.
 
-**Q8.** How many nonnegative integer solutions does x + y + z + w = 10 have?
+</details>
+
+<details>
+<summary>Q8. How many nonnegative integer solutions does x + y + z + w = 10 have?</summary>
+
 A) 220 B) 286 C) 1000 D) 715
+
 **Ans: B.** Stars and bars: C(10 + 4 − 1, 4 − 1) = C(13, 3) = 286.
 
-**Q9.** Using the recurrence aₙ = 5aₙ₋₁ − 6aₙ₋₂, a₀=1, a₁=4, find a closed form.
+</details>
+
+<details>
+<summary>Q9. Using the recurrence aₙ = 5aₙ₋₁ − 6aₙ₋₂, a₀=1, a₁=4, find a closed form.</summary>
+
 A) 2ⁿ + 3ⁿ B) 2·2ⁿ − 3ⁿ C) 2ⁿ⁺¹ − 3ⁿ⁻¹ D) 3ⁿ − 2ⁿ
+
 **Ans: A.** r² − 5r + 6 = 0 ⇒ r = 2, 3. aₙ = α·2ⁿ + β·3ⁿ. a₀=α+β=1, a₁=2α+3β=4 ⇒ α=−1? Recompute: α+β=1, 2α+3β=4 ⇒ β=2, α=−1. So aₙ = 3·3ⁿ⁻¹... Let me redo: α= −1, β=2 gives a₀=1 ✓, a₁=−2+6=4 ✓. So aₙ = −2ⁿ + 2·3ⁿ. _(Correct answer in that wording isn't among options; on the real test double-check. If forced, closest is B form.)_ **Takeaway:** process matters — solve char eq, fit constants.
 
-**Q10.** In a simple graph with 8 vertices where every vertex has degree 3, how many edges?
+</details>
+
+<details>
+<summary>Q10. In a simple graph with 8 vertices where every vertex has degree 3, how many edges?</summary>
+
 A) 8 B) 12 C) 16 D) 24
+
 **Ans: B.** Σ deg = 2E ⇒ 8·3 = 24 = 2E ⇒ E = 12.
 
-**Q11.** P(A)=0.5, P(B)=0.4, P(A∩B)=0.2. Are A and B independent?
+</details>
+
+<details>
+<summary>Q11. P(A)=0.5, P(B)=0.4, P(A∩B)=0.2. Are A and B independent?</summary>
+
 A) Yes B) No C) Cannot tell
+
 **Ans: A.** P(A)P(B) = 0.2 = P(A∩B) ⇒ independent.
 
-**Q12.** 7² · 11 mod 13 = ?
+</details>
+
+<details>
+<summary>Q12. 7² · 11 mod 13 = ?</summary>
+
 A) 1 B) 7 C) 9 D) 12
+
 **Ans: C.** 49 mod 13 = 10; 10·11 = 110; 110 mod 13 = 110 − 104 = 6. _Recheck:_ 13·8=104, 110−104=6. **Correct answer: 6** (none match — this is the kind of arithmetic slip to watch for; compute carefully on exam).
 
-**Q13.** How many bit strings of length 8 contain exactly three 1s?
+</details>
+
+<details>
+<summary>Q13. How many bit strings of length 8 contain exactly three 1s?</summary>
+
 A) 24 B) 56 C) 64 D) 256
+
 **Ans: B.** C(8,3) = 56.
 
-**Q14.** Which graph has an Euler circuit?
+</details>
+
+<details>
+<summary>Q14. Which graph has an Euler circuit?</summary>
+
 A) K₄ B) K₅ C) K₃,₃ D) Path on 4 vertices
+
 **Ans: B.** Every vertex of K₅ has degree 4 (even), connected ⇒ Euler circuit. K₄ has degree 3 (odd).
 
-**Q15.** |P({a,b,c,d,e})| = ?
+</details>
+
+<details>
+<summary>Q15. |P({a,b,c,d,e})| = ?</summary>
+
 A) 10 B) 25 C) 32 D) 120
+
 **Ans: C.** 2⁵ = 32.
+
+</details>
 
 ---
 
@@ -267,150 +342,242 @@ A) 10 B) 25 C) 32 D) 120
 
 ## 🧪 Try Yourself — Practice Questions
 
-1. Which of the following is logically equivalent to ¬(p → q)?
-   - A. ¬p ∨ q
-   - B. p ∧ ¬q
-   - C. ¬p ∧ q
-   - D. p → ¬q
+<details>
+<summary>1. Which of the following is logically equivalent to ¬(p → q)?</summary>
 
-2. Let P(x): "x is prime" and E(x): "x is even", domain = positive integers. Which statement says "there is exactly one even prime"?
-   - A. ∀x (P(x) ∧ E(x))
-   - B. ∃x (P(x) ∧ E(x))
-   - C. ∃!x (P(x) ∧ E(x))
-   - D. ∀x (P(x) → ¬E(x))
+- A. ¬p ∨ q
+- B. p ∧ ¬q
+- C. ¬p ∧ q
+- D. p → ¬q
 
-3. The negation of ∀x ∃y (x < y) over the reals is:
-   - A. ∃x ∀y (x ≥ y)
-   - B. ∀x ∃y (x ≥ y)
-   - C. ∃x ∃y (x ≥ y)
-   - D. ∀x ∀y (x < y)
+**Ans: B.** p → q is equivalent to ¬p ∨ q, so its negation is p ∧ ¬q by De Morgan.
 
-4. If |A| = 4 and |B| = 3, how many functions f: A → B exist?
-   - A. 12
-   - B. 64
-   - C. 81
-   - D. 24
-
-5. How many of those functions from Q4 are injective?
-   - A. 0
-   - B. 24
-   - C. 12
-   - D. 6
-
-6. A relation R on {1,2,3} is reflexive and symmetric but not transitive. Which set of pairs qualifies (besides the mandatory reflexive pairs)?
-   - A. {(1,2),(2,1),(2,3),(3,2)}
-   - B. {(1,2),(2,1),(1,3),(3,1),(2,3),(3,2)}
-   - C. {(1,2),(2,3)}
-   - D. {(1,1),(2,2),(3,3)}
-
-7. How many subsets of a 10-element set have size exactly 3?
-   - A. 720
-   - B. 120
-   - C. 45
-   - D. 1000
-
-8. In how many distinct ways can the letters of "MISSISSIPPI" be arranged?
-   - A. 11!
-   - B. 11!/(4!·4!·2!)
-   - C. 11!/(4!·4!·2!·1!)
-   - D. 34650
-
-9. Two fair dice are rolled. What is P(sum = 7 | first die is 4)?
-   - A. 1/36
-   - B. 1/6
-   - C. 1/12
-   - D. 1/4
-
-10. A disease has prevalence 1%. A test is 99% sensitive and 99% specific. Given a positive test, the probability of actually having the disease is closest to:
-    - A. 99%
-    - B. 50%
-    - C. 1%
-    - D. 9%
-
-11. A simple graph has 7 vertices and every vertex has degree 4. How many edges does it have?
-    - A. 14
-    - B. 28
-    - C. 7
-    - D. Not possible
-
-12. Which of the following graphs is NOT planar?
-    - A. K₄
-    - B. C₅
-    - C. K₃,₃
-    - D. The Petersen graph minus one vertex
-
-13. A tree with n vertices has how many edges?
-    - A. n
-    - B. n − 1
-    - C. n + 1
-    - D. 2n − 2
-
-14. Compute gcd(252, 198) using the Euclidean algorithm.
-    - A. 2
-    - B. 6
-    - C. 18
-    - D. 9
-
-15. What is 7^100 mod 5?
-    - A. 0
-    - B. 1
-    - C. 2
-    - D. 4
-
-16. Solve the recurrence aₙ = 2aₙ₋₁ + 3aₙ₋₂ with a₀ = 0, a₁ = 1. Closed form?
-    - A. (3ⁿ − (−1)ⁿ)/4
-    - B. 3ⁿ − 1
-    - C. 2ⁿ − 1
-    - D. (3ⁿ + (−1)ⁿ)/2
-
-17. Using the Master Theorem: T(n) = 4T(n/2) + n. What is T(n)?
-    - A. Θ(n log n)
-    - B. Θ(n²)
-    - C. Θ(n² log n)
-    - D. Θ(n^{log₂ 3})
-
-18. "If n² is even, then n is even." The most natural proof technique is:
-    - A. Direct proof
-    - B. Proof by contrapositive
-    - C. Proof by cases
-    - D. Proof by induction
-
-19. Let A, B ⊆ U. Which identity is FALSE in general?
-    - A. A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C)
-    - B. A \ (B ∪ C) = (A \ B) ∩ (A \ C)
-    - C. |A ∪ B| = |A| + |B| − |A ∩ B|
-    - D. A × (B ∪ C) = (A × B) ∪ (A × C) ∪ (A ∩ B)
-
-20. You draw 5 cards from a standard 52-card deck. What is the probability of getting exactly one pair (no three-of-a-kind, no two pair)?
-    - A. C(13,1)·C(4,2)·C(12,3)·4³ / C(52,5)
-    - B. C(13,2)·C(4,2)² / C(52,5)
-    - C. 13·C(4,2)·48·44·40 / (C(52,5)·3!)
-    - D. 1/2
-
-### ✅ Answer Key & Explanations
+</details>
 
 <details>
-<summary>Reveal full answer key</summary>
+<summary>2. Let P(x): "x is prime" and E(x): "x is even", domain = positive integers. Which statement says "there is exactly one even prime"?</summary>
 
-1. **B** — p → q is equivalent to ¬p ∨ q, so its negation is p ∧ ¬q by De Morgan.
-2. **C** — ∃! means "there exists exactly one". Only C captures uniqueness.
-3. **A** — Negation flips quantifiers and inner predicate: ∃x ∀y ¬(x < y) = ∃x ∀y (x ≥ y).
-4. **C** — Each of 4 inputs maps independently to 3 outputs: 3⁴ = 81.
-5. **A** — Injective requires |A| ≤ |B|; here 4 > 3, so zero injective functions exist.
-6. **B** — Reflexive + symmetric on all pairs but 1~2 and 2~3 don't force 1~3 missing… wait: B includes (1,3) so transitivity holds. Correct answer: **A**, where 1~2 and 2~3 but (1,3) missing breaks transitivity. (Trap: re-read — answer is **A**.)
-7. **B** — C(10,3) = 10·9·8/6 = 120.
-8. **D** — 11!/(4!·4!·2!·1!) = 34650. Both B's denominator (missing P's factorial) and C/D evaluate; D is the numeric value, which is what MFT usually wants.
-9. **B** — Given first die = 4, need second = 3; probability 1/6. Conditioning removes the joint denominator.
-10. **B** — Base-rate trap: P(D|+) = (.99·.01)/(.99·.01 + .01·.99) = 0.5. Equal sensitivity/specificity with 1% prevalence gives 50%.
-11. **A** — Sum of degrees = 2E ⇒ 7·4 = 28 = 2E ⇒ E = 14.
-12. **C** — K₃,₃ is the classic non-planar graph (Kuratowski). K₄ and C₅ are planar.
-13. **B** — A tree on n vertices always has exactly n − 1 edges by definition/induction.
-14. **C** — 252 = 1·198 + 54; 198 = 3·54 + 36; 54 = 1·36 + 18; 36 = 2·18 + 0 ⇒ gcd = 18.
-15. **B** — 7 ≡ 2 (mod 5); 2⁴ ≡ 1 (mod 5); 100 = 4·25 so 2¹⁰⁰ ≡ 1.
-16. **A** — Characteristic eq x² − 2x − 3 = 0 ⇒ roots 3, −1. Using a₀=0, a₁=1: aₙ = (3ⁿ − (−1)ⁿ)/4.
-17. **B** — a=4, b=2, log_b a = 2; f(n)=n = O(n^{2−ε}) so Case 1 gives Θ(n²).
-18. **B** — Contrapositive ("if n is odd then n² is odd") is a short one-line algebraic proof; direct is awkward.
-19. **D** — A × (B ∪ C) = (A × B) ∪ (A × C); the extra ∪ (A ∩ B) term makes D false in general (wrong type — A ∩ B is a set, not a set of pairs).
-20. **C** — Choose the pair's rank (13), the two suits (C(4,2)), then 3 distinct other ranks from the remaining 12 with one suit each — standard "one pair" hand count. Option A double-counts suit choices; B counts two pair.
+- A. ∀x (P(x) ∧ E(x))
+- B. ∃x (P(x) ∧ E(x))
+- C. ∃!x (P(x) ∧ E(x))
+- D. ∀x (P(x) → ¬E(x))
+
+**Ans: C.** ∃! means "there exists exactly one". Only C captures uniqueness.
+
+</details>
+
+<details>
+<summary>3. The negation of ∀x ∃y (x < y) over the reals is:</summary>
+
+- A. ∃x ∀y (x ≥ y)
+- B. ∀x ∃y (x ≥ y)
+- C. ∃x ∃y (x ≥ y)
+- D. ∀x ∀y (x < y)
+
+**Ans: A.** Negation flips quantifiers and inner predicate: ∃x ∀y ¬(x < y) = ∃x ∀y (x ≥ y).
+
+</details>
+
+<details>
+<summary>4. If |A| = 4 and |B| = 3, how many functions f: A → B exist?</summary>
+
+- A. 12
+- B. 64
+- C. 81
+- D. 24
+
+**Ans: C.** Each of 4 inputs maps independently to 3 outputs: 3⁴ = 81.
+
+</details>
+
+<details>
+<summary>5. How many of those functions from Q4 are injective?</summary>
+
+- A. 0
+- B. 24
+- C. 12
+- D. 6
+
+**Ans: A.** Injective requires |A| ≤ |B|; here 4 > 3, so zero injective functions exist.
+
+</details>
+
+<details>
+<summary>6. A relation R on {1,2,3} is reflexive and symmetric but not transitive. Which set of pairs qualifies (besides the mandatory reflexive pairs)?</summary>
+
+- A. {(1,2),(2,1),(2,3),(3,2)}
+- B. {(1,2),(2,1),(1,3),(3,1),(2,3),(3,2)}
+- C. {(1,2),(2,3)}
+- D. {(1,1),(2,2),(3,3)}
+
+**Ans: A.** Reflexive + symmetric on all pairs but 1~2 and 2~3 don't force 1~3 missing… wait: B includes (1,3) so transitivity holds. Correct answer: **A**, where 1~2 and 2~3 but (1,3) missing breaks transitivity. (Trap: re-read — answer is **A**.)
+
+</details>
+
+<details>
+<summary>7. How many subsets of a 10-element set have size exactly 3?</summary>
+
+- A. 720
+- B. 120
+- C. 45
+- D. 1000
+
+**Ans: B.** C(10,3) = 10·9·8/6 = 120.
+
+</details>
+
+<details>
+<summary>8. In how many distinct ways can the letters of "MISSISSIPPI" be arranged?</summary>
+
+- A. 11!
+- B. 11!/(4!·4!·2!)
+- C. 11!/(4!·4!·2!·1!)
+- D. 34650
+
+**Ans: D.** 11!/(4!·4!·2!·1!) = 34650. Both B's denominator (missing P's factorial) and C/D evaluate; D is the numeric value, which is what MFT usually wants.
+
+</details>
+
+<details>
+<summary>9. Two fair dice are rolled. What is P(sum = 7 | first die is 4)?</summary>
+
+- A. 1/36
+- B. 1/6
+- C. 1/12
+- D. 1/4
+
+**Ans: B.** Given first die = 4, need second = 3; probability 1/6. Conditioning removes the joint denominator.
+
+</details>
+
+<details>
+<summary>10. A disease has prevalence 1%. A test is 99% sensitive and 99% specific. Given a positive test, the probability of actually having the disease is closest to:</summary>
+
+- A. 99%
+- B. 50%
+- C. 1%
+- D. 9%
+
+**Ans: B.** Base-rate trap: P(D|+) = (.99·.01)/(.99·.01 + .01·.99) = 0.5. Equal sensitivity/specificity with 1% prevalence gives 50%.
+
+</details>
+
+<details>
+<summary>11. A simple graph has 7 vertices and every vertex has degree 4. How many edges does it have?</summary>
+
+- A. 14
+- B. 28
+- C. 7
+- D. Not possible
+
+**Ans: A.** Sum of degrees = 2E ⇒ 7·4 = 28 = 2E ⇒ E = 14.
+
+</details>
+
+<details>
+<summary>12. Which of the following graphs is NOT planar?</summary>
+
+- A. K₄
+- B. C₅
+- C. K₃,₃
+- D. The Petersen graph minus one vertex
+
+**Ans: C.** K₃,₃ is the classic non-planar graph (Kuratowski). K₄ and C₅ are planar.
+
+</details>
+
+<details>
+<summary>13. A tree with n vertices has how many edges?</summary>
+
+- A. n
+- B. n − 1
+- C. n + 1
+- D. 2n − 2
+
+**Ans: B.** A tree on n vertices always has exactly n − 1 edges by definition/induction.
+
+</details>
+
+<details>
+<summary>14. Compute gcd(252, 198) using the Euclidean algorithm.</summary>
+
+- A. 2
+- B. 6
+- C. 18
+- D. 9
+
+**Ans: C.** 252 = 1·198 + 54; 198 = 3·54 + 36; 54 = 1·36 + 18; 36 = 2·18 + 0 ⇒ gcd = 18.
+
+</details>
+
+<details>
+<summary>15. What is 7^100 mod 5?</summary>
+
+- A. 0
+- B. 1
+- C. 2
+- D. 4
+
+**Ans: B.** 7 ≡ 2 (mod 5); 2⁴ ≡ 1 (mod 5); 100 = 4·25 so 2¹⁰⁰ ≡ 1.
+
+</details>
+
+<details>
+<summary>16. Solve the recurrence aₙ = 2aₙ₋₁ + 3aₙ₋₂ with a₀ = 0, a₁ = 1. Closed form?</summary>
+
+- A. (3ⁿ − (−1)ⁿ)/4
+- B. 3ⁿ − 1
+- C. 2ⁿ − 1
+- D. (3ⁿ + (−1)ⁿ)/2
+
+**Ans: A.** Characteristic eq x² − 2x − 3 = 0 ⇒ roots 3, −1. Using a₀=0, a₁=1: aₙ = (3ⁿ − (−1)ⁿ)/4.
+
+</details>
+
+<details>
+<summary>17. Using the Master Theorem: T(n) = 4T(n/2) + n. What is T(n)?</summary>
+
+- A. Θ(n log n)
+- B. Θ(n²)
+- C. Θ(n² log n)
+- D. Θ(n^{log₂ 3})
+
+**Ans: B.** a=4, b=2, log_b a = 2; f(n)=n = O(n^{2−ε}) so Case 1 gives Θ(n²).
+
+</details>
+
+<details>
+<summary>18. "If n² is even, then n is even." The most natural proof technique is:</summary>
+
+- A. Direct proof
+- B. Proof by contrapositive
+- C. Proof by cases
+- D. Proof by induction
+
+**Ans: B.** Contrapositive ("if n is odd then n² is odd") is a short one-line algebraic proof; direct is awkward.
+
+</details>
+
+<details>
+<summary>19. Let A, B ⊆ U. Which identity is FALSE in general?</summary>
+
+- A. A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C)
+- B. A \ (B ∪ C) = (A \ B) ∩ (A \ C)
+- C. |A ∪ B| = |A| + |B| − |A ∩ B|
+- D. A × (B ∪ C) = (A × B) ∪ (A × C) ∪ (A ∩ B)
+
+**Ans: D.** A × (B ∪ C) = (A × B) ∪ (A × C); the extra ∪ (A ∩ B) term makes D false in general (wrong type — A ∩ B is a set, not a set of pairs).
+
+</details>
+
+<details>
+<summary>20. You draw 5 cards from a standard 52-card deck. What is the probability of getting exactly one pair (no three-of-a-kind, no two pair)?</summary>
+
+- A. C(13,1)·C(4,2)·C(12,3)·4³ / C(52,5)
+- B. C(13,2)·C(4,2)² / C(52,5)
+- C. 13·C(4,2)·48·44·40 / (C(52,5)·3!)
+- D. 1/2
+
+**Ans: C.** Choose the pair's rank (13), the two suits (C(4,2)), then 3 distinct other ranks from the remaining 12 with one suit each — standard "one pair" hand count. Option A double-counts suit choices; B counts two pair.
 
 </details>

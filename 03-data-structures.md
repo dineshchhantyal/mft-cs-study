@@ -258,21 +258,36 @@ LR case example: insert 30, 10, 20 → at 30 bf = +2, left child's right-heavy �
 **Q1.** In a max-heap stored in a 0-indexed array, the parent of index 9 is:
 (a) 3 (b) 4 (c) 5 (d) 18 (e) 19
 
+<details>
+<summary>Reveal answer</summary>
+
 **A:** (b) 4. Parent = (9−1)/2 = 4.
+
+</details>
 
 ---
 
 **Q2.** Pre-order: A B D E C F G. In-order: D B E A F C G. What is post-order?
 (a) D E B F G C A (b) D B E F G C A (c) A B D E C F G (d) D E F G B C A
 
+<details>
+<summary>Reveal answer</summary>
+
 **A:** (a) D E B F G C A. Root A; left subtree in-order {D,B,E} → B with children D (left), E (right); right subtree {F,C,G} → C with F left, G right. Post = D E B F G C A.
+
+</details>
 
 ---
 
 **Q3.** You insert 10, 20, 30, 40, 50 into an initially empty BST (no balancing). Height of resulting tree?
 (a) 2 (b) 3 (c) 4 (d) log₂ 5
 
+<details>
+<summary>Reveal answer</summary>
+
 **A:** (c) 4. Right-skewed chain; height (edges from root to deepest leaf) = 4.
+
+</details>
 
 ---
 
@@ -282,12 +297,20 @@ LR case example: insert 30, 10, 20 → at 30 bf = +2, left child's right-heavy �
 (c) Every leaf is red.
 (d) Every path has equal numbers of red nodes.
 
+<details>
+<summary>Reveal answer</summary>
+
 **A:** (b).
+
+</details>
 
 ---
 
 **Q5.** Hash table size 7, h(k) = k mod 7, linear probing. Insert 15, 11, 27, 8, 12 in order. At which index is 12?
 (a) 5 (b) 6 (c) 0 (d) 1
+
+<details>
+<summary>Reveal answer</summary>
 
 **A:** Compute:
 
@@ -298,63 +321,105 @@ LR case example: insert 30, 10, 20 → at 30 bf = +2, left child's right-heavy �
 - 12 mod 7 = 5 → idx 5
   Answer: (a) 5.
 
+</details>
+
 ---
 
 **Q6.** Which data structure gives O(1) amortized operations (with path compression + union by rank)?
 (a) AVL tree (b) Skip list (c) Disjoint set (union-find) (d) Red-black tree
 
+<details>
+<summary>Reveal answer</summary>
+
 **A:** (c).
+
+</details>
 
 ---
 
 **Q7.** Time to build a heap from an unsorted array of n elements using bottom-up heapify:
 (a) O(log n) (b) O(n) (c) O(n log n) (d) O(n²)
 
+<details>
+<summary>Reveal answer</summary>
+
 **A:** (b) O(n). Common trap — naive insertion is O(n log n) but bottom-up is O(n).
+
+</details>
 
 ---
 
 **Q8.** Which traversal of a BST yields keys in sorted order?
 (a) Pre-order (b) In-order (c) Post-order (d) Level-order
 
+<details>
+<summary>Reveal answer</summary>
+
 **A:** (b) In-order.
+
+</details>
 
 ---
 
 **Q9.** In a singly linked list with a head pointer only, the worst-case time to delete the last node is:
 (a) O(1) (b) O(log n) (c) O(n) (d) O(n log n)
 
+<details>
+<summary>Reveal answer</summary>
+
 **A:** (c) O(n). Must traverse to find the second-to-last node.
+
+</details>
 
 ---
 
 **Q10.** An AVL tree currently has nodes (20 root, 10 left child, 30 right child, 5 left of 10). Inserting 3 causes which rotation?
 (a) Left (b) Right (c) Left-Right (d) Right-Left
 
+<details>
+<summary>Reveal answer</summary>
+
 **A:** (b) Right rotation at 10's grandparent (20). After inserting 3 under 5, balance factor at 20 becomes +2 (left-heavy, LL case) → single **right rotation** at 20.
+
+</details>
 
 ---
 
 **Q11.** Array-based circular queue of capacity 5, front and rear both 0, empty. After enqueue(A), enqueue(B), enqueue(C), dequeue(), enqueue(D), enqueue(E): values of front and rear?
 (a) front=1, rear=0 (b) front=1, rear=4 (c) front=0, rear=4 (d) front=1, rear=5
 
+<details>
+<summary>Reveal answer</summary>
+
 **A:** (b) front=1, rear=4. After 3 enqueues: rear advanced to 3 (positions 0,1,2 filled, rear points to next free = 3). Dequeue → front=1. Enqueue D → idx 3, rear=4. Enqueue E → idx 4, rear=(4+1)%5 = 0. Actually rear=0 after E. Let me redo.
 
 Depending on convention (rear = next free slot), after all ops rear = 0. Using convention rear = index of last inserted: after E, rear = 4. Convention matters! The ETS answer uses the "rear = index of last" convention → **(b)**.
+
+</details>
 
 ---
 
 **Q12.** For a sparse graph with V vertices and E << V² edges, what is the space complexity of an adjacency list?
 (a) O(V) (b) O(E) (c) O(V + E) (d) O(V²)
 
+<details>
+<summary>Reveal answer</summary>
+
 **A:** (c) O(V + E).
+
+</details>
 
 ---
 
 **Q13.** Which hash collision resolution strategy is most susceptible to primary clustering?
 (a) Separate chaining (b) Linear probing (c) Quadratic probing (d) Double hashing
 
+<details>
+<summary>Reveal answer</summary>
+
 **A:** (b) Linear probing.
+
+</details>
 
 ---
 
@@ -412,112 +477,203 @@ Average / Expected (Worst in parentheses where different):
 **1.** What is the time complexity of inserting an element at the beginning of a singly linked list (head known)?
 A) O(n) B) O(log n) C) O(1) D) O(n log n)
 
-**2.** In a circular queue of capacity 8 with `front=3`, `rear=6`, how many elements are present?
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** C) O(1) — Head insert rewires two pointers in constant time; no traversal needed.
+
+</details>
+
+**2.** In a circular queue of capacity 8 with front=3, rear=6, how many elements are present?
 A) 2 B) 3 C) 4 D) 9
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** B) 3 — Elements = (rear − front + capacity) mod capacity = (6−3+8) mod 8 = 3.
+
+</details>
 
 **3.** Which data structure is most appropriate for implementing function call management in recursion?
 A) Queue B) Stack C) Priority Queue D) Deque
 
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** B) Stack — Call frames are LIFO; a stack matches the natural save/restore order of recursion.
+
+</details>
+
 **4.** The in-order traversal of a Binary Search Tree produces:
 A) Reverse sorted order B) Sorted order C) Level order D) Random order
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** B) Sorted order — In-order on a BST visits left, root, right, yielding ascending sorted order by definition of BST ordering.
+
+</details>
 
 **5.** In a min-heap stored in a 0-indexed array, the parent of index 7 is at index:
 A) 2 B) 3 C) 4 D) 14
 
-**6.** Which hashing collision resolution technique suffers from **primary clustering**?
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** B) 3 — Parent index in a 0-indexed heap is ⌊(i−1)/2⌋ = ⌊6/2⌋ = 3.
+
+</details>
+
+**6.** Which hashing collision resolution technique suffers from primary clustering?
 A) Quadratic probing B) Double hashing C) Linear probing D) Separate chaining
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** C) Linear probing — Linear probing causes contiguous runs ("clusters") because collisions fill adjacent slots, degrading performance.
+
+</details>
 
 **7.** Space complexity of an adjacency matrix for a graph with V vertices is:
 A) O(V + E) B) O(E) C) O(V²) D) O(V log V)
 
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** C) O(V²) — A V×V matrix stores all possible edges regardless of E, giving Θ(V²) space.
+
+</details>
+
 **8.** Which structure gives O(L) lookup for a string of length L independent of dictionary size?
 A) Hash table B) Trie C) BST D) AVL tree
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** B) Trie — Trie traversal depends only on the key length L; hash tables depend on hash cost and possible collisions, and tree ops depend on N.
+
+</details>
 
 ---
 
 **9.** An AVL tree with N nodes guarantees a worst-case height of:
 A) O(N) B) O(√N) C) O(log N) D) O(N log N)
 
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** C) O(log N) — AVL balance factor ∈ {−1,0,+1} bounds height to ≈1.44·log₂(n), i.e., O(log N).
+
+</details>
+
 **10.** A Red-Black tree with n internal nodes has height at most:
 A) log₂(n) B) 2·log₂(n+1) C) 1.44·log₂(n) D) √n
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** B) 2·log₂(n+1) — Classic RB-tree bound: height ≤ 2·log₂(n+1) due to the black-height property.
+
+</details>
 
 **11.** Given preorder = [A,B,D,E,C,F] and inorder = [D,B,E,A,C,F], the root's right child is:
 A) B B) C C) D D) F
 
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** B) C — Root is A (first in preorder). Inorder splits into left [D,B,E] and right [C,F]; the right subtree's root is the next preorder element after the left subtree, which is C.
+
+</details>
+
 **12.** In a B-tree of order m, each non-root internal node has at least how many children?
 A) 1 B) ⌈m/2⌉ C) m−1 D) m
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** B) ⌈m/2⌉ — In a B-tree of order m, every internal non-root node has between ⌈m/2⌉ and m children to preserve balance.
+
+</details>
 
 **13.** Using Union-Find with union-by-rank and path compression, the amortized cost per operation is:
 A) O(log n) B) O(α(n)) ≈ O(1) C) O(n) D) O(√n)
 
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** B) O(α(n)) ≈ O(1) — Combining path compression and union-by-rank yields inverse-Ackermann amortized cost, effectively constant.
+
+</details>
+
 **14.** Which traversal of a BST can be used to delete all nodes safely (children before parent)?
 A) Preorder B) Inorder C) Postorder D) Level order
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** C) Postorder — Postorder processes children before their parent, letting you free a node only after its subtrees are already deleted.
+
+</details>
 
 **15.** In open addressing with load factor α < 1, the expected number of probes for a successful search (uniform hashing) is approximately:
 A) 1/(1−α) B) (1/α)·ln(1/(1−α)) C) α D) log(n)
 
-**16.** Building a max-heap from an unordered array of n elements using `heapify` bottom-up costs:
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** B) (1/α)·ln(1/(1−α)) — Under uniform hashing, expected probes for successful search ≈ (1/α)·ln(1/(1−α)); option A is the formula for unsuccessful search.
+
+</details>
+
+**16.** Building a max-heap from an unordered array of n elements using heapify bottom-up costs:
 A) O(n log n) B) O(n) C) O(log n) D) O(n²)
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** B) O(n) — Bottom-up heapify sums to Σ (n/2^(h+1))·h = O(n); the O(n log n) bound is a loose overestimate.
+
+</details>
 
 ---
 
-**17.** (Trap) Two binary trees have identical **preorder** and **postorder** sequences of length n > 1. Which is true?
+**17.** (Trap) Two binary trees have identical preorder and postorder sequences of length n > 1. Which is true?
 A) The tree is uniquely determined B) Not unique in general — ambiguity remains when a node has only one child C) Impossible to share both sequences D) Determines a unique BST only
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** B) Not unique in general — ambiguity remains when a node has exactly one child. Uniqueness needs inorder.
+
+</details>
 
 **18.** (Trap) Inserting keys 10, 20, 30, 40, 50 sequentially into an initially empty AVL tree, the root after all insertions is:
 A) 10 B) 20 C) 30 D) 40
 
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** B) 20 — After 10,20,30 a left rotation at 10 makes 20 the root; subsequent inserts of 40 and 50 trigger rotations in the right subtree, but the root stays 20.
+
+</details>
+
 **19.** (Trap) In a hash table using linear probing with table size 10 and h(k)=k mod 10, inserting 12, 22, 32 in order places 32 at index:
 A) 2 B) 3 C) 4 D) 5
 
-**20.** (Trap) You dequeue from a queue implemented with two stacks (`inStack`, `outStack`). What is the amortized time per dequeue across n operations?
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** C) 4 — 12 → idx 2; 22 collides at 2, probes to 3; 32 collides at 2, then 3, lands at 4.
+
+</details>
+
+**20.** (Trap) You dequeue from a queue implemented with two stacks (inStack, outStack). What is the amortized time per dequeue across n operations?
 A) O(n) B) O(log n) C) O(1) D) O(√n)
 
----
-
-### ✅ Answer Key & Explanations
-
 <details>
-<summary>Reveal full answer key</summary>
+<summary>Reveal answer</summary>
 
-**1. C** — Head insert rewires two pointers in constant time; no traversal needed.
-
-**2. B** — Elements = (rear − front + capacity) mod capacity = (6−3+8) mod 8 = 3.
-
-**3. B** — Call frames are LIFO; a stack matches the natural save/restore order of recursion.
-
-**4. B** — In-order on a BST visits left, root, right, yielding ascending sorted order by definition of BST ordering.
-
-**5. B** — Parent index in a 0-indexed heap is ⌊(i−1)/2⌋ = ⌊6/2⌋ = 3.
-
-**6. C** — Linear probing causes contiguous runs ("clusters") because collisions fill adjacent slots, degrading performance.
-
-**7. C** — A V×V matrix stores all possible edges regardless of E, giving Θ(V²) space.
-
-**8. B** — Trie traversal depends only on the key length L; hash tables depend on hash cost and possible collisions, and tree ops depend on N.
-
-**9. C** — AVL balance factor ∈ {−1,0,+1} bounds height to ≈1.44·log₂(n), i.e., O(log N).
-
-**10. B** — Classic RB-tree bound: height ≤ 2·log₂(n+1) due to the black-height property.
-
-**11. B** — Root is A (first in preorder). Inorder splits into left [D,B,E] and right [C,F]; the right subtree's root is the next preorder element after the left subtree, which is C.
-
-**12. B** — In a B-tree of order m, every internal non-root node has between ⌈m/2⌉ and m children to preserve balance.
-
-**13. B** — Combining path compression and union-by-rank yields inverse-Ackermann amortized cost, effectively constant.
-
-**14. C** — Postorder processes children before their parent, letting you free a node only after its subtrees are already deleted.
-
-**15. B** — Under uniform hashing, expected probes for successful search ≈ (1/α)·ln(1/(1−α)); option A is the formula for _unsuccessful_ search.
-
-**16. B** — Bottom-up heapify sums to Σ (n/2^(h+1))·h = O(n); the O(n log n) bound is a loose overestimate.
-
-**17. B** — Preorder+Postorder alone do not uniquely determine a binary tree: when a node has exactly one child, you cannot tell if it's the left or right child. Uniqueness needs inorder.
-
-**18. B** — After 10,20,30 a left rotation at 10 makes 20 the root; subsequent inserts of 40 and 50 trigger rotations in the right subtree, but the root stays 20.
-
-**19. C** — 12 → idx 2; 22 collides at 2, probes to 3; 32 collides at 2, then 3, lands at 4.
-
-**20. C** — Each element is pushed and popped at most twice across both stacks, so n dequeues cost O(n) total → O(1) amortized.
+**Answer:** C) O(1) — Each element is pushed and popped at most twice across both stacks, so n dequeues cost O(n) total → O(1) amortized.
 
 </details>

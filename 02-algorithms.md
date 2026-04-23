@@ -545,11 +545,25 @@ SAT, 3-SAT, Vertex Cover, Independent Set, Clique, Hamiltonian Path/Cycle, TSP (
    - C. f(n) = Ω(n³)
    - D. f(n) = o(n²)
 
+   <details>
+   <summary>Show answer</summary>
+
+   **B.** The dominant term is 3n²; lower-order terms (n log n, constant) are absorbed, so f(n) = Θ(n²).
+
+   </details>
+
 2. What is the time complexity of building a binary heap from an unsorted array of n elements using the bottom-up (heapify) method?
    - A. O(log n)
    - B. O(n)
    - C. O(n log n)
    - D. O(n²)
+
+   <details>
+   <summary>Show answer</summary>
+
+   **B.** Bottom-up heapify is linear: the work per level forms a geometric series that sums to O(n). Inserting n items one by one is O(n log n), but heapifying an existing array is O(n).
+
+   </details>
 
 3. An array is nearly sorted (each element is at most k = O(1) positions from its sorted place). Which sorting algorithm runs in O(n) time on such input?
    - A. Merge sort
@@ -557,11 +571,25 @@ SAT, 3-SAT, Vertex Cover, Independent Set, Clique, Hamiltonian Path/Cycle, TSP (
    - C. Insertion sort
    - D. Heapsort
 
+   <details>
+   <summary>Show answer</summary>
+
+   **C.** Insertion sort runs in O(nk) when each element is at most k positions from its final place; with k = O(1), that becomes O(n).
+
+   </details>
+
 4. Which algorithm FAILS to compute correct single-source shortest paths when the graph has negative edge weights (but no negative cycles)?
    - A. Bellman-Ford
    - B. Floyd-Warshall
    - C. Dijkstra's algorithm
    - D. Topological-order relaxation on a DAG
+
+   <details>
+   <summary>Show answer</summary>
+
+   **C.** Dijkstra's greedy finalization step is invalid with negative edges because a later negative edge can reduce an already-settled distance. Bellman-Ford and Floyd-Warshall handle negative edges if there is no negative cycle.
+
+   </details>
 
 5. Which equality is correct?
    - A. log(n!) = Θ(n)
@@ -569,11 +597,25 @@ SAT, 3-SAT, Vertex Cover, Independent Set, Clique, Hamiltonian Path/Cycle, TSP (
    - C. log(n!) = Θ(n log n)
    - D. log(n!) = Θ(n²)
 
+   <details>
+   <summary>Show answer</summary>
+
+   **C.** log(n!) = Σ log k, and Stirling's approximation gives Θ(n log n).
+
+   </details>
+
 6. Which statement about 2-SAT is TRUE?
    - A. 2-SAT is NP-complete.
    - B. 2-SAT is solvable in polynomial time.
    - C. 2-SAT is undecidable.
    - D. 2-SAT is harder than 3-SAT.
+
+   <details>
+   <summary>Show answer</summary>
+
+   **B.** 2-SAT is in P and can be solved in linear time with an implication graph and SCCs. 3-SAT and higher are NP-complete.
+
+   </details>
 
 7. BFS from a source s in an unweighted graph computes:
    - A. Shortest paths in any weighted graph.
@@ -581,11 +623,25 @@ SAT, 3-SAT, Vertex Cover, Independent Set, Clique, Hamiltonian Path/Cycle, TSP (
    - C. A minimum spanning tree.
    - D. Strongly connected components.
 
+   <details>
+   <summary>Show answer</summary>
+
+   **B.** BFS gives shortest paths by edge count, so it is correct only when all edges have equal weight.
+
+   </details>
+
 8. Solve T(n) = 2T(n/2) + n using the Master Theorem.
    - A. Θ(n)
    - B. Θ(n log n)
    - C. Θ(n²)
    - D. Θ(log n)
+
+   <details>
+   <summary>Show answer</summary>
+
+   **B.** a = 2, b = 2, and f(n) = n match Case 2, so T(n) = Θ(n log n).
+
+   </details>
 
 9. Solve T(n) = 4T(n/2) + n.
    - A. Θ(n)
@@ -593,11 +649,25 @@ SAT, 3-SAT, Vertex Cover, Independent Set, Clique, Hamiltonian Path/Cycle, TSP (
    - C. Θ(n²)
    - D. Θ(n² log n)
 
+   <details>
+   <summary>Show answer</summary>
+
+   **C.** Here n^{log₂ 4} = n² dominates the linear work term, so Master Theorem Case 1 gives Θ(n²).
+
+   </details>
+
 10. Solve T(n) = T(n/2) + 1.
     - A. Θ(1)
     - B. Θ(log n)
     - C. Θ(n)
     - D. Θ(n log n)
+
+   <details>
+   <summary>Show answer</summary>
+
+**B.** This is the binary-search recurrence, which solves to Θ(log n).
+
+   </details>
 
 11. Solve T(n) = 3T(n/2) + n² using the Master Theorem.
     - A. Θ(n^log₂ 3)
@@ -605,11 +675,25 @@ SAT, 3-SAT, Vertex Cover, Independent Set, Clique, Hamiltonian Path/Cycle, TSP (
     - C. Θ(n² log n)
     - D. Θ(n³)
 
+   <details>
+   <summary>Show answer</summary>
+
+**B.** n^{log₂ 3} is smaller than n², and the regularity condition holds, so this is Case 3 and the answer is Θ(n²).
+
+   </details>
+
 12. Which problem is solved optimally by a greedy algorithm (not requiring full DP)?
     - A. 0/1 Knapsack
     - B. Fractional Knapsack
     - C. Matrix Chain Multiplication
     - D. Longest Common Subsequence
+
+   <details>
+   <summary>Show answer</summary>
+
+**B.** Fractional knapsack is greedy-optimal by sorting on value/weight ratio and taking fractions as needed.
+
+   </details>
 
 13. In a dynamic array (vector) that doubles capacity on overflow, the amortized cost per push_back is:
     - A. Θ(1)
@@ -617,11 +701,25 @@ SAT, 3-SAT, Vertex Cover, Independent Set, Clique, Hamiltonian Path/Cycle, TSP (
     - C. Θ(n)
     - D. Θ(n log n)
 
+   <details>
+   <summary>Show answer</summary>
+
+**A.** Doubling makes the total copying cost across n pushes geometric, so the amortized cost per push is Θ(1).
+
+   </details>
+
 14. The running time of Floyd-Warshall all-pairs shortest paths is:
     - A. O(V²)
     - B. O(V² log V)
     - C. O(V³)
     - D. O(VE log V)
+
+   <details>
+   <summary>Show answer</summary>
+
+**C.** Floyd-Warshall uses three nested loops over the vertex set, so it runs in O(V³).
+
+   </details>
 
 15. Kruskal's MST with union-find (path compression + union by rank) on a graph with |V|=V, |E|=E runs in:
     - A. O(V + E)
@@ -629,11 +727,25 @@ SAT, 3-SAT, Vertex Cover, Independent Set, Clique, Hamiltonian Path/Cycle, TSP (
     - C. O(V²)
     - D. O(VE)
 
+   <details>
+   <summary>Show answer</summary>
+
+**B.** Sorting the edges dominates at O(E log E), which is O(E log V); union-find adds only near-linear overhead.
+
+   </details>
+
 16. If problem A is NP-complete and A ≤ₚ B (A polynomial-time reduces to B) with B ∈ NP, then:
     - A. B is in P.
     - B. B is NP-complete.
     - C. B is undecidable.
     - D. P = NP.
+
+   <details>
+   <summary>Show answer</summary>
+
+**B.** The reduction makes B NP-hard, and membership in NP makes B NP-complete.
+
+   </details>
 
 17. A topological sort exists for a directed graph G if and only if:
     - A. G is connected.
@@ -641,11 +753,25 @@ SAT, 3-SAT, Vertex Cover, Independent Set, Clique, Hamiltonian Path/Cycle, TSP (
     - C. G is bipartite.
     - D. G is strongly connected.
 
+   <details>
+   <summary>Show answer</summary>
+
+**B.** A directed graph has a topological ordering exactly when it is acyclic.
+
+   </details>
+
 18. Consider the recurrence T(n) = T(n-1) + n. Solving via substitution gives:
     - A. Θ(n)
     - B. Θ(n log n)
     - C. Θ(n²)
     - D. Θ(2ⁿ)
+
+   <details>
+   <summary>Show answer</summary>
+
+**C.** Unrolling gives 1 + 2 + ... + n = Θ(n²).
+
+   </details>
 
 19. The edit distance (Levenshtein) between strings of length m and n can be computed in:
     - A. O(m + n)
@@ -653,58 +779,25 @@ SAT, 3-SAT, Vertex Cover, Independent Set, Clique, Hamiltonian Path/Cycle, TSP (
     - C. O(mn log(mn))
     - D. O((m+n)²·log(m+n))
 
+   <details>
+   <summary>Show answer</summary>
+
+**B.** Standard edit distance DP fills an (m+1) × (n+1) table, so the runtime is O(mn).
+
+   </details>
+
 20. In a DFS of a directed graph, classifying edges: the presence of which edge type indicates a cycle?
     - A. Tree edge
     - B. Forward edge
     - C. Cross edge
     - D. Back edge
 
-### ✅ Answer Key & Explanations
+   <details>
+   <summary>Show answer</summary>
 
-<details>
-<summary>Reveal full answer key</summary>
+**D.** A back edge to an ancestor in the DFS tree exists iff the directed graph contains a cycle.
 
-1. **B.** Dominant term is 3n²; lower-order terms (n log n, constant) are absorbed. So f(n) = Θ(n²). Not O(n log n) (too small) and not Ω(n³) (too big).
-
-2. **B.** Bottom-up heapify costs Σ\_{h=0..log n} (n/2^(h+1))·h which sums to O(n). _Trap:_ inserting n items one-by-one into a heap is O(n log n), but building from an existing array is linear.
-
-3. **C.** Insertion sort runs in O(nk) on input where each element is at most k positions from its sorted place; with k = O(1) that is O(n). Merge/heap/quicksort still run in Θ(n log n).
-
-4. **C.** Dijkstra's "finalize the min-distance vertex" greedy step is invalid with negative edges — a later negative edge can reduce an already-finalized distance. Bellman-Ford and Floyd-Warshall handle negative edges (absent a negative cycle for SSSP).
-
-5. **C.** log(n!) = Σ\_{k=1..n} log k. Upper bound ≤ n log n. Lower bound ≥ (n/2)·log(n/2) = Θ(n log n). So log(n!) = Θ(n log n) (Stirling).
-
-6. **B.** 2-SAT is in P — solvable in linear time via the implication graph and strongly connected components (Aspvall-Plass-Tarjan). 3-SAT and higher are NP-complete.
-
-7. **B.** BFS layers give shortest paths by edge count — equivalent to shortest paths only when edge weights are all equal (unweighted). General weights require Dijkstra/Bellman-Ford.
-
-8. **B.** a=2, b=2, f(n)=n; n^log_b a = n^1 = n = Θ(f(n)) → Case 2 → Θ(n log n). (Merge sort recurrence.)
-
-9. **C.** a=4, b=2, f(n)=n; n^log_b a = n² dominates f(n) → Case 1 → Θ(n²).
-
-10. **B.** a=1, b=2, f(n)=1; n^log_b a = n⁰ = 1 = Θ(f(n)) → Case 2 → Θ(log n). (Binary search recurrence.)
-
-11. **B.** a=3, b=2, f(n)=n²; n^log_b a = n^1.585; f(n)=n² grows faster and regularity holds (3·(n/2)² = 3n²/4 ≤ c·n² with c=3/4<1) → Case 3 → Θ(n²).
-
-12. **B.** Fractional knapsack: sort by value/weight ratio and take greedily (splitting the last item) — provably optimal. 0/1 Knapsack needs DP; MCM and LCS are classic DP problems.
-
-13. **A.** Doubling bounds total copying cost by a geometric series 1+2+4+…+n ≤ 2n over n pushes, so the amortized cost per push is Θ(1).
-
-14. **C.** Three nested loops over V vertices → Θ(V³); handles negative weights (no negative cycle).
-
-15. **B.** Sorting edges is O(E log E) = O(E log V) (since E ≤ V²); union-find operations contribute O(E·α(V)) ≈ O(E). Total O(E log V).
-
-16. **B.** If A is NP-complete and A ≤ₚ B, then B is NP-hard. Combined with B ∈ NP, B is NP-complete by definition.
-
-17. **B.** A directed graph admits a topological ordering iff it is a DAG. Connectivity is not required; strong connectivity would forbid any topo order.
-
-18. **C.** T(n) = n + (n-1) + … + 1 = n(n+1)/2 = Θ(n²).
-
-19. **B.** Standard Wagner-Fischer DP uses an (m+1)×(n+1) table; each cell is O(1) → O(mn) time (space reducible to O(min(m,n))).
-
-20. **D.** In DFS of a directed graph, a back edge (to an ancestor in the DFS tree) exists iff the graph has a cycle. Forward/cross edges alone do not imply cycles.
-
-</details>
+   </details>
 
 ---
 
@@ -798,41 +891,81 @@ else:                          # right half sorted
 1. Given sorted array `[1,3,5,7,9,11]`, `lower_bound(7)` returns index:
    A) 2 B) 3 C) 4 D) −1
 
+   <details>
+   <summary>Show answer</summary>
+
+   **B** — index 3 is the first position with a value ≥ 7 (value 7 itself).
+
+   </details>
+
 2. In iterative binary search over n elements, the worst-case number of comparisons is:
    A) n/2 B) n C) ⌊log₂ n⌋ + 1 D) √n
+
+   <details>
+   <summary>Show answer</summary>
+
+   **C** — halving n takes ⌊log₂ n⌋ + 1 comparisons in the worst case.
+
+   </details>
 
 3. Why is `mid = lo + (hi - lo) / 2` preferred over `(lo + hi) / 2`?
    A) Faster B) Avoids integer overflow C) Gives better rounding D) Works on floats
 
+   <details>
+   <summary>Show answer</summary>
+
+   **B** — `lo + hi` may overflow for large indices; the subtraction form is safe.
+
+   </details>
+
 4. Expected running time of randomized quicksort on n distinct elements:
    A) O(n) B) O(n log n) C) O(n²) D) O(n log² n)
+
+   <details>
+   <summary>Show answer</summary>
+
+   **B** — expected O(n log n); the worst case is still O(n²), but with vanishing probability.
+
+   </details>
 
 5. A Monte Carlo algorithm is one that:
    A) Always correct, random runtime B) Possibly wrong, bounded runtime C) Always runs in polynomial time D) Uses no randomness
 
+   <details>
+   <summary>Show answer</summary>
+
+   **B** — Monte Carlo algorithms have bounded runtime but may be wrong with small probability.
+
+   </details>
+
 6. Reservoir sampling with k=1 on a stream of length n gives each element probability:
    A) 1 B) 1/k C) 1/n D) k/n² of being selected
+
+   <details>
+   <summary>Show answer</summary>
+
+   **C** — by symmetry, each of the n elements has equal probability 1/n.
+
+   </details>
 
 7. Miller–Rabin declaring "composite" means:
    A) Definitely composite B) Probably composite C) Probably prime D) Inconclusive
 
+   <details>
+   <summary>Show answer</summary>
+
+   **A** — "composite" is one-sided certain; only "prime" verdicts are probabilistic.
+
+   </details>
+
 8. To binary-search the "minimum weight capacity to ship all packages within D days", you search over:
    A) the package array B) the answer space (capacities) C) days D) package indices
 
-**Answer Key:**
+   <details>
+   <summary>Show answer</summary>
 
-<details>
-<summary>Reveal Practice MCQ answers</summary>
+   **B** — parametric / binary-search-on-answer: search the monotone feasibility space.
 
-1. **B** — index 3 is the first position with a value ≥ 7 (value 7 itself).
-2. **C** — halving n takes ⌊log₂ n⌋ + 1 comparisons worst case.
-3. **B** — `lo + hi` may overflow for large indices; subtraction form is safe.
-4. **B** — expected O(n log n); worst case O(n²) with vanishing probability.
-5. **B** — Monte Carlo: bounded time, may be wrong with small probability.
-6. **C** — by symmetry, each of n elements has equal probability 1/n.
-7. **A** — "composite" is one-sided certain; only "prime" verdicts are probabilistic.
-8. **B** — parametric / binary-search-on-answer: search the monotone feasibility space.
-
-</details>
+   </details>
 
 ---

@@ -153,299 +153,373 @@ Works only under **call-by-name** because each iteration re-evaluates `k*k` with
 
 ### 4.1 Definitions
 
-- **Static (lexical) scope:** A variable reference is resolved using the **program text** — the nearest enclosing declaration in the source code. Used by almost every modern language (C, Java, Python, Scheme, ML, Rust).
-- **Dynamic scope:** A variable reference is resolved using the **call stack** — the most recent declaration on the runtime stack. Used by early Lisp, classic Perl (`local`), Bash, Emacs Lisp.
+<details>
+<summary><strong>Q1.</strong> In <strong>call-by-value</strong>, what does the callee receive?</summary>
 
-### 4.2 The Canonical Trace
+A. The address of the argument
+B. A copy of the argument's value
+C. A reference alias to the caller's variable
+D. The unevaluated expression text
 
-```
-x := 10
+**Answer: (B) A copy of the argument's value.**
+Call-by-value copies the argument's value into the parameter, so changes inside the callee do not affect the caller.
 
-procedure show():
-    print(x)
+</details>
 
-procedure inner():
-    x := 20
-    show()
+<details>
+<summary><strong>Q2.</strong> Which compiler phase rejects <code>int x = "hello";</code> in a statically typed language?</summary>
 
-inner()
-```
+A. Lexical analysis
+B. Syntax analysis (parsing)
+C. Semantic analysis (type checking)
+D. Code generation
 
-| Scoping     | Output | Why                                                                                                                                       |
-| ----------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| **Static**  | `10`   | `show` was defined at top level where `x=10`; the x in inner() is a different binding at runtime but the textual lookup finds the global. |
-| **Dynamic** | `20`   | When `show` runs, most-recent `x` on the stack is inner's `x=20`.                                                                         |
+**Answer: (C) Semantic analysis (type checking).**
+Lexing accepts the tokens, parsing accepts the grammar, and the type mismatch is caught during semantic analysis.
 
-### 4.3 Nested Procedures (Pascal-style)
+</details>
 
-```
-procedure outer():
-    x := 1
-    procedure middle():
-        x := 2
-        inner()
-    procedure inner():
-        print(x)
-    middle()
+<details>
+<summary><strong>Q3.</strong> Which memory region typically holds objects allocated with <code>new</code> in Java?</summary>
 
-outer()
-```
+A. Stack
+B. Heap
+C. Code segment
+D. CPU registers
 
-- **Static:** `inner` is declared inside `outer`; its enclosing `x` is outer's `x=1`. Prints `1`. _(middle's x is a different variable unless inner is declared inside middle.)_
-- **Dynamic:** Active stack at print time = inner → middle → outer. Most recent `x` is middle's = `2`. Prints `2`.
+**Answer: (B) Heap.**
+In Java, the object itself is heap-allocated and garbage-collected; the reference variable may live elsewhere.
 
-### 4.4 How Implementations Differ
+</details>
 
-| Feature     | Static scope                                    | Dynamic scope                                 |
-| ----------- | ----------------------------------------------- | --------------------------------------------- |
-| Resolution  | Compile-time (mostly)                           | Runtime stack walk                            |
+<details>
+<summary><strong>Q4.</strong> Which best distinguishes an <strong>abstract class</strong> from a classical (pre-Java 8) <strong>interface</strong>?</summary>
+
+A. Interfaces can have constructors; abstract classes cannot
+B. Abstract classes can hold state (fields) and partial implementations; interfaces only declared method signatures
+C. A class can extend multiple abstract classes but implement only one interface
+D. Interfaces support private fields; abstract classes do not
+
+**Answer: (B).**
+Abstract classes can carry fields and concrete methods; classical interfaces only declare signatures and constants. A class may implement many interfaces but extend only one class.
+
+</details>
+
+<details>
+<summary><strong>Q5.</strong> What does the <strong>Liskov Substitution Principle</strong> require?</summary>
+
+A. Subtypes must override every method of the supertype
+B. Subtypes must be usable anywhere the supertype is expected without breaking correctness
+C. Supertypes must not have abstract methods
+D. Subtypes should always throw new checked exceptions
+
+**Answer: (B).**
+LSP requires behavioral substitutability: a subtype should be a drop-in replacement for its supertype without surprising failures.
+
+</details>
+
+<details>
+<summary><strong>Q6.</strong> Mark-and-sweep, reference counting, and generational collection are variants of what?</summary>
+
+A. Stack allocation strategies
+B. Garbage collection algorithms
+C. Virtual memory paging
+D. Type inference techniques
+
+**Answer: (B) Garbage collection algorithms.**
+They are different ways of reclaiming unreachable heap memory.
+
+</details>
+
+<details>
+<summary><strong>Q7.</strong> The <strong>dangling-else</strong> ambiguity is resolved in most C-family languages by binding <code>else</code> to the…</summary>
+
+A. Outermost unmatched <code>if</code>
+B. Nearest unmatched <code>if</code>
+C. First <code>if</code> in the block
+D. It is a compile error
+
+**Answer: (B) Nearest unmatched <code>if</code>.**
+That is the standard rule used to resolve the ambiguity.
+
+</details>
+
+<details>
+<summary><strong>Q8.</strong> Which is a property of a <strong>pure function</strong>?</summary>
+
+A. It may write to a global log
+B. Given the same inputs, it returns the same output and has no side effects
+C. It must be recursive
+D. It must return <code>void</code>
+
+**Answer: (B).**
+Purity means deterministic output for the same inputs and no side effects.
+
+</details>
 | Needs       | **Static link** or display in activation record | **Dynamic link** (access link via call stack) |
 | Readability | Good — see declarations in source               | Poor — behavior depends on caller             |
 | Speed       | Faster (offsets known)                          | Slower (search)                               |
 
 > **Mnemonic:** **"Static follows the page, Dynamic follows the stage."** The page = source code; the stage = active actors (call stack).
 
----
-
-## 5. Binding Times
-
-A **binding** associates a name/attribute with a value/property. The _time_ binding occurs matters.
-
-| Binding time                | Example                                                                  |
-| --------------------------- | ------------------------------------------------------------------------ |
-| **Language design**         | Meaning of `+`, `if`, keyword reserved words                             |
-| **Language implementation** | Size of `int` (32 vs 64 bits in C)                                       |
-| **Compile time**            | Type of a variable in C/Java; overload resolution in C++                 |
-| **Link time**               | Resolution of external library calls (static linking)                    |
-| **Load time**               | Address of a global variable (without ASLR)                              |
-| **Runtime — early**         | Values of local variables at procedure entry                             |
-| **Runtime — late**          | Virtual method dispatch; dynamic type checks; method in Smalltalk/Python |
-
-- **Static binding** = before runtime (compile/link/load). Faster, safer, less flexible.
-- **Dynamic binding** = at runtime. Slower, flexible, enables polymorphism.
-
-> **Trick:** _overload_ resolution (same name, different signatures) is **static** (compile time, based on declared arg types). _Override_ resolution (virtual methods) is **dynamic** (runtime, based on actual object type). The MFT loves this distinction.
-
----
-
-## 6. Recursion
-
-### 6.1 Must-Know Patterns
+<details>
+<summary><strong>Q9.</strong> Static vs dynamic scope. Given the code below, what is printed under <strong>static (lexical)</strong> vs <strong>dynamic</strong> scope?</summary>
 
 ```
-factorial(n):
-    if n <= 1: return 1
-    return n * factorial(n-1)
+x = 1
+function f():  print(x)
+function g():  x = 2; f()
+g()
 ```
 
-Trace `factorial(4)`: `4 * 3 * 2 * 1 = 24`.
+A. 1 and 1
+B. 2 and 2
+C. 1 (static) and 2 (dynamic)
+D. 2 (static) and 1 (dynamic)
 
-### 6.2 Fibonacci Call Count
+**Answer: (C).**
+Under static scope, `f` resolves `x` in its lexical environment and prints 1. Under dynamic scope, `f` sees `g`'s local `x = 2` on the call stack and prints 2.
 
-```
-fib(n):
-    if n < 2: return n
-    return fib(n-1) + fib(n-2)
-```
+</details>
 
-Number of total calls to `fib` when invoking `fib(n)`: **`2·fib(n+1) − 1`** (each non-base returns a node; the binary-tree size).
-
-| n   | fib(n) | # calls |
-| --- | ------ | ------- |
-| 0   | 0      | 1       |
-| 1   | 1      | 1       |
-| 2   | 1      | 3       |
-| 3   | 2      | 5       |
-| 4   | 3      | 9       |
-| 5   | 5      | 15      |
-| 6   | 8      | 25      |
-| 7   | 13     | 41      |
-
-> **Mnemonic:** `calls(n) = calls(n-1) + calls(n-2) + 1` with calls(0)=calls(1)=1.
-
-### 6.3 Tail Recursion
-
-A call is **tail-recursive** if the recursive call is the **last operation** — no pending work after it returns.
+<details>
+<summary><strong>Q10.</strong> Recursion trace — what does <code>mystery(4)</code> return?</summary>
 
 ```
-// NOT tail recursive — must multiply n after return
-fact(n) = if n<=1 then 1 else n * fact(n-1)
-
-// Tail recursive — accumulator pattern
-fact_tr(n, acc) = if n<=1 then acc else fact_tr(n-1, n*acc)
+function mystery(n):
+  if n <= 1: return 1
+  return n * mystery(n - 2)
 ```
 
-- Compilers (Scheme, SML, Scala with `@tailrec`, some Haskell) perform **tail-call optimization (TCO)**: reuse the current activation record → O(1) stack, equivalent to a loop.
-- Java, Python do **not** perform TCO.
+A. 24
+B. 8
+C. 6
+D. 4
 
-### 6.4 Mutual Recursion
+**Answer: (B) 8.**
+Trace it bottom-up: `mystery(4) = 4 * mystery(2) = 4 * (2 * mystery(0)) = 4 * 2 * 1 = 8`.
 
-```
-even(n) = if n=0 then true else odd(n-1)
-odd(n)  = if n=0 then false else even(n-1)
-```
+</details>
 
-Each call of `even(n)` generates `n` function calls total. No TCO → stack depth = n.
-
-### 6.5 Iteration Conversion
-
-Any recursion → iteration via explicit stack. Tail recursion → `while` loop directly. Non-tail linear recursion (like factorial) → loop with accumulator. Tree recursion (like naive fib) → iteration + memo table (DP) for efficiency.
-
----
-
-## 7. Object-Oriented Programming
-
-### 7.1 The Four Pillars (ETS loves "which is NOT a pillar")
-
-1. **Encapsulation** — bundling data and methods; hiding representation.
-2. **Inheritance** — deriving classes from existing ones; "is-a".
-3. **Polymorphism** — one interface, many implementations.
-4. **Abstraction** — modeling essential features only (often listed as 4th; sometimes the 4 are Encaps/Inherit/Polymorph/Abstraction, sometimes just the first 3 + "data hiding").
-
-### 7.2 Inheritance Types
-
-| Term                      | Meaning                                                           |
-| ------------------------- | ----------------------------------------------------------------- |
-| **Single inheritance**    | One parent (Java, C#)                                             |
-| **Multiple inheritance**  | Many parents (C++, Python). Risks the **diamond problem**         |
-| **Interface inheritance** | Implement multiple interfaces (Java) — no state                   |
-| **Mixin / Trait**         | Reusable method bundles (Ruby modules, Scala traits, Rust traits) |
-
-**Diamond problem:** B and C both inherit from A; D inherits B and C. Which A's `foo()` does D use? C++ uses virtual inheritance to share; Python uses C3 linearization (MRO).
-
-### 7.3 Polymorphism Kinds
-
-| Kind           | Also called         | Example                                                       |
-| -------------- | ------------------- | ------------------------------------------------------------- |
-| **Subtype**    | Inclusion, dynamic  | Shape → Circle, Square; `s.area()` dispatches                 |
-| **Parametric** | Generics            | `List<T>`, ML's `'a list`, Java generics                      |
-| **Ad-hoc**     | Overloading         | Multiple `print(int)`, `print(String)` chosen at compile time |
-| **Coercion**   | Implicit conversion | `int + double` auto-promotes                                  |
-
-### 7.4 Virtual vs Non-virtual (Dynamic Dispatch)
-
-- **Virtual method:** The method called depends on the **runtime (dynamic) type** of the object.
-- **Non-virtual method:** Resolved by **static (declared) type**.
-
-C++: only methods declared `virtual` dispatch dynamically.
-Java: _all_ instance methods are virtual by default (except `private`, `static`, `final`).
-C#: methods are non-virtual by default; must say `virtual` + `override`.
-Python: everything is virtual-ish (attribute lookup on the instance's class).
+<details>
+<summary><strong>Q11.</strong> Java-like overload/override:</summary>
 
 ```
-class A { void f() { print("A"); } }
-class B extends A { void f() { print("B"); } }
-A x = new B();
-x.f();
+class A { void p(int x) { print("A-int"); } }
+class B extends A {
+  void p(int x) { print("B-int"); }
+  void p(double x) { print("B-double"); }
+}
+A a = new B();
+a.p(3);
 ```
 
-- Java: prints `B` (virtual).
-- C++ without `virtual`: prints `A` (static dispatch).
-- C++ with `virtual`: prints `B`.
+What prints?
+A. A-int
+B. B-int
+C. B-double
+D. Compile error
 
-### 7.5 Abstract Class vs Interface
+**Answer: (B) B-int.**
+The call resolves to `p(int)` at compile time from the static type `A`, then dispatches dynamically to B's override.
 
-| Aspect          | Abstract class                   | Interface                                                                |
-| --------------- | -------------------------------- | ------------------------------------------------------------------------ |
-| Can have state? | Yes                              | Historically no; Java 8+ allows `default` methods but no instance fields |
-| Method bodies   | Yes (mix of abstract + concrete) | Typically none (or default)                                              |
-| Inheritance     | Single (Java/C#)                 | Multiple                                                                 |
-| Constructors    | Yes                              | No                                                                       |
-| Use when...     | Shared code + fields             | Pure contract                                                            |
+</details>
 
-### 7.6 Overloading vs Overriding (High-frequency MFT trap)
+<details>
+<summary><strong>Q12.</strong> Short-circuit + precedence. With <code>a = 0</code>, <code>b = 5</code>, evaluate <code>a != 0 && b / a > 1</code>:</summary>
 
-|                 | Overloading                                    | Overriding                      |
-| --------------- | ---------------------------------------------- | ------------------------------- |
-| Same name?      | Yes                                            | Yes                             |
-| Same signature? | **No** (different param types/counts)          | **Yes** (same signature)        |
-| Relationship    | Within one class or hierarchy                  | Subclass replaces parent method |
-| Resolved at     | **Compile time** (static, ad-hoc polymorphism) | **Runtime** (dynamic dispatch)  |
-| Binding         | Early                                          | Late                            |
+A. Runtime division-by-zero
+B. <code>false</code> (no division performed)
+C. <code>true</code>
+D. Compile error
 
-### 7.7 Object Layout & vtables
+**Answer: (B) false.**
+The left operand is false, so `&&` short-circuits and the division is never evaluated.
 
-A C++/Java object is typically laid out as: `[vptr | field1 | field2 | ...]`. The `vptr` points to a **vtable** — an array of function pointers for virtual methods. Dynamic dispatch = one indirection through the vtable. Cost: one extra pointer per object + one extra load per call.
+</details>
 
----
-
-## 8. Functional Programming Concepts
-
-### 8.1 Higher-Order Functions
-
-A function that takes a function as an argument and/or returns a function. Examples: `map`, `filter`, `reduce/fold`, `compose`.
-
-### 8.2 Closures
-
-A **closure** = function + captured lexical environment.
+<details>
+<summary><strong>Q13.</strong> Pre/post-increment (assume strict left-to-right evaluation with sequence points):</summary>
 
 ```
-function makeCounter():
-    count := 0
-    function inc():
-        count := count + 1
-        return count
-    return inc
-
-c := makeCounter()
-print(c())   // 1
-print(c())   // 2
+int i = 2;
+int r = (i++) + (++i) + i;
 ```
 
-`inc` captures `count` — the variable survives beyond the enclosing function's return. Only possible under **static scope with heap-allocated environments** (activation record must outlive the call).
+What is `r`?
+A. 8
+B. 9
+C. 10
+D. 11
 
-### 8.3 Lambda Expressions
+**Answer: (C) 10.**
+`i++` yields 2 then increments `i` to 3; `++i` increments to 4 and yields 4; final `i` is 4, so the sum is 2 + 4 + 4 = 10.
 
-Anonymous function literal. `λx. x+1` (math) = `lambda x: x+1` (Python) = `x -> x+1` (Java 8) = `fn x => x+1` (SML). Lambdas usually capture their environment → they are closures.
+</details>
 
-### 8.4 Immutability
-
-Values can't be changed after creation. Enables safe sharing, easy reasoning, referential transparency.
-
-- Haskell: everything immutable by default.
-- ML, Clojure: mostly immutable.
-- Java: `String`, `final`, `java.util.List.of(...)` give immutability.
-
-### 8.5 Lazy (Non-strict) Evaluation
-
-Expressions not evaluated until their value is needed.
+<details>
+<summary><strong>Q14.</strong> The classic JavaScript 3-3-3 problem:</summary>
 
 ```
-take 5 [1..]
+var fns = [];
+for (var i = 0; i < 3; i++) {
+  fns.push(function() { return i; });
+}
+print(fns[0](), fns[1](), fns[2]());
 ```
 
-In Haskell, `[1..]` is an infinite list; lazy evaluation makes `take 5` return `[1,2,3,4,5]` without looping forever.
+What prints?
+A. 0 1 2
+B. 1 2 3
+C. 3 3 3
+D. undefined undefined undefined
 
-**Strict (eager)** = arguments evaluated before call (C, Java, Python).
-**Non-strict (lazy)** = arguments evaluated when used (Haskell; `call-by-need` is memoized lazy).
+**Answer: (C) 3 3 3.**
+`var` is function-scoped, so all closures capture the same `i`, which ends at 3.
 
-### 8.6 Referential Transparency
+</details>
 
-An expression is **referentially transparent** if it can be replaced by its value without changing program meaning. Pure functions are RT. Side effects (I/O, mutation, exceptions) break RT.
+<details>
+<summary><strong>Q15.</strong> Exception propagation (Java-like):</summary>
 
-### 8.7 Currying
+```
+try {
+  try { throw new IOException(); }
+  finally { print("A"); }
+} catch (IOException e) { print("B"); }
+finally { print("C"); }
+```
 
-Turning `f(x, y, z)` into `f(x)(y)(z)`. In Haskell every function is curried: `f : a -> b -> c` ≡ `a -> (b -> c)`.
+What prints?
+A. A B C
+B. B A C
+C. A C
+D. B C
 
----
+**Answer: (A) A B C.**
+The inner `finally` runs first, then the exception is caught, then the outer `finally` runs.
 
-## 9. Type Systems
+</details>
 
-### 9.1 The Four Axes
+<details>
+<summary><strong>Q16.</strong> Higher-order + immutability:</summary>
 
-| Axis                      | Options              | Example                                                   |
-| ------------------------- | -------------------- | --------------------------------------------------------- |
-| **When checked**          | Static vs Dynamic    | Java (static), Python (dynamic)                           |
-| **How strict**            | Strong vs Weak       | Python/Java (strong), C (weak — unchecked casts, void\*)  |
-| **Explicit vs Inferred**  | Manifest vs Inferred | Java pre-10 (manifest), Haskell/ML (inferred)             |
-| **Nominal vs Structural** | By name vs by shape  | Java/C++ (nominal), TypeScript/Go interfaces (structural) |
+```
+xs = [1, 2, 3]
+ys = map(xs, x -> x * 2)
+print(xs, ys)
+```
 
-> **Don't confuse axes!** Python is **dynamic and strong**. C is **static and weak**. JavaScript is **dynamic and weak**. Haskell is **static and strong** (and inferred).
+Assuming `map` is pure and non-mutating:
+A. <code>[2,4,6] [2,4,6]</code>
+B. <code>[1,2,3] [2,4,6]</code>
+C. <code>[1,2,3] [1,2,3]</code>
+D. <code>[2,4,6] [1,2,3]</code>
 
-### 9.2 Type Inference (Hindley–Milner)
+**Answer: (B).**
+`map` returns a new list and leaves the input unchanged.
 
-Used by ML, Haskell, OCaml. Principal type is inferred from usage. Decidable in polynomial time (in practice). Cannot infer subtypes or higher-rank polymorphism without annotations.
+</details>
 
+| Kind           | Also called        | Example                                       |
+| -------------- | ------------------ | --------------------------------------------- |
+| **Subtype**    | Inclusion, dynamic | Shape → Circle, Square; `s.area()` dispatches |
+| **Parametric** | Generics           | `List<T>`, ML's `'a list`, Java generics      |
+
+<details>
+<summary><strong>Q17.</strong> <strong>Call-by-name with swap</strong> (Jensen's device). Parameters passed by name — every use of a parameter re-evaluates its actual expression:</summary>
+
+```
+procedure swap(a, b):     // pass by NAME
+  temp = a
+  a = b
+  b = temp
+
+i = 1
+A = [10, 20, 30]          // 1-indexed: A[1]=10, A[2]=20, A[3]=30
+swap(i, A[i])
+```
+
+After the call, what are `i` and `A`?
+A. i = 10, A = [1, 20, 30]
+B. i = 10, A = [10, 1, 30]
+C. i = 1, A = [1, 20, 30]
+D. i = 10, A = [10, 20, 30]
+
+**Answer: (A) i = 10, A = [1, 20, 30].**
+Trace with call-by-name by substituting the actual expressions textually. `temp = a` reads `i = 1`; `a = b` becomes `i = A[i]`, so `i` becomes 10; `b = temp` then re-evaluates `A[i]` with the new `i`, which is the classic call-by-name trap. The key takeaway is that `swap(i, A[i])` breaks under name semantics.
+
+</details>
+
+<details>
+<summary><strong>Q18.</strong> <strong>Overload (static) vs override (dynamic):</strong></summary>
+
+```
+class Animal { void speak(Animal a) { print("animal+animal"); } }
+class Dog extends Animal {
+  void speak(Animal a) { print("dog+animal"); }   // override
+  void speak(Dog d)    { print("dog+dog"); }      // overload (Dog-only)
+}
+Animal x = new Dog();
+Dog    y = new Dog();
+x.speak(y);
+```
+
+What prints? (Java resolves overloads at compile time using **static** types.)
+A. dog+dog
+B. dog+animal
+C. animal+animal
+D. Compile error
+
+**Answer: (B) dog+animal.**
+`x`'s static type is `Animal`, so overload resolution sees only `speak(Animal)`. At runtime, dynamic dispatch invokes `Dog`'s override of that method.
+
+</details>
+
+<details>
+<summary><strong>Q19.</strong> <strong>Closures capture variables, not values</strong> — the <code>let</code> twist:</summary>
+
+```
+let fns = [];
+for (let i = 0; i < 3; i++) {
+  fns.push(() => i);
+}
+console.log(fns[0](), fns[1](), fns[2]());
+```
+
+What prints?
+A. 0 1 2
+B. 3 3 3
+C. 2 2 2
+D. undefined undefined undefined
+
+**Answer: (A) 0 1 2.**
+`let` creates a fresh binding per iteration, so each closure captures its own `i`.
+
+</details>
+
+<details>
+<summary><strong>Q20.</strong> <strong>Call-by-value-result (copy-in/copy-out) vs call-by-reference.</strong></summary>
+
+```
+procedure p(x, y):
+  x = x + 1
+  y = y + 1
+
+i = 5
+p(i, i)                   // same variable passed twice
+```
+
+What is `i` after the call under (a) call-by-reference, and (b) call-by-value-result (copy back left-to-right on return)?
+A. (a) 7, (b) 7
+B. (a) 7, (b) 6
+C. (a) 6, (b) 7
+D. (a) 6, (b) 6
+
+**Answer: (B) (a) 7, (b) 6.**
+Under reference, both parameters alias `i`, so `i` is incremented twice. Under value-result, both locals start at 5, both become 6, and the second copy-back overwrites the first.
+
+</details>
 ### 9.3 Subtyping
 
 `S <: T` means anywhere a `T` is expected, an `S` can be used (**Liskov Substitution Principle**). Consequences:
@@ -1401,39 +1475,84 @@ u.c[0] == 1 → little-endian
 
 ### Practice MCQs
 
-1. What does `x & (x-1) == 0` test for (assuming `x > 0`)?
-   A) x is even B) x is odd C) x is a power of 2 D) x has exactly 2 set bits
+<details>
+<summary><strong>Q1.</strong> What does <code>x & (x-1) == 0</code> test for (assuming <code>x &gt; 0</code>)?</summary>
 
-2. After `int x = 12; x &= x - 1;` what is `x`?
-   A) 11 B) 8 C) 4 D) 0
+A) x is even B) x is odd C) x is a power of 2 D) x has exactly 2 set bits
 
-3. In C, `int a[5]; int *p = a;` What does `sizeof(a) / sizeof(p)` evaluate to on a 64-bit system (int=4 bytes)?
-   A) 5 B) 2 C) 2.5 D) 1
+**Answer: (C) x is a power of 2.**
+Clearing the lowest set bit leaves 0 only if exactly one bit was set.
 
-4. Which declaration describes a pointer to a constant integer?
-   A) `int * const p;` B) `const int *p;` C) `const int * const p;` D) `int const * const p;`
+</details>
 
-5. Expression `3[arr]` where `int arr[] = {10,20,30,40,50};` evaluates to:
-   A) 10 B) 30 C) 40 D) compile error
+<details>
+<summary><strong>Q2.</strong> After <code>int x = 12; x &amp;= x - 1;</code> what is <code>x</code>?</summary>
 
-6. XOR swap fails when:
-   A) values are equal B) one value is 0 C) both args alias the same memory D) values are negative
+A) 11 B) 8 C) 4 D) 0
 
-7. `int (*fp)(int);` declares:
-   A) array of function pointers B) function returning pointer to int C) pointer to function taking int and returning int D) function pointer array of size int
+**Answer: (B) 8.**
+12 is <code>1100</code>; <code>12 &amp; 11</code> is <code>1000</code>, which is 8.
 
-8. Counting set bits of `0b10110100` (180) via Brian Kernighan takes how many loop iterations?
-   A) 8 B) 4 C) 7 D) 1
+</details>
 
-**Answer Key:**
+<details>
+<summary><strong>Q3.</strong> In C, <code>int a[5]; int *p = a;</code> what does <code>sizeof(a) / sizeof(p)</code> evaluate to on a 64-bit system (int=4 bytes)?</summary>
 
-1. **C** — Clearing the lowest set bit leaves 0 only if exactly one bit was set.
-2. **B** — 12 = `1100`; 11 = `1011`; AND = `1000` = 8.
-3. **A** — `sizeof(a)` = 20, `sizeof(p)` = 8; 20/8 = 2 (integer division). ⚠️ Wait — 20/8 = 2, not 5. Correct answer: **B) 2**. (Trap: many expect 5, forgetting pointer != array.) The intended teaching point is the trap; choose **B**.
-4. **B** — `const int *p` — can't modify `*p`, but can reassign `p`.
-5. **C** — `3[arr]` ≡ `*(3 + arr)` ≡ `arr[3]` = 40.
-6. **C** — If `&a == &b`, the first XOR zeros the memory; both become 0.
-7. **C** — Parens bind `*` to `fp` first, then `(int)` is parameter list.
-8. **B** — 180 has four 1-bits (`10110100`); Kernighan iterates once per set bit.
+A) 5 B) 2 C) 2.5 D) 1
+
+**Answer: (B) 2.**
+`sizeof(a)` is 20 and `sizeof(p)` is 8, so the integer division is 2. The trap is treating the array like a pointer.
+
+</details>
+
+<details>
+<summary><strong>Q4.</strong> Which declaration describes a pointer to a constant integer?</summary>
+
+A) <code>int * const p;</code> B) <code>const int *p;</code> C) <code>const int _ const p;</code> D) <code>int const _ const p;</code>
+
+**Answer: (B) <code>const int \*p;</code>.**
+The pointed-to integer is const; the pointer itself can still be reassigned.
+
+</details>
+
+<details>
+<summary><strong>Q5.</strong> Expression <code>3[arr]</code> where <code>int arr[] = {10,20,30,40,50};</code> evaluates to:</summary>
+
+A) 10 B) 30 C) 40 D) compile error
+
+**Answer: (C) 40.**
+`3[arr]` is the same as `arr[3]`, which is 40.
+
+</details>
+
+<details>
+<summary><strong>Q6.</strong> XOR swap fails when:</summary>
+
+A) values are equal B) one value is 0 C) both args alias the same memory D) values are negative
+
+**Answer: (C) both args alias the same memory.**
+If both references point at the same location, the first XOR zeros the memory and the swap corrupts the value.
+
+</details>
+
+<details>
+<summary><strong>Q7.</strong> <code>int (*fp)(int);</code> declares:</summary>
+
+A) array of function pointers B) function returning pointer to int C) pointer to function taking int and returning int D) function pointer array of size int
+
+**Answer: (C) pointer to function taking int and returning int.**
+The parentheses bind <code>\*fp</code> before the parameter list.
+
+</details>
+
+<details>
+<summary><strong>Q8.</strong> Counting set bits of <code>0b10110100</code> (180) via Brian Kernighan takes how many loop iterations?</summary>
+
+A) 8 B) 4 C) 7 D) 1
+
+**Answer: (B) 4.**
+Kernighan's loop runs once per set bit, and <code>10110100</code> has four 1-bits.
+
+</details>
 
 ---
