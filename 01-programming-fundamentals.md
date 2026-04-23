@@ -153,104 +153,120 @@ Works only under **call-by-name** because each iteration re-evaluates `k*k` with
 
 ### 4.1 Definitions
 
-<details>
-<summary><strong>Q1.</strong> In <strong>call-by-value</strong>, what does the callee receive?</summary>
+**<strong>Q1.</strong> In <strong>call-by-value</strong>, what does the callee receive?**
 
 A. The address of the argument
 B. A copy of the argument's value
 C. A reference alias to the caller's variable
 D. The unevaluated expression text
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: (B) A copy of the argument's value.**
 Call-by-value copies the argument's value into the parameter, so changes inside the callee do not affect the caller.
 
 </details>
 
-<details>
-<summary><strong>Q2.</strong> Which compiler phase rejects <code>int x = "hello";</code> in a statically typed language?</summary>
+**<strong>Q2.</strong> Which compiler phase rejects <code>int x = "hello";</code> in a statically typed language?**
 
 A. Lexical analysis
 B. Syntax analysis (parsing)
 C. Semantic analysis (type checking)
 D. Code generation
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: (C) Semantic analysis (type checking).**
 Lexing accepts the tokens, parsing accepts the grammar, and the type mismatch is caught during semantic analysis.
 
 </details>
 
-<details>
-<summary><strong>Q3.</strong> Which memory region typically holds objects allocated with <code>new</code> in Java?</summary>
+**<strong>Q3.</strong> Which memory region typically holds objects allocated with <code>new</code> in Java?**
 
 A. Stack
 B. Heap
 C. Code segment
 D. CPU registers
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: (B) Heap.**
 In Java, the object itself is heap-allocated and garbage-collected; the reference variable may live elsewhere.
 
 </details>
 
-<details>
-<summary><strong>Q4.</strong> Which best distinguishes an <strong>abstract class</strong> from a classical (pre-Java 8) <strong>interface</strong>?</summary>
+**<strong>Q4.</strong> Which best distinguishes an <strong>abstract class</strong> from a classical (pre-Java 8) <strong>interface</strong>?**
 
 A. Interfaces can have constructors; abstract classes cannot
 B. Abstract classes can hold state (fields) and partial implementations; interfaces only declared method signatures
 C. A class can extend multiple abstract classes but implement only one interface
 D. Interfaces support private fields; abstract classes do not
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: (B).**
 Abstract classes can carry fields and concrete methods; classical interfaces only declare signatures and constants. A class may implement many interfaces but extend only one class.
 
 </details>
 
-<details>
-<summary><strong>Q5.</strong> What does the <strong>Liskov Substitution Principle</strong> require?</summary>
+**<strong>Q5.</strong> What does the <strong>Liskov Substitution Principle</strong> require?**
 
 A. Subtypes must override every method of the supertype
 B. Subtypes must be usable anywhere the supertype is expected without breaking correctness
 C. Supertypes must not have abstract methods
 D. Subtypes should always throw new checked exceptions
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: (B).**
 LSP requires behavioral substitutability: a subtype should be a drop-in replacement for its supertype without surprising failures.
 
 </details>
 
-<details>
-<summary><strong>Q6.</strong> Mark-and-sweep, reference counting, and generational collection are variants of what?</summary>
+**<strong>Q6.</strong> Mark-and-sweep, reference counting, and generational collection are variants of what?**
 
 A. Stack allocation strategies
 B. Garbage collection algorithms
 C. Virtual memory paging
 D. Type inference techniques
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: (B) Garbage collection algorithms.**
 They are different ways of reclaiming unreachable heap memory.
 
 </details>
 
-<details>
-<summary><strong>Q7.</strong> The <strong>dangling-else</strong> ambiguity is resolved in most C-family languages by binding <code>else</code> to the…</summary>
+**<strong>Q7.</strong> The <strong>dangling-else</strong> ambiguity is resolved in most C-family languages by binding <code>else</code> to the…**
 
 A. Outermost unmatched <code>if</code>
 B. Nearest unmatched <code>if</code>
 C. First <code>if</code> in the block
 D. It is a compile error
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: (B) Nearest unmatched <code>if</code>.**
 That is the standard rule used to resolve the ambiguity.
 
 </details>
 
-<details>
-<summary><strong>Q8.</strong> Which is a property of a <strong>pure function</strong>?</summary>
+**<strong>Q8.</strong> Which is a property of a <strong>pure function</strong>?**
 
 A. It may write to a global log
 B. Given the same inputs, it returns the same output and has no side effects
 C. It must be recursive
 D. It must return <code>void</code>
+
+<details>
+<summary>Reveal answer</summary>
 
 **Answer: (B).**
 Purity means deterministic output for the same inputs and no side effects.
@@ -262,8 +278,7 @@ Purity means deterministic output for the same inputs and no side effects.
 
 > **Mnemonic:** **"Static follows the page, Dynamic follows the stage."** The page = source code; the stage = active actors (call stack).
 
-<details>
-<summary><strong>Q9.</strong> Static vs dynamic scope. Given the code below, what is printed under <strong>static (lexical)</strong> vs <strong>dynamic</strong> scope?</summary>
+**<strong>Q9.</strong> Static vs dynamic scope. Given the code below, what is printed under <strong>static (lexical)</strong> vs <strong>dynamic</strong> scope?**
 
 ```
 x = 1
@@ -277,13 +292,15 @@ B. 2 and 2
 C. 1 (static) and 2 (dynamic)
 D. 2 (static) and 1 (dynamic)
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: (C).**
 Under static scope, `f` resolves `x` in its lexical environment and prints 1. Under dynamic scope, `f` sees `g`'s local `x = 2` on the call stack and prints 2.
 
 </details>
 
-<details>
-<summary><strong>Q10.</strong> Recursion trace — what does <code>mystery(4)</code> return?</summary>
+**<strong>Q10.</strong> Recursion trace — what does <code>mystery(4)</code> return?**
 
 ```
 function mystery(n):
@@ -296,13 +313,15 @@ B. 8
 C. 6
 D. 4
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: (B) 8.**
 Trace it bottom-up: `mystery(4) = 4 * mystery(2) = 4 * (2 * mystery(0)) = 4 * 2 * 1 = 8`.
 
 </details>
 
-<details>
-<summary><strong>Q11.</strong> Java-like overload/override:</summary>
+**<strong>Q11.</strong> Java-like overload/override:**
 
 ```
 class A { void p(int x) { print("A-int"); } }
@@ -320,26 +339,30 @@ B. B-int
 C. B-double
 D. Compile error
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: (B) B-int.**
 The call resolves to `p(int)` at compile time from the static type `A`, then dispatches dynamically to B's override.
 
 </details>
 
-<details>
-<summary><strong>Q12.</strong> Short-circuit + precedence. With <code>a = 0</code>, <code>b = 5</code>, evaluate <code>a != 0 && b / a > 1</code>:</summary>
+**<strong>Q12.</strong> Short-circuit + precedence. With <code>a = 0</code>, <code>b = 5</code>, evaluate <code>a != 0 && b / a > 1</code>:**
 
 A. Runtime division-by-zero
 B. <code>false</code> (no division performed)
 C. <code>true</code>
 D. Compile error
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: (B) false.**
 The left operand is false, so `&&` short-circuits and the division is never evaluated.
 
 </details>
 
-<details>
-<summary><strong>Q13.</strong> Pre/post-increment (assume strict left-to-right evaluation with sequence points):</summary>
+**<strong>Q13.</strong> Pre/post-increment (assume strict left-to-right evaluation with sequence points):**
 
 ```
 int i = 2;
@@ -352,13 +375,15 @@ B. 9
 C. 10
 D. 11
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: (C) 10.**
 `i++` yields 2 then increments `i` to 3; `++i` increments to 4 and yields 4; final `i` is 4, so the sum is 2 + 4 + 4 = 10.
 
 </details>
 
-<details>
-<summary><strong>Q14.</strong> The classic JavaScript 3-3-3 problem:</summary>
+**<strong>Q14.</strong> The classic JavaScript 3-3-3 problem:**
 
 ```
 var fns = [];
@@ -374,13 +399,15 @@ B. 1 2 3
 C. 3 3 3
 D. undefined undefined undefined
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: (C) 3 3 3.**
 `var` is function-scoped, so all closures capture the same `i`, which ends at 3.
 
 </details>
 
-<details>
-<summary><strong>Q15.</strong> Exception propagation (Java-like):</summary>
+**<strong>Q15.</strong> Exception propagation (Java-like):**
 
 ```
 try {
@@ -396,13 +423,15 @@ B. B A C
 C. A C
 D. B C
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: (A) A B C.**
 The inner `finally` runs first, then the exception is caught, then the outer `finally` runs.
 
 </details>
 
-<details>
-<summary><strong>Q16.</strong> Higher-order + immutability:</summary>
+**<strong>Q16.</strong> Higher-order + immutability:**
 
 ```
 xs = [1, 2, 3]
@@ -416,6 +445,9 @@ B. <code>[1,2,3] [2,4,6]</code>
 C. <code>[1,2,3] [1,2,3]</code>
 D. <code>[2,4,6] [1,2,3]</code>
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: (B).**
 `map` returns a new list and leaves the input unchanged.
 
@@ -426,8 +458,7 @@ D. <code>[2,4,6] [1,2,3]</code>
 | **Subtype**    | Inclusion, dynamic | Shape → Circle, Square; `s.area()` dispatches |
 | **Parametric** | Generics           | `List<T>`, ML's `'a list`, Java generics      |
 
-<details>
-<summary><strong>Q17.</strong> <strong>Call-by-name with swap</strong> (Jensen's device). Parameters passed by name — every use of a parameter re-evaluates its actual expression:</summary>
+**<strong>Q17.</strong> <strong>Call-by-name with swap</strong> (Jensen's device). Parameters passed by name — every use of a parameter re-evaluates its actual expression:**
 
 ```
 procedure swap(a, b):     // pass by NAME
@@ -446,13 +477,15 @@ B. i = 10, A = [10, 1, 30]
 C. i = 1, A = [1, 20, 30]
 D. i = 10, A = [10, 20, 30]
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: (A) i = 10, A = [1, 20, 30].**
 Trace with call-by-name by substituting the actual expressions textually. `temp = a` reads `i = 1`; `a = b` becomes `i = A[i]`, so `i` becomes 10; `b = temp` then re-evaluates `A[i]` with the new `i`, which is the classic call-by-name trap. The key takeaway is that `swap(i, A[i])` breaks under name semantics.
 
 </details>
 
-<details>
-<summary><strong>Q18.</strong> <strong>Overload (static) vs override (dynamic):</strong></summary>
+**<strong>Q18.</strong> <strong>Overload (static) vs override (dynamic):</strong>**
 
 ```
 class Animal { void speak(Animal a) { print("animal+animal"); } }
@@ -471,13 +504,15 @@ B. dog+animal
 C. animal+animal
 D. Compile error
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: (B) dog+animal.**
 `x`'s static type is `Animal`, so overload resolution sees only `speak(Animal)`. At runtime, dynamic dispatch invokes `Dog`'s override of that method.
 
 </details>
 
-<details>
-<summary><strong>Q19.</strong> <strong>Closures capture variables, not values</strong> — the <code>let</code> twist:</summary>
+**<strong>Q19.</strong> <strong>Closures capture variables, not values</strong> — the <code>let</code> twist:**
 
 ```
 let fns = [];
@@ -493,13 +528,15 @@ B. 3 3 3
 C. 2 2 2
 D. undefined undefined undefined
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: (A) 0 1 2.**
 `let` creates a fresh binding per iteration, so each closure captures its own `i`.
 
 </details>
 
-<details>
-<summary><strong>Q20.</strong> <strong>Call-by-value-result (copy-in/copy-out) vs call-by-reference.</strong></summary>
+**<strong>Q20.</strong> <strong>Call-by-value-result (copy-in/copy-out) vs call-by-reference.</strong>**
 
 ```
 procedure p(x, y):
@@ -515,6 +552,9 @@ A. (a) 7, (b) 7
 B. (a) 7, (b) 6
 C. (a) 6, (b) 7
 D. (a) 6, (b) 6
+
+<details>
+<summary>Reveal answer</summary>
 
 **Answer: (B) (a) 7, (b) 6.**
 Under reference, both parameters alias `i`, so `i` is incremented twice. Under value-result, both locals start at 5, both become 6, and the second copy-back overwrites the first.
@@ -1114,104 +1154,119 @@ _End of file — Programming Fundamentals & Programming Languages. Next files in
 
 ## 🧪 Try Yourself — Practice Questions
 
-<details>
-<summary><strong>Q1.</strong> In call-by-value, what does the callee receive?</summary>
+**<strong>Q1.</strong> In call-by-value, what does the callee receive?**
 
 A. The address of the argument  
 B. A copy of the argument's value  
 C. A reference alias to the caller's variable  
 D. The unevaluated expression text
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: B.** Call-by-value copies the argument value into the parameter.
 
 </details>
 
-<details>
-<summary><strong>Q2.</strong> Which compiler phase rejects <code>int x = "hello";</code> in a statically typed language?</summary>
+**<strong>Q2.</strong> Which compiler phase rejects <code>int x = "hello";</code> in a statically typed language?**
 
 A. Lexical analysis  
 B. Syntax analysis (parsing)  
 C. Semantic analysis (type checking)  
 D. Code generation
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: C.** Type mismatch is caught during semantic analysis.
 
 </details>
 
-<details>
-<summary><strong>Q3.</strong> Which memory region typically holds objects allocated with <code>new</code> in Java?</summary>
+**<strong>Q3.</strong> Which memory region typically holds objects allocated with <code>new</code> in Java?**
 
 A. Stack  
 B. Heap  
 C. Code segment  
 D. CPU registers
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: B.** Java objects are heap-allocated.
 
 </details>
 
-<details>
-<summary><strong>Q4.</strong> Which best distinguishes an abstract class from a classical (pre-Java 8) interface?</summary>
+**<strong>Q4.</strong> Which best distinguishes an abstract class from a classical (pre-Java 8) interface?**
 
 A. Interfaces can have constructors; abstract classes cannot  
 B. Abstract classes can hold state and partial implementations; interfaces only declared method signatures  
 C. A class can extend multiple abstract classes but implement only one interface  
 D. Interfaces support private fields; abstract classes do not
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: B.** Abstract classes can include fields and concrete methods.
 
 </details>
 
-<details>
-<summary><strong>Q5.</strong> What does the Liskov Substitution Principle require?</summary>
+**<strong>Q5.</strong> What does the Liskov Substitution Principle require?**
 
 A. Subtypes must override every method of the supertype  
 B. Subtypes must be usable anywhere the supertype is expected without breaking correctness  
 C. Supertypes must not have abstract methods  
 D. Subtypes should always throw new checked exceptions
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: B.** Subtypes must be behaviorally substitutable.
 
 </details>
 
-<details>
-<summary><strong>Q6.</strong> Mark-and-sweep, reference counting, and generational collection are variants of what?</summary>
+**<strong>Q6.</strong> Mark-and-sweep, reference counting, and generational collection are variants of what?**
 
 A. Stack allocation strategies  
 B. Garbage collection algorithms  
 C. Virtual memory paging  
 D. Type inference techniques
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: B.** These are all GC strategies.
 
 </details>
 
-<details>
-<summary><strong>Q7.</strong> The dangling-else ambiguity is resolved in most C-family languages by binding <code>else</code> to the...</summary>
+**<strong>Q7.</strong> The dangling-else ambiguity is resolved in most C-family languages by binding <code>else</code> to the...**
 
 A. Outermost unmatched if  
 B. Nearest unmatched if  
 C. First if in the block  
 D. It is a compile error
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: B.** `else` binds to the nearest unmatched `if`.
 
 </details>
 
-<details>
-<summary><strong>Q8.</strong> Which is a property of a pure function?</summary>
+**<strong>Q8.</strong> Which is a property of a pure function?**
 
 A. It may write to a global log  
 B. Given the same inputs, it returns the same output and has no side effects  
 C. It must be recursive  
 D. It must return void
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: B.** Pure functions are deterministic and side-effect free.
 
 </details>
 
-<details>
-<summary><strong>Q9.</strong> Static vs dynamic scope. Given the code shown, what prints under static vs dynamic scope?</summary>
+**<strong>Q9.</strong> Static vs dynamic scope. Given the code shown, what prints under static vs dynamic scope?**
 
 `x = 1; f() prints x; g() sets x=2 then calls f()`
 
@@ -1220,137 +1275,162 @@ B. 2 and 2
 C. 1 (static) and 2 (dynamic)  
 D. 2 (static) and 1 (dynamic)
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: C.** Static lookup uses lexical declaration, dynamic uses call stack.
 
 </details>
 
-<details>
-<summary><strong>Q10.</strong> Recursion trace: <code>mystery(4)</code> where <code>mystery(n)=n*mystery(n-2)</code> and base is 1.</summary>
+**<strong>Q10.</strong> Recursion trace: <code>mystery(4)</code> where <code>mystery(n)=n*mystery(n-2)</code> and base is 1.**
 
 A. 24  
 B. 8  
 C. 6  
 D. 4
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: B.** `4 * 2 * 1 = 8`.
 
 </details>
 
-<details>
-<summary><strong>Q11.</strong> Java-like overload/override: <code>A a = new B(); a.p(3);</code> where B overrides <code>p(int)</code>. What prints?</summary>
+**<strong>Q11.</strong> Java-like overload/override: <code>A a = new B(); a.p(3);</code> where B overrides <code>p(int)</code>. What prints?**
 
 A. A-int  
 B. B-int  
 C. B-double  
 D. Compile error
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: B.** Overload selection is static; override dispatch is dynamic.
 
 </details>
 
-<details>
-<summary><strong>Q12.</strong> With <code>a=0</code>, <code>b=5</code>, evaluate <code>a != 0 && b / a > 1</code>.</summary>
+**<strong>Q12.</strong> With <code>a=0</code>, <code>b=5</code>, evaluate <code>a != 0 && b / a > 1</code>.**
 
 A. Runtime division-by-zero  
 B. false (no division performed)  
 C. true  
 D. Compile error
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: B.** Short-circuit prevents division by zero.
 
 </details>
 
-<details>
-<summary><strong>Q13.</strong> With strict left-to-right evaluation, what is <code>r</code> for <code>int i=2; int r=(i++) + (++i) + i;</code>?</summary>
+**<strong>Q13.</strong> With strict left-to-right evaluation, what is <code>r</code> for <code>int i=2; int r=(i++) + (++i) + i;</code>?**
 
 A. 8  
 B. 9  
 C. 10  
 D. 11
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: C.** Terms are 2, 4, 4 so total is 10.
 
 </details>
 
-<details>
-<summary><strong>Q14.</strong> JavaScript closure loop with <code>var i</code> from 0 to 2; each function returns <code>i</code>. What prints?</summary>
+**<strong>Q14.</strong> JavaScript closure loop with <code>var i</code> from 0 to 2; each function returns <code>i</code>. What prints?**
 
 A. 0 1 2  
 B. 1 2 3  
 C. 3 3 3  
 D. undefined undefined undefined
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: C.** `var` is function-scoped; all closures see final `i=3`.
 
 </details>
 
-<details>
-<summary><strong>Q15.</strong> Exception flow with inner <code>finally("A")</code>, outer <code>catch("B")</code>, outer <code>finally("C")</code>. Output?</summary>
+**<strong>Q15.</strong> Exception flow with inner <code>finally("A")</code>, outer <code>catch("B")</code>, outer <code>finally("C")</code>. Output?**
 
 A. A B C  
 B. B A C  
 C. A C  
 D. B C
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: A.** Inner finally runs, then catch, then outer finally.
 
 </details>
 
-<details>
-<summary><strong>Q16.</strong> For <code>xs=[1,2,3]</code>, <code>ys=map(xs,x->x*2)</code> with pure non-mutating map, what prints?</summary>
+**<strong>Q16.</strong> For <code>xs=[1,2,3]</code>, <code>ys=map(xs,x->x*2)</code> with pure non-mutating map, what prints?**
 
 A. [2,4,6] [2,4,6]  
 B. [1,2,3] [2,4,6]  
 C. [1,2,3] [1,2,3]  
 D. [2,4,6] [1,2,3]
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: B.** `map` returns a new list and keeps `xs` unchanged.
 
 </details>
 
-<details>
-<summary><strong>Q17.</strong> Call-by-name swap trap: <code>swap(i, A[i])</code>. What is the accepted exam outcome?</summary>
+**<strong>Q17.</strong> Call-by-name swap trap: <code>swap(i, A[i])</code>. What is the accepted exam outcome?**
 
 A. i = 10, A = [1, 20, 30]  
 B. i = 10, A = [10, 1, 30]  
 C. i = 1, A = [1, 20, 30]  
 D. i = 10, A = [10, 20, 30]
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: A.** This classic example shows call-by-name breaks swap.
 
 </details>
 
-<details>
-<summary><strong>Q18.</strong> Overload vs override: <code>Animal x = new Dog(); Dog y = new Dog(); x.speak(y);</code> prints?</summary>
+**<strong>Q18.</strong> Overload vs override: <code>Animal x = new Dog(); Dog y = new Dog(); x.speak(y);</code> prints?**
 
 A. dog+dog  
 B. dog+animal  
 C. animal+animal  
 D. Compile error
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: B.** Overload resolution picks `speak(Animal)` statically; Dog override runs dynamically.
 
 </details>
 
-<details>
-<summary><strong>Q19.</strong> JavaScript closure loop using <code>let i</code> from 0 to 2; what prints?</summary>
+**<strong>Q19.</strong> JavaScript closure loop using <code>let i</code> from 0 to 2; what prints?**
 
 A. 0 1 2  
 B. 3 3 3  
 C. 2 2 2  
 D. undefined undefined undefined
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: A.** `let` creates a fresh binding per iteration.
 
 </details>
 
-<details>
-<summary><strong>Q20.</strong> Same variable passed twice to <code>p(i,i)</code>: result for (a) call-by-reference and (b) call-by-value-result?</summary>
+**<strong>Q20.</strong> Same variable passed twice to <code>p(i,i)</code>: result for (a) call-by-reference and (b) call-by-value-result?**
 
 A. (a) 7, (b) 7  
 B. (a) 7, (b) 6  
 C. (a) 6, (b) 7  
 D. (a) 6, (b) 6
+
+<details>
+<summary>Reveal answer</summary>
 
 **Answer: B.** Reference aliases both params (7); value-result copy-back ends at 6.
 
@@ -1420,80 +1500,96 @@ u.c[0] == 1 → little-endian
 
 ### Practice MCQs
 
-<details>
-<summary><strong>Q1.</strong> What does <code>x & (x-1) == 0</code> test for (assuming <code>x &gt; 0</code>)?</summary>
+**<strong>Q1.</strong> What does <code>x & (x-1) == 0</code> test for (assuming <code>x &gt; 0</code>)?**
 
 A) x is even B) x is odd C) x is a power of 2 D) x has exactly 2 set bits
+
+<details>
+<summary>Reveal answer</summary>
 
 **Answer: (C) x is a power of 2.**
 Clearing the lowest set bit leaves 0 only if exactly one bit was set.
 
 </details>
 
-<details>
-<summary><strong>Q2.</strong> After <code>int x = 12; x &amp;= x - 1;</code> what is <code>x</code>?</summary>
+**<strong>Q2.</strong> After <code>int x = 12; x &amp;= x - 1;</code> what is <code>x</code>?**
 
 A) 11 B) 8 C) 4 D) 0
+
+<details>
+<summary>Reveal answer</summary>
 
 **Answer: (B) 8.**
 12 is <code>1100</code>; <code>12 &amp; 11</code> is <code>1000</code>, which is 8.
 
 </details>
 
-<details>
-<summary><strong>Q3.</strong> In C, <code>int a[5]; int *p = a;</code> what does <code>sizeof(a) / sizeof(p)</code> evaluate to on a 64-bit system (int=4 bytes)?</summary>
+**<strong>Q3.</strong> In C, <code>int a[5]; int *p = a;</code> what does <code>sizeof(a) / sizeof(p)</code> evaluate to on a 64-bit system (int=4 bytes)?**
 
 A) 5 B) 2 C) 2.5 D) 1
+
+<details>
+<summary>Reveal answer</summary>
 
 **Answer: (B) 2.**
 `sizeof(a)` is 20 and `sizeof(p)` is 8, so the integer division is 2. The trap is treating the array like a pointer.
 
 </details>
 
-<details>
-<summary><strong>Q4.</strong> Which declaration describes a pointer to a constant integer?</summary>
+**<strong>Q4.</strong> Which declaration describes a pointer to a constant integer?**
 
 A) <code>int * const p;</code> B) <code>const int *p;</code> C) <code>const int _ const p;</code> D) <code>int const _ const p;</code>
+
+<details>
+<summary>Reveal answer</summary>
 
 **Answer: (B) <code>const int \*p;</code>.**
 The pointed-to integer is const; the pointer itself can still be reassigned.
 
 </details>
 
-<details>
-<summary><strong>Q5.</strong> Expression <code>3[arr]</code> where <code>int arr[] = {10,20,30,40,50};</code> evaluates to:</summary>
+**<strong>Q5.</strong> Expression <code>3[arr]</code> where <code>int arr[] = {10,20,30,40,50};</code> evaluates to:**
 
 A) 10 B) 30 C) 40 D) compile error
+
+<details>
+<summary>Reveal answer</summary>
 
 **Answer: (C) 40.**
 `3[arr]` is the same as `arr[3]`, which is 40.
 
 </details>
 
-<details>
-<summary><strong>Q6.</strong> XOR swap fails when:</summary>
+**<strong>Q6.</strong> XOR swap fails when:**
 
 A) values are equal B) one value is 0 C) both args alias the same memory D) values are negative
+
+<details>
+<summary>Reveal answer</summary>
 
 **Answer: (C) both args alias the same memory.**
 If both references point at the same location, the first XOR zeros the memory and the swap corrupts the value.
 
 </details>
 
-<details>
-<summary><strong>Q7.</strong> <code>int (*fp)(int);</code> declares:</summary>
+**<strong>Q7.</strong> <code>int (*fp)(int);</code> declares:**
 
 A) array of function pointers B) function returning pointer to int C) pointer to function taking int and returning int D) function pointer array of size int
+
+<details>
+<summary>Reveal answer</summary>
 
 **Answer: (C) pointer to function taking int and returning int.**
 The parentheses bind <code>\*fp</code> before the parameter list.
 
 </details>
 
-<details>
-<summary><strong>Q8.</strong> Counting set bits of <code>0b10110100</code> (180) via Brian Kernighan takes how many loop iterations?</summary>
+**<strong>Q8.</strong> Counting set bits of <code>0b10110100</code> (180) via Brian Kernighan takes how many loop iterations?**
 
 A) 8 B) 4 C) 7 D) 1
+
+<details>
+<summary>Reveal answer</summary>
 
 **Answer: (B) 4.**
 Kernighan's loop runs once per set bit, and <code>10110100</code> has four 1-bits.

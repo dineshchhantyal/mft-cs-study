@@ -558,184 +558,224 @@ L is **NP-complete** if NP-hard AND L ∈ NP.
 
 ## 🧪 Try Yourself — Practice Questions
 
-<details>
-<summary>Q1. Minimum DFA states where the third-last symbol is 'a'</summary>
+**Q1. Minimum DFA states where the third-last symbol is 'a'**
 
 (a) 3 (b) 4 (c) 8 (d) 16
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: (c)**
 
 </details>
 
-<details>
-<summary>Q2. Regex equivalent to (a+b)*</summary>
+**Q2. Regex equivalent to (a+b)***
 
 (a) a*b* (b) (a*b*)_ (c) (a+b)(a+b)_ (d) a*+b*
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: (b)**
 
 </details>
 
-<details>
-<summary>Q3. Max DFA states from NFA with n states</summary>
+**Q3. Max DFA states from NFA with n states**
 
 (a) n (b) n² (c) 2ⁿ (d) n!
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: (c)**
 
 </details>
 
-<details>
-<summary>Q4. Not closed under intersection</summary>
+**Q4. Not closed under intersection**
 
 (a) Regular languages (b) Context-free languages (c) Decidable languages (d) Recursively enumerable languages
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: (b)**
 
 </details>
 
-<details>
-<summary>Q5. L = {aⁿbⁿcⁿ : n ≥ 0}</summary>
+**Q5. L = {aⁿbⁿcⁿ : n ≥ 0}**
 
 (a) Regular (b) CFL but not regular (c) Context-sensitive but not CFL (d) Not recursively enumerable
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: (c)**
 
 </details>
 
-<details>
-<summary>Q6. PDA is more powerful than FA because it has</summary>
+**Q6. PDA is more powerful than FA because it has**
 
 (a) More states (b) A stack (c) Two tapes (d) Nondeterminism only
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: (b)**
 
 </details>
 
-<details>
-<summary>Q7. DPDA vs NPDA</summary>
+**Q7. DPDA vs NPDA**
 
 (a) DPDA = NPDA (b) DPDA is strictly less powerful (c) DPDA is more powerful (d) Both accept all CFLs
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: (b)**
 
 </details>
 
-<details>
-<summary>Q8. Which language is context-free</summary>
+**Q8. Which language is context-free**
 
 (a) {ww} (b) {wwᴿ} (c) {aⁿbⁿcⁿ} (d) {aᵖ}
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: (b)**
 
 </details>
 
-<details>
-<summary>Q9. CFL ∩ regular is always</summary>
+**Q9. CFL ∩ regular is always**
 
 (a) Regular (b) Context-free (c) Context-sensitive but not CFL (d) Undecidable
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: (b)**
 
 </details>
 
-<details>
-<summary>Q10. Which is decidable</summary>
+**Q10. Which is decidable**
 
 (a) L(M)=∅ (TM) (b) CFG generates ε (c) Two TMs equivalent (d) L(M) regular
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: (b)**
 
 </details>
 
-<details>
-<summary>Q11. Rice theorem: decidable property</summary>
+**Q11. Rice theorem: decidable property**
 
 (a) L(M) empty (b) L(M) regular (c) M has exactly 10 states (d) L(M) finite
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: (c)**
 
 </details>
 
-<details>
-<summary>Q12. Complement of an RE language is</summary>
+**Q12. Complement of an RE language is**
 
 (a) Always RE (b) Always decidable (c) RE iff original is decidable (d) Never RE
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: (c)**
 
 </details>
 
-<details>
-<summary>Q13. Known in P</summary>
+**Q13. Known in P**
 
 (a) 3-SAT (b) 2-SAT (c) Hamiltonian Cycle (d) Subset Sum
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: (b)**
 
 </details>
 
-<details>
-<summary>Q14. If A ≤p B and B ∈ P, then</summary>
+**Q14. If A ≤p B and B ∈ P, then**
 
 (a) A is NP-complete (b) A ∈ P (c) A undecidable (d) B NP-complete
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: (b)**
 
 </details>
 
-<details>
-<summary>Q15. NP-complete problem</summary>
+**Q15. NP-complete problem**
 
 (a) 2-SAT (b) Sorting (c) 3-SAT (d) Matrix multiplication
+
+<details>
+<summary>Reveal answer</summary>
 
 **Answer: (c)**
 
 </details>
 
-<details>
-<summary>Q16. Pumping lemma for CFLs condition</summary>
+**Q16. Pumping lemma for CFLs condition**
 
 (a) |vxy| ≤ p, |vy| ≥ 1, and uvⁱxyⁱz ∈ L ∀i≥0  
 (b) |uv| ≤ p and uvⁱz ∈ L  
 (c) v = y  
 (d) |v| = |y|
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: (a)**
 
 </details>
 
-<details>
-<summary>Q17. True statement</summary>
+**Q17. True statement**
 
 (a) Every RE language is decidable (b) Every decidable language is context-free (c) Every context-free language is decidable (d) Every regular language is finite
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: (c)**
 
 </details>
 
-<details>
-<summary>Q18. Type-1 grammars correspond to</summary>
+**Q18. Type-1 grammars correspond to**
 
 (a) Regular (b) Context-free (c) Context-sensitive (d) Recursively enumerable
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: (c)**
 
 </details>
 
-<details>
-<summary>Q19. {⟨M⟩ : L(M) is empty} is</summary>
+**Q19. {⟨M⟩ : L(M) is empty} is**
 
 (a) Decidable (b) RE not decidable (c) co-RE not RE (d) Neither RE nor co-RE
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: (c)**
 
 </details>
 
-<details>
-<summary>Q20. True about Halting problem</summary>
+**Q20. True about Halting problem**
 
 (a) Decidable (b) RE but not decidable (c) Complement is RE (d) In P
+
+<details>
+<summary>Reveal answer</summary>
 
 **Answer: (b)**
 

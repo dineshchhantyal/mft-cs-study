@@ -544,241 +544,281 @@ R → R1, R2 lossless iff (R1 ∩ R2) → R1 or (R1 ∩ R2) → R2.
 
 ## 🧪 Try Yourself — Practice Questions
 
-<details>
-<summary>Q1. Superkey definition</summary>
+**Q1. Superkey definition**
 
 A. It must be minimal.  
 B. It uniquely identifies every tuple but need not be minimal.  
 C. It can contain NULL values in any attribute.  
 D. Every relation has exactly one superkey.
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: B**
 
 </details>
 
-<details>
-<summary>Q2. Relational algebra difference operator</summary>
+**Q2. Relational algebra difference operator**
 
 A. σ  
 B. π  
 C. R − S  
 D. R ⋈ S
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: C**
 
 </details>
 
-<details>
-<summary>Q3. Clause evaluated before SELECT</summary>
+**Q3. Clause evaluated before SELECT**
 
 A. ORDER BY  
 B. DISTINCT  
 C. HAVING  
 D. LIMIT
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: C**
 
 </details>
 
-<details>
-<summary>Q4. From A→B and B→C, derive</summary>
+**Q4. From A→B and B→C, derive**
 
 A. C → A  
 B. A → C  
 C. B → A  
 D. AC → B only
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: B**
 
 </details>
 
-<details>
-<summary>Q5. 1NF means</summary>
+**Q5. 1NF means**
 
 A. No partial dependencies.  
 B. No transitive dependencies.  
 C. Atomic values only.  
 D. Every determinant is a candidate key.
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: C**
 
 </details>
 
-<details>
-<summary>Q6. Weak entity characteristic</summary>
+**Q6. Weak entity characteristic**
 
 A. No attributes.  
 B. Identified with owner + partial key.  
 C. Unary only.  
 D. Full key of its own.
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: B**
 
 </details>
 
-<details>
-<summary>Q7. ACID D stands for</summary>
+**Q7. ACID D stands for**
 
 A. Serializable behavior.  
 B. Committed data survives crashes.  
 C. No visibility across txns.  
 D. All-or-nothing.
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: B**
 
 </details>
 
-<details>
-<summary>Q8. WAL requires</summary>
+**Q8. WAL requires**
 
 A. Flush data page first.  
 B. Flush log record first.  
 C. Log only at commit.  
 D. Checkpoint replaces logs.
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: B**
 
 </details>
 
-<details>
-<summary>Q9. COUNT(*) - COUNT(salary) with 10 rows, 3 NULL salary</summary>
+**Q9. COUNT(*) - COUNT(salary) with 10 rows, 3 NULL salary**
 
 A. 0  
 B. 3  
 C. 7  
 D. 10
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: B**
 
 </details>
 
-<details>
-<summary>Q10. Precedence graph has T1→T2 and T2→T1</summary>
+**Q10. Precedence graph has T1→T2 and T2→T1**
 
 A. Conflict-serializable  
 B. View-serializable only  
 C. Not conflict-serializable  
 D. Always recoverable
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: C**
 
 </details>
 
-<details>
-<summary>Q11. Strict 2PL guarantees</summary>
+**Q11. Strict 2PL guarantees**
 
 A. Serializability only  
 B. Serializability + recoverability + no cascading aborts  
 C. No deadlocks  
 D. Phantom-free without range locks
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: B**
 
 </details>
 
-<details>
-<summary>Q12. Candidate key for R(A,B,C,D), FDs {AB→C, C→D, D→A}</summary>
+**Q12. Candidate key for R(A,B,C,D), FDs {AB→C, C→D, D→A}**
 
 A. {A,B}  
 B. {B,C}  
 C. {A,D}  
 D. Both AB and BC
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: D**
 
 </details>
 
-<details>
-<summary>Q13. Best index for salary BETWEEN query</summary>
+**Q13. Best index for salary BETWEEN query**
 
 A. Hash on salary  
 B. B+-tree on salary  
 C. Bitmap on department  
 D. No index
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: B**
 
 </details>
 
-<details>
-<summary>Q14. GROUP BY + HAVING query returns</summary>
+**Q14. GROUP BY + HAVING query returns**
 
 A. Employee rows  
 B. Avg salary per dept with count > 5  
 C. Depts with >5 distinct salaries  
 D. HAVING error
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: B**
 
 </details>
 
-<details>
-<summary>Q15. LEFT JOIN with 10 left rows and 4 matches produces</summary>
+**Q15. LEFT JOIN with 10 left rows and 4 matches produces**
 
 A. 4 rows  
 B. 10 rows with NULLs on unmatched right side  
 C. 14 rows  
 D. Error
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: B**
 
 </details>
 
-<details>
-<summary>Q16. READ COMMITTED still allows</summary>
+**Q16. READ COMMITTED still allows**
 
 A. Dirty read  
 B. Non-repeatable read  
 C. Lost update in one statement  
 D. Reading uncommitted data
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: B**
 
 </details>
 
-<details>
-<summary>Q17. commission <> 1000 when commission is NULL</summary>
+**Q17. commission <> 1000 when commission is NULL**
 
 A. Returned  
 B. Not returned (UNKNOWN)  
 C. Returned only with ANSI_NULLS OFF  
 D. Runtime error
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: B**
 
 </details>
 
-<details>
-<summary>Q18. Highest NF for R(A,B,C), FDs {A→B, B→C, C→A}</summary>
+**Q18. Highest NF for R(A,B,C), FDs {A→B, B→C, C→A}**
 
 A. 2NF only  
 B. 3NF not BCNF  
 C. BCNF  
 D. Not 1NF
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: C**
 
 </details>
 
-<details>
-<summary>Q19. Count query changes after insert between reads</summary>
+**Q19. Count query changes after insert between reads**
 
 A. Dirty read  
 B. Non-repeatable read  
 C. Phantom read  
 D. Lost update
 
+<details>
+<summary>Reveal answer</summary>
+
 **Answer: C**
 
 </details>
 
-<details>
-<summary>Q20. R(A,B,C,D) with FDs {A→B, C→D} is</summary>
+**Q20. R(A,B,C,D) with FDs {A→B, C→D} is**
 
 A. BCNF  
 B. 3NF not BCNF  
 C. Not in 2NF (thus not 3NF/BCNF)  
 D. 1NF due to transitive dependencies
+
+<details>
+<summary>Reveal answer</summary>
 
 **Answer: C**
 

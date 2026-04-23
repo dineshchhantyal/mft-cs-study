@@ -155,136 +155,166 @@ Exam date: **May 1, 2026**. Discrete math is one of the highest-yield sections p
 
 ## 4. Practice MCQs (with solutions)
 
-<details>
-<summary>Q1. Which is logically equivalent to ¬(p → q)?</summary>
+**Q1. Which is logically equivalent to ¬(p → q)?**
 
 A) ¬p ∨ q B) p ∧ ¬q C) ¬p ∧ q D) p → ¬q
+
+<details>
+<summary>Reveal answer</summary>
 
 **Ans: B.** p→q ≡ ¬p∨q; negate to p∧¬q.
 
 </details>
 
-<details>
-<summary>Q2. Let S = {1,2,3,4}. How many subsets of S contain the element 1?</summary>
+**Q2. Let S = {1,2,3,4}. How many subsets of S contain the element 1?**
 
 A) 7 B) 8 C) 15 D) 16
+
+<details>
+<summary>Reveal answer</summary>
 
 **Ans: B.** Fix 1 as included, choose freely among the other 3: 2³ = 8.
 
 </details>
 
-<details>
-<summary>Q3. How many functions f: {1,2,3} → {a,b,c,d} are there? How many are injective?</summary>
+**Q3. How many functions f: {1,2,3} → {a,b,c,d} are there? How many are injective?**
 
 A) 64, 24 B) 12, 24 C) 81, 60 D) 64, 60
+
+<details>
+<summary>Reveal answer</summary>
 
 **Ans: A.** Functions: 4³ = 64. Injections: 4·3·2 = 24.
 
 </details>
 
-<details>
-<summary>Q4. In a group of 30 people, at least how many share a birth month?</summary>
+**Q4. In a group of 30 people, at least how many share a birth month?**
 
 A) 2 B) 3 C) 4 D) 5
+
+<details>
+<summary>Reveal answer</summary>
 
 **Ans: B.** ⌈30/12⌉ = 3 (pigeonhole).
 
 </details>
 
-<details>
-<summary>Q5. Which relation on ℤ is NOT an equivalence relation?</summary>
+**Q5. Which relation on ℤ is NOT an equivalence relation?**
 
 A) a ≡ b (mod 5) B) a = b C) a ≤ b D) a − b is even
+
+<details>
+<summary>Reveal answer</summary>
 
 **Ans: C.** ≤ is not symmetric.
 
 </details>
 
-<details>
-<summary>Q6. A simple connected graph has 10 vertices and 9 edges. Which is true?</summary>
+**Q6. A simple connected graph has 10 vertices and 9 edges. Which is true?**
 
 A) It must be a tree. B) It must contain a cycle. C) It cannot be planar. D) Its chromatic number is 10.
+
+<details>
+<summary>Reveal answer</summary>
 
 **Ans: A.** Connected + n−1 edges ⇒ tree.
 
 </details>
 
-<details>
-<summary>Q7. ¬(∀x ∃y P(x,y)) is equivalent to:</summary>
+**Q7. ¬(∀x ∃y P(x,y)) is equivalent to:**
 
 A) ∀x ∀y ¬P(x,y) B) ∃x ∀y ¬P(x,y) C) ∀x ∃y ¬P(x,y) D) ∃x ∃y ¬P(x,y)
+
+<details>
+<summary>Reveal answer</summary>
 
 **Ans: B.** Flip each quantifier, negate body.
 
 </details>
 
-<details>
-<summary>Q8. How many nonnegative integer solutions does x + y + z + w = 10 have?</summary>
+**Q8. How many nonnegative integer solutions does x + y + z + w = 10 have?**
 
 A) 220 B) 286 C) 1000 D) 715
+
+<details>
+<summary>Reveal answer</summary>
 
 **Ans: B.** Stars and bars: C(10 + 4 − 1, 4 − 1) = C(13, 3) = 286.
 
 </details>
 
-<details>
-<summary>Q9. Using the recurrence aₙ = 5aₙ₋₁ − 6aₙ₋₂, a₀=1, a₁=4, find a closed form.</summary>
+**Q9. Using the recurrence aₙ = 5aₙ₋₁ − 6aₙ₋₂, a₀=1, a₁=4, find a closed form.**
 
 A) 2ⁿ + 3ⁿ B) 2·2ⁿ − 3ⁿ C) 2ⁿ⁺¹ − 3ⁿ⁻¹ D) 3ⁿ − 2ⁿ
+
+<details>
+<summary>Reveal answer</summary>
 
 **Ans: A.** r² − 5r + 6 = 0 ⇒ r = 2, 3. aₙ = α·2ⁿ + β·3ⁿ. a₀=α+β=1, a₁=2α+3β=4 ⇒ α=−1? Recompute: α+β=1, 2α+3β=4 ⇒ β=2, α=−1. So aₙ = 3·3ⁿ⁻¹... Let me redo: α= −1, β=2 gives a₀=1 ✓, a₁=−2+6=4 ✓. So aₙ = −2ⁿ + 2·3ⁿ. _(Correct answer in that wording isn't among options; on the real test double-check. If forced, closest is B form.)_ **Takeaway:** process matters — solve char eq, fit constants.
 
 </details>
 
-<details>
-<summary>Q10. In a simple graph with 8 vertices where every vertex has degree 3, how many edges?</summary>
+**Q10. In a simple graph with 8 vertices where every vertex has degree 3, how many edges?**
 
 A) 8 B) 12 C) 16 D) 24
+
+<details>
+<summary>Reveal answer</summary>
 
 **Ans: B.** Σ deg = 2E ⇒ 8·3 = 24 = 2E ⇒ E = 12.
 
 </details>
 
-<details>
-<summary>Q11. P(A)=0.5, P(B)=0.4, P(A∩B)=0.2. Are A and B independent?</summary>
+**Q11. P(A)=0.5, P(B)=0.4, P(A∩B)=0.2. Are A and B independent?**
 
 A) Yes B) No C) Cannot tell
+
+<details>
+<summary>Reveal answer</summary>
 
 **Ans: A.** P(A)P(B) = 0.2 = P(A∩B) ⇒ independent.
 
 </details>
 
-<details>
-<summary>Q12. 7² · 11 mod 13 = ?</summary>
+**Q12. 7² · 11 mod 13 = ?**
 
 A) 1 B) 7 C) 9 D) 12
+
+<details>
+<summary>Reveal answer</summary>
 
 **Ans: C.** 49 mod 13 = 10; 10·11 = 110; 110 mod 13 = 110 − 104 = 6. _Recheck:_ 13·8=104, 110−104=6. **Correct answer: 6** (none match — this is the kind of arithmetic slip to watch for; compute carefully on exam).
 
 </details>
 
-<details>
-<summary>Q13. How many bit strings of length 8 contain exactly three 1s?</summary>
+**Q13. How many bit strings of length 8 contain exactly three 1s?**
 
 A) 24 B) 56 C) 64 D) 256
+
+<details>
+<summary>Reveal answer</summary>
 
 **Ans: B.** C(8,3) = 56.
 
 </details>
 
-<details>
-<summary>Q14. Which graph has an Euler circuit?</summary>
+**Q14. Which graph has an Euler circuit?**
 
 A) K₄ B) K₅ C) K₃,₃ D) Path on 4 vertices
+
+<details>
+<summary>Reveal answer</summary>
 
 **Ans: B.** Every vertex of K₅ has degree 4 (even), connected ⇒ Euler circuit. K₄ has degree 3 (odd).
 
 </details>
 
-<details>
-<summary>Q15. |P({a,b,c,d,e})| = ?</summary>
+**Q15. |P({a,b,c,d,e})| = ?**
 
 A) 10 B) 25 C) 32 D) 120
+
+<details>
+<summary>Reveal answer</summary>
 
 **Ans: C.** 2⁵ = 32.
 
