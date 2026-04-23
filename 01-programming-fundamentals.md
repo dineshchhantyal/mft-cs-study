@@ -1114,300 +1114,245 @@ _End of file — Programming Fundamentals & Programming Languages. Next files in
 
 ## 🧪 Try Yourself — Practice Questions
 
-### Easy (1–8)
+<details>
+<summary><strong>Q1.</strong> In call-by-value, what does the callee receive?</summary>
 
-**Q1.** In **call-by-value**, what does the callee receive?
-A. The address of the argument
-B. A copy of the argument's value
-C. A reference alias to the caller's variable
+A. The address of the argument  
+B. A copy of the argument's value  
+C. A reference alias to the caller's variable  
 D. The unevaluated expression text
 
-**Q2.** Which compiler phase rejects `int x = "hello";` in a statically typed language?
-A. Lexical analysis
-B. Syntax analysis (parsing)
-C. Semantic analysis (type checking)
-D. Code generation
+**Answer: B.** Call-by-value copies the argument value into the parameter.
 
-**Q3.** Which memory region typically holds objects allocated with `new` in Java?
-A. Stack
-B. Heap
-C. Code segment
-D. CPU registers
-
-**Q4.** Which best distinguishes an **abstract class** from a classical (pre-Java 8) **interface**?
-A. Interfaces can have constructors; abstract classes cannot
-B. Abstract classes can hold state (fields) and partial implementations; interfaces only declared method signatures
-C. A class can extend multiple abstract classes but implement only one interface
-D. Interfaces support private fields; abstract classes do not
-
-**Q5.** What does the **Liskov Substitution Principle** require?
-A. Subtypes must override every method of the supertype
-B. Subtypes must be usable anywhere the supertype is expected without breaking correctness
-C. Supertypes must not have abstract methods
-D. Subtypes should always throw new checked exceptions
-
-**Q6.** Mark-and-sweep, reference counting, and generational collection are variants of what?
-A. Stack allocation strategies
-B. Garbage collection algorithms
-C. Virtual memory paging
-D. Type inference techniques
-
-**Q7.** The **dangling-else** ambiguity is resolved in most C-family languages by binding `else` to the…
-A. Outermost unmatched `if`
-B. Nearest unmatched `if`
-C. First `if` in the block
-D. It is a compile error
-
-**Q8.** Which is a property of a **pure function**?
-A. It may write to a global log
-B. Given the same inputs, it returns the same output and has no side effects
-C. It must be recursive
-D. It must return `void`
-
----
-
-### Medium — Code Tracing (9–16)
-
-**Q9.** Static vs dynamic scope. Given:
-
-```
-x = 1
-function f():  print(x)
-function g():  x = 2; f()
-g()
-```
-
-What is printed under **static (lexical)** vs **dynamic** scope?
-A. 1 and 1
-B. 2 and 2
-C. 1 (static) and 2 (dynamic)
-D. 2 (static) and 1 (dynamic)
-
-**Q10.** Recursion trace — what does `mystery(4)` return?
-
-```
-function mystery(n):
-  if n <= 1: return 1
-  return n * mystery(n - 2)
-```
-
-A. 24
-B. 8
-C. 6
-D. 4
-
-**Q11.** Java-like overload/override:
-
-```
-class A { void p(int x) { print("A-int"); } }
-class B extends A {
-  void p(int x) { print("B-int"); }
-  void p(double x) { print("B-double"); }
-}
-A a = new B();
-a.p(3);
-```
-
-What prints?
-A. A-int
-B. B-int
-C. B-double
-D. Compile error
-
-**Q12.** Short-circuit + precedence. With `a = 0, b = 5`, evaluate `a != 0 && b / a > 1`:
-A. Runtime division-by-zero
-B. `false` (no division performed)
-C. `true`
-D. Compile error
-
-**Q13.** Pre/post-increment (assume strict left-to-right evaluation with sequence points):
-
-```
-int i = 2;
-int r = (i++) + (++i) + i;
-```
-
-What is `r`?
-A. 8
-B. 9
-C. 10
-D. 11
-
-**Q14.** The classic JavaScript 3-3-3 problem:
-
-```
-var fns = [];
-for (var i = 0; i < 3; i++) {
-  fns.push(function() { return i; });
-}
-print(fns[0](), fns[1](), fns[2]());
-```
-
-What prints?
-A. 0 1 2
-B. 1 2 3
-C. 3 3 3
-D. undefined undefined undefined
-
-**Q15.** Exception propagation (Java-like):
-
-```
-try {
-  try { throw new IOException(); }
-  finally { print("A"); }
-} catch (IOException e) { print("B"); }
-finally { print("C"); }
-```
-
-What prints?
-A. A B C
-B. B A C
-C. A C
-D. B C
-
-**Q16.** Higher-order + immutability:
-
-```
-xs = [1, 2, 3]
-ys = map(xs, x -> x * 2)
-print(xs, ys)
-```
-
-Assuming `map` is pure and non-mutating:
-A. `[2,4,6] [2,4,6]`
-B. `[1,2,3] [2,4,6]`
-C. `[1,2,3] [1,2,3]`
-D. `[2,4,6] [1,2,3]`
-
----
-
-### Trap / Advanced (17–20)
-
-**Q17.** **Call-by-name with swap** (Jensen's device). Parameters passed by name — every use of a parameter re-evaluates its actual expression:
-
-```
-procedure swap(a, b):     // pass by NAME
-  temp = a
-  a = b
-  b = temp
-
-i = 1
-A = [10, 20, 30]          // 1-indexed: A[1]=10, A[2]=20, A[3]=30
-swap(i, A[i])
-```
-
-After the call, what are `i` and `A`?
-A. i = 10, A = [1, 20, 30]
-B. i = 10, A = [10, 1, 30]
-C. i = 1, A = [1, 20, 30]
-D. i = 10, A = [10, 20, 30]
-
-**Q18.** **Overload (static) vs override (dynamic):**
-
-```
-class Animal { void speak(Animal a) { print("animal+animal"); } }
-class Dog extends Animal {
-  void speak(Animal a) { print("dog+animal"); }   // override
-  void speak(Dog d)    { print("dog+dog"); }      // overload (Dog-only)
-}
-Animal x = new Dog();
-Dog    y = new Dog();
-x.speak(y);
-```
-
-What prints? (Java resolves overloads at compile time using **static** types.)
-A. dog+dog
-B. dog+animal
-C. animal+animal
-D. Compile error
-
-**Q19.** **Closures capture variables, not values** — the `let` twist:
-
-```
-let fns = [];
-for (let i = 0; i < 3; i++) {
-  fns.push(() => i);
-}
-console.log(fns[0](), fns[1](), fns[2]());
-```
-
-What prints?
-A. 0 1 2
-B. 3 3 3
-C. 2 2 2
-D. undefined undefined undefined
-
-**Q20.** **Call-by-value-result (copy-in/copy-out) vs call-by-reference.**
-
-```
-procedure p(x, y):
-  x = x + 1
-  y = y + 1
-
-i = 5
-p(i, i)                   // same variable passed twice
-```
-
-What is `i` after the call under (a) call-by-reference, and (b) call-by-value-result (copy back left-to-right on return)?
-A. (a) 7, (b) 7
-B. (a) 7, (b) 6
-C. (a) 6, (b) 7
-D. (a) 6, (b) 6
-
----
-
-### ✅ Answer Key & Explanations
+</details>
 
 <details>
-<summary>Reveal full answer key</summary>
+<summary><strong>Q2.</strong> Which compiler phase rejects <code>int x = "hello";</code> in a statically typed language?</summary>
 
-**Q1 — B.** Call-by-value copies the argument's _value_ into the parameter; changes to the parameter cannot affect the caller.
+A. Lexical analysis  
+B. Syntax analysis (parsing)  
+C. Semantic analysis (type checking)  
+D. Code generation
 
-**Q2 — C.** Lexing accepts the tokens, parsing accepts the grammar (assignment is syntactically legal). The `int` vs string-literal mismatch is caught during **semantic analysis / type checking**.
+**Answer: C.** Type mismatch is caught during semantic analysis.
 
-**Q3 — B.** In Java, `new` allocates on the **heap**. The reference variable lives on the stack, but the object itself is heap-allocated and GC-managed.
+</details>
 
-**Q4 — B.** Abstract classes can carry fields and concrete methods; classical interfaces only declare signatures (and constants). C is backwards — a class may implement many interfaces but extend only one (abstract) class.
+<details>
+<summary><strong>Q3.</strong> Which memory region typically holds objects allocated with <code>new</code> in Java?</summary>
 
-**Q5 — B.** LSP demands **behavioral substitutability**: no strengthened preconditions, no weakened postconditions, no surprising exceptions. Subtypes must be drop-in replacements.
+A. Stack  
+B. Heap  
+C. Code segment  
+D. CPU registers
 
-**Q6 — B.** All three are **garbage-collection** strategies. Generational GC exploits the weak-generational hypothesis (most objects die young).
+**Answer: B.** Java objects are heap-allocated.
 
-**Q7 — B.** `else` binds to the **nearest unmatched `if`**. That's why `if (a) if (b) S1 else S2` attaches the `else` to the inner `if`.
+</details>
 
-**Q8 — B.** Purity = deterministic output (same inputs → same output) + no side effects. Global logging is a side effect.
+<details>
+<summary><strong>Q4.</strong> Which best distinguishes an abstract class from a classical (pre-Java 8) interface?</summary>
 
-**Q9 — C.** Under **static scope**, `f` sees the `x` in its lexical environment (the global `x = 1`) → prints 1. Under **dynamic scope**, `f` sees the most recent binding on the call stack, which is `g`'s local `x = 2` → prints 2.
+A. Interfaces can have constructors; abstract classes cannot  
+B. Abstract classes can hold state and partial implementations; interfaces only declared method signatures  
+C. A class can extend multiple abstract classes but implement only one interface  
+D. Interfaces support private fields; abstract classes do not
 
-**Q10 — B.** `mystery(4) = 4 * mystery(2) = 4 * (2 * mystery(0)) = 4 * 2 * 1 = 8`.
+**Answer: B.** Abstract classes can include fields and concrete methods.
 
-**Q11 — B.** `p(int)` is **overridden** in B. Static type of `a` is `A`, so the compiler picks the `p(int)` overload (the only one visible on A); dynamic dispatch then runs B's override → "B-int". `p(double)` is invisible through an A reference.
+</details>
 
-**Q12 — B.** `a != 0` is `false`, so `&&` **short-circuits** — the right operand is never evaluated, so no division-by-zero occurs. Result: `false`.
+<details>
+<summary><strong>Q5.</strong> What does the Liskov Substitution Principle require?</summary>
 
-**Q13 — C.** With strict left-to-right evaluation: `i++` yields 2 (then i=3); `++i` makes i=4 and yields 4; final `i` is 4. Sum = 2 + 4 + 4 = **10**. (Real C leaves this _undefined_ due to multiple unsequenced modifications — a known trap; exam-style assumes the ordered interpretation.)
+A. Subtypes must override every method of the supertype  
+B. Subtypes must be usable anywhere the supertype is expected without breaking correctness  
+C. Supertypes must not have abstract methods  
+D. Subtypes should always throw new checked exceptions
 
-**Q14 — C.** `var i` is function-scoped, so all three closures capture the **same variable**. After the loop, `i === 3`, so every call returns 3 → "3 3 3". This is the classic 3-3-3 problem.
+**Answer: B.** Subtypes must be behaviorally substitutable.
 
-**Q15 — A.** Inner `try` throws IOException; its `finally` runs first → "A". The outer `catch` then handles the exception → "B". Finally the outer `finally` runs → "C". Output: **A B C**.
+</details>
 
-**Q16 — B.** A pure `map` does not mutate its input. `xs` stays `[1,2,3]`; `ys` is a new list `[2,4,6]`.
+<details>
+<summary><strong>Q6.</strong> Mark-and-sweep, reference counting, and generational collection are variants of what?</summary>
 
-**Q17 — A.** Trace with call-by-name (substitute the actual expressions textually):
+A. Stack allocation strategies  
+B. Garbage collection algorithms  
+C. Virtual memory paging  
+D. Type inference techniques
 
-- `temp = a` → `temp = i` → temp = 1
-- `a = b` → `i = A[i]` → `i = A[1] = 10`. Now **i = 10**.
-- `b = temp` → `A[i] = temp`, but `i` was re-evaluated and is now 10, so this assigns `A[10] = 1`… that's out of range for a 3-element array. In the Jensen/exam convention (array treated as extensible or 1-indexed with the expected trap), the classic _observable_ result focuses on the first two effects: `i` became 10 and the intended swap failed. Among the given options, **A (i = 10, A = [1, 20, 30])** is the accepted answer — it reflects the write `A[1] = temp` that would have occurred had `b` been evaluated **once** at entry (as reference-style), revealing how call-by-name _looks like_ it should swap but actually breaks because `b` is re-evaluated. Key takeaway: `swap(i, A[i])` is the canonical example that call-by-name breaks swap. (If your exam expects the strictly substituted trace `A[10] = 1`, note the instructor's convention; the pedagogical point — **name semantics breaks swap** — is the same.)
+**Answer: B.** These are all GC strategies.
 
-**Q18 — B.** `x`'s static type is `Animal`, so overload resolution sees only `speak(Animal)`. At runtime, dynamic dispatch invokes `Dog`'s override of `speak(Animal)` → "**dog+animal**". The `speak(Dog)` overload is unreachable through an `Animal` reference — overloads are resolved statically, overrides dynamically.
+</details>
 
-**Q19 — A.** `let` creates a **fresh binding per iteration**, so each closure captures its own `i` holding 0, 1, 2 respectively → "0 1 2". Contrast with Q14's `var`.
+<details>
+<summary><strong>Q7.</strong> The dangling-else ambiguity is resolved in most C-family languages by binding <code>else</code> to the...</summary>
 
-**Q20 — B.**
+A. Outermost unmatched if  
+B. Nearest unmatched if  
+C. First if in the block  
+D. It is a compile error
 
-- **(a) Call-by-reference:** both parameters alias `i`. `x = x + 1` makes i = 6. `y = y + 1` reads the same `i`, makes i = 7. Final **i = 7**.
-- **(b) Call-by-value-result:** `x` and `y` each receive a **copy** of 5. Inside, both become 6. On return, values are copied back in order; the second copy-back overwrites the first, so **i = 6**.
-  This asymmetry is precisely why the two modes are _not_ equivalent when the same variable is passed to multiple parameters (aliasing vs copy-back).
+**Answer: B.** `else` binds to the nearest unmatched `if`.
+
+</details>
+
+<details>
+<summary><strong>Q8.</strong> Which is a property of a pure function?</summary>
+
+A. It may write to a global log  
+B. Given the same inputs, it returns the same output and has no side effects  
+C. It must be recursive  
+D. It must return void
+
+**Answer: B.** Pure functions are deterministic and side-effect free.
+
+</details>
+
+<details>
+<summary><strong>Q9.</strong> Static vs dynamic scope. Given the code shown, what prints under static vs dynamic scope?</summary>
+
+`x = 1; f() prints x; g() sets x=2 then calls f()`
+
+A. 1 and 1  
+B. 2 and 2  
+C. 1 (static) and 2 (dynamic)  
+D. 2 (static) and 1 (dynamic)
+
+**Answer: C.** Static lookup uses lexical declaration, dynamic uses call stack.
+
+</details>
+
+<details>
+<summary><strong>Q10.</strong> Recursion trace: <code>mystery(4)</code> where <code>mystery(n)=n*mystery(n-2)</code> and base is 1.</summary>
+
+A. 24  
+B. 8  
+C. 6  
+D. 4
+
+**Answer: B.** `4 * 2 * 1 = 8`.
+
+</details>
+
+<details>
+<summary><strong>Q11.</strong> Java-like overload/override: <code>A a = new B(); a.p(3);</code> where B overrides <code>p(int)</code>. What prints?</summary>
+
+A. A-int  
+B. B-int  
+C. B-double  
+D. Compile error
+
+**Answer: B.** Overload selection is static; override dispatch is dynamic.
+
+</details>
+
+<details>
+<summary><strong>Q12.</strong> With <code>a=0</code>, <code>b=5</code>, evaluate <code>a != 0 && b / a > 1</code>.</summary>
+
+A. Runtime division-by-zero  
+B. false (no division performed)  
+C. true  
+D. Compile error
+
+**Answer: B.** Short-circuit prevents division by zero.
+
+</details>
+
+<details>
+<summary><strong>Q13.</strong> With strict left-to-right evaluation, what is <code>r</code> for <code>int i=2; int r=(i++) + (++i) + i;</code>?</summary>
+
+A. 8  
+B. 9  
+C. 10  
+D. 11
+
+**Answer: C.** Terms are 2, 4, 4 so total is 10.
+
+</details>
+
+<details>
+<summary><strong>Q14.</strong> JavaScript closure loop with <code>var i</code> from 0 to 2; each function returns <code>i</code>. What prints?</summary>
+
+A. 0 1 2  
+B. 1 2 3  
+C. 3 3 3  
+D. undefined undefined undefined
+
+**Answer: C.** `var` is function-scoped; all closures see final `i=3`.
+
+</details>
+
+<details>
+<summary><strong>Q15.</strong> Exception flow with inner <code>finally("A")</code>, outer <code>catch("B")</code>, outer <code>finally("C")</code>. Output?</summary>
+
+A. A B C  
+B. B A C  
+C. A C  
+D. B C
+
+**Answer: A.** Inner finally runs, then catch, then outer finally.
+
+</details>
+
+<details>
+<summary><strong>Q16.</strong> For <code>xs=[1,2,3]</code>, <code>ys=map(xs,x->x*2)</code> with pure non-mutating map, what prints?</summary>
+
+A. [2,4,6] [2,4,6]  
+B. [1,2,3] [2,4,6]  
+C. [1,2,3] [1,2,3]  
+D. [2,4,6] [1,2,3]
+
+**Answer: B.** `map` returns a new list and keeps `xs` unchanged.
+
+</details>
+
+<details>
+<summary><strong>Q17.</strong> Call-by-name swap trap: <code>swap(i, A[i])</code>. What is the accepted exam outcome?</summary>
+
+A. i = 10, A = [1, 20, 30]  
+B. i = 10, A = [10, 1, 30]  
+C. i = 1, A = [1, 20, 30]  
+D. i = 10, A = [10, 20, 30]
+
+**Answer: A.** This classic example shows call-by-name breaks swap.
+
+</details>
+
+<details>
+<summary><strong>Q18.</strong> Overload vs override: <code>Animal x = new Dog(); Dog y = new Dog(); x.speak(y);</code> prints?</summary>
+
+A. dog+dog  
+B. dog+animal  
+C. animal+animal  
+D. Compile error
+
+**Answer: B.** Overload resolution picks `speak(Animal)` statically; Dog override runs dynamically.
+
+</details>
+
+<details>
+<summary><strong>Q19.</strong> JavaScript closure loop using <code>let i</code> from 0 to 2; what prints?</summary>
+
+A. 0 1 2  
+B. 3 3 3  
+C. 2 2 2  
+D. undefined undefined undefined
+
+**Answer: A.** `let` creates a fresh binding per iteration.
+
+</details>
+
+<details>
+<summary><strong>Q20.</strong> Same variable passed twice to <code>p(i,i)</code>: result for (a) call-by-reference and (b) call-by-value-result?</summary>
+
+A. (a) 7, (b) 7  
+B. (a) 7, (b) 6  
+C. (a) 6, (b) 7  
+D. (a) 6, (b) 6
+
+**Answer: B.** Reference aliases both params (7); value-result copy-back ends at 6.
 
 </details>
 
