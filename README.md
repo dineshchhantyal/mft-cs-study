@@ -30,8 +30,6 @@ I put this repo together while preparing for CS exams. The notes are short, prac
 2. Systems: [05-architecture.md](05-architecture.md), [06-operating-systems.md](06-operating-systems.md), [07-databases.md](07-databases.md)
 3. Theory and advanced: [08-theory-of-computation.md](08-theory-of-computation.md), [09-software-engineering-networks.md](09-software-engineering-networks.md), [10-other-topics.md](10-other-topics.md), [11-formal-methods-and-parsing.md](11-formal-methods-and-parsing.md)
 
-## Notes
-
 ## Caution
 
 Some parts of these notes are AI-generated. Please double-check important facts, formulas, and examples with trusted sources before using them for exams.
