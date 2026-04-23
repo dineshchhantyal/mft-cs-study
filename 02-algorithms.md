@@ -633,6 +633,9 @@ SAT, 3-SAT, Vertex Cover, Independent Set, Clique, Hamiltonian Path/Cycle, TSP (
 
 ### ✅ Answer Key & Explanations
 
+<details>
+<summary>Reveal full answer key</summary>
+
 1. **B.** Dominant term is 3n²; lower-order terms (n log n, constant) are absorbed. So f(n) = Θ(n²). Not O(n log n) (too small) and not Ω(n³) (too big).
 
 2. **B.** Bottom-up heapify costs Σ_{h=0..log n} (n/2^(h+1))·h which sums to O(n). *Trap:* inserting n items one-by-one into a heap is O(n log n), but building from an existing array is linear.
@@ -672,6 +675,8 @@ SAT, 3-SAT, Vertex Cover, Independent Set, Clique, Hamiltonian Path/Cycle, TSP (
 19. **B.** Standard Wagner-Fischer DP uses an (m+1)×(n+1) table; each cell is O(1) → O(mn) time (space reducible to O(min(m,n))).
 
 20. **D.** In DFS of a directed graph, a back edge (to an ancestor in the DFS tree) exists iff the graph has a cycle. Forward/cross edges alone do not imply cycles.
+
+</details>
 
 ---
 
@@ -782,6 +787,9 @@ else:                          # right half sorted
    A) the package array   B) the answer space (capacities)   C) days   D) package indices
 
 **Answer Key:**
+<details>
+<summary>Reveal Practice MCQ answers</summary>
+
 1. **B** — index 3 is the first position with a value ≥ 7 (value 7 itself).
 2. **C** — halving n takes ⌊log₂ n⌋ + 1 comparisons worst case.
 3. **B** — `lo + hi` may overflow for large indices; subtraction form is safe.
@@ -790,6 +798,8 @@ else:                          # right half sorted
 6. **C** — by symmetry, each of n elements has equal probability 1/n.
 7. **A** — "composite" is one-sided certain; only "prime" verdicts are probabilistic.
 8. **B** — parametric / binary-search-on-answer: search the monotone feasibility space.
+
+</details>
 
 ---
 

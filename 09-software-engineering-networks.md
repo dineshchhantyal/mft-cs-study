@@ -5,6 +5,33 @@
 
 ---
 
+## Interactive Study Mode (Use This First)
+
+Make this file active instead of passive reading.
+
+### 20-Minute Sprint
+
+- [ ] 5 min: Read one section fast (no notes)
+- [ ] 8 min: Close notes, explain from memory out loud
+- [ ] 5 min: Solve 5 MCQs from this file
+- [ ] 2 min: Write 3 weak points to revise
+
+### Score Game
+
+- +2 points: Correct answer without peeking
+- +1 point: Correct after one hint/review
+- 0 points: Incorrect
+- Target: 14+ points per sprint
+
+### Active Recall Prompts
+
+1. Explain LOW coupling and HIGH cohesion in one sentence each.
+2. Say the OSI layers bottom-to-top without looking.
+3. Compare TCP vs UDP in 20 seconds.
+4. Solve hosts in /26 and /30 mentally.
+
+---
+
 ## PART A — SOFTWARE ENGINEERING
 
 ### 1. SDLC Models
@@ -272,58 +299,108 @@
 
 ---
 
-## PART C — 10 PRACTICE MCQs WITH SOLUTIONS
+## PART C — 12 PRACTICE MCQs (INTERACTIVE)
+
+Try to answer first. Open each answer only after you commit.
 
 **Q1.** A module passes a flag to another module that changes its control flow. This is:
 A) Data coupling  B) Stamp coupling  C) Control coupling  D) Common coupling
-**Answer: C.** Flag controlling behavior = control coupling.
+<details>
+<summary>Reveal answer</summary>
+
+**C.** Flag controlling behavior = control coupling.
+</details>
 
 **Q2.** Which cohesion is BEST?
 A) Logical  B) Temporal  C) Sequential  D) Functional
-**Answer: D.** Functional = all parts contribute to one task.
+<details>
+<summary>Reveal answer</summary>
+
+**D.** Functional = all parts contribute to one task.
+</details>
 
 **Q3.** A function has 4 `if` statements (no else), and 1 `while` loop. Cyclomatic complexity?
 A) 4  B) 5  C) 6  D) 7
-**Answer: C.** V(G) = decision points + 1 = 5 + 1 = 6.
+<details>
+<summary>Reveal answer</summary>
 
-**Q4.** "Add scrolling to a window at runtime without subclassing" — which pattern?
+**C.** V(G) = decision points + 1 = 5 + 1 = 6.
+</details>
+
+**Q4.** "Add scrolling to a window at runtime without subclassing" - which pattern?
 A) Adapter  B) Decorator  C) Proxy  D) Strategy
-**Answer: B.** Decorator adds behavior dynamically.
+<details>
+<summary>Reveal answer</summary>
+
+**B.** Decorator adds behavior dynamically.
+</details>
 
 **Q5.** Liskov Substitution Principle means:
 A) Classes should have one responsibility
 B) Subtypes must be usable wherever base type is expected
 C) Depend on abstractions
 D) Many small interfaces
-**Answer: B.**
+<details>
+<summary>Reveal answer</summary>
+
+**B.** Subtypes must work anywhere the base type is expected.
+</details>
 
 **Q6.** Which layer does a router operate at?
 A) 1  B) 2  C) 3  D) 4
-**Answer: C.** Network layer (IP routing).
+<details>
+<summary>Reveal answer</summary>
+
+**C.** Network layer (IP routing).
+</details>
 
 **Q7.** TCP 3-way handshake order:
 A) SYN, ACK, SYN-ACK  B) SYN, SYN-ACK, ACK  C) ACK, SYN, SYN-ACK  D) SYN-ACK, SYN, ACK
-**Answer: B.**
+<details>
+<summary>Reveal answer</summary>
+
+**B.** SYN -> SYN-ACK -> ACK.
+</details>
 
 **Q8.** How many usable hosts in a /26 subnet?
 A) 62  B) 64  C) 30  D) 126
-**Answer: A.** 2^(32−26) − 2 = 64 − 2 = 62.
+<details>
+<summary>Reveal answer</summary>
+
+**A.** $2^{(32-26)} - 2 = 64 - 2 = 62$.
+</details>
 
 **Q9.** Which protocol is connectionless and has 8-byte header?
 A) TCP  B) UDP  C) IP  D) ICMP
-**Answer: B.** UDP.
+<details>
+<summary>Reveal answer</summary>
+
+**B.** UDP.
+</details>
 
 **Q10.** DNS primarily uses which transport protocol and port?
 A) TCP 53  B) UDP 53  C) TCP 80  D) UDP 80
-**Answer: B.** UDP 53 (TCP 53 for zone transfers / large responses).
+<details>
+<summary>Reveal answer</summary>
+
+**B.** UDP 53 (TCP 53 for zone transfers / large responses).
+</details>
 
 **Q11.** White-box testing that ensures every edge of the control flow graph is executed:
 A) Statement coverage  B) Branch coverage  C) Path coverage  D) Loop coverage
-**Answer: B.** Branch (decision) coverage.
+<details>
+<summary>Reveal answer</summary>
+
+**B.** Branch (decision) coverage.
+</details>
 
 **Q12.** In UML, a filled diamond from Car to Engine means:
 A) Aggregation  B) Composition  C) Association  D) Dependency
-**Answer: B.** Composition — Engine lifetime bound to Car.
+<details>
+<summary>Reveal answer</summary>
+
+**B.** Composition - Engine lifetime bound to Car.
+</details>
 
 ---
 
@@ -413,6 +490,9 @@ A) Aggregation  B) Composition  C) Association  D) Dependency
 
 ### ✅ Answer Key & Explanations
 
+<details>
+<summary>Reveal full answer key</summary>
+
 1. **C) Spiral** — Iterative with risk analysis; ideal for evolving requirements. Waterfall needs fixed specs upfront.
 
 2. **B) Non-functional requirement** — Describes a quality/constraint (security), not a behavior the system performs for users.
@@ -452,6 +532,8 @@ A) Aggregation  B) Composition  C) Association  D) Dependency
 19. **C) ICMP** — ICMP (ping, traceroute) runs at Layer 3 (Network). TCP=L4, HTTP/FTP=L7.
 
 20. **D) Router** — Layer 3 device using IP for inter-network forwarding. Switch=L2 (MAC), Hub=L1, Bridge=L2.
+
+</details>
 
 ---
 
@@ -550,12 +632,17 @@ Interpretation: the **minimum average number of bits** required to encode one ou
    A) a capturing group matching a digit   B) a non-capturing group   C) a positive lookahead (zero-width)   D) a backreference
 
 **Answer Key:**
+<details>
+<summary>Reveal Practice MCQ answers</summary>
+
 1. **B** — log₂ 4 = 2 bits; uniform distribution achieves max entropy.
 2. **C** — Huffman is optimal among **prefix** codes; arithmetic coding can do slightly better but is not a prefix code.
 3. **C** — `.*` greedily extends to the last `>`; use `<.*?>` for minimal match.
 4. **C** — backrefs make regex equivalence NP-hard; DFA engines deliberately omit them to keep O(n) matching.
 5. **C** — H = −(0.9·log₂ 0.9 + 0.1·log₂ 0.1) ≈ 0.469 bits.
 6. **C** — `(?=...)` is a positive lookahead; matches zero characters but asserts the following text matches the inner pattern.
+
+</details>
 
 ---
 

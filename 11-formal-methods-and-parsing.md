@@ -730,6 +730,9 @@ Equispaced interpolation at high degree **oscillates wildly** near the endpoints
 
 ### ✅ Answer Key & Explanations
 
+<details>
+<summary>Reveal full answer key</summary>
+
 **Q1 — B.** By the axiom, `wp(x:=x+3, x>10) = (x+3 > 10) = x > 7`.
 
 **Q2 — D.** Partial correctness `{P}S{Q}` is an implication: *if* `P` holds initially *and* `S` terminates, *then* `Q`. It is vacuously true when `P` is false (antecedent false) or when `S` diverges (termination condition fails).
@@ -765,6 +768,8 @@ Equispaced interpolation at high degree **oscillates wildly** near the endpoints
 **Q17 — B.** Runge phenomenon is tied to equispaced nodes. Chebyshev nodes cluster near endpoints and avoid the oscillation; piecewise (splines) also fixes it.
 
 **Q18 — C.** Each bisection step halves the bracket: `|eₙ₊₁| = ½ |eₙ|`. Linear with rate ½, always converges under sign-change + continuity.
+
+</details>
 
 ---
 

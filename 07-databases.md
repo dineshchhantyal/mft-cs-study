@@ -469,6 +469,9 @@ R → R1, R2 lossless iff (R1 ∩ R2) → R1 or (R1 ∩ R2) → R2.
 
 ### ✅ Answer Key & Explanations
 
+<details>
+<summary>Reveal full answer key</summary>
+
 1. **B** — A superkey uniquely identifies tuples; a *candidate* key adds the minimality requirement.
 2. **C** — Set difference `R − S` returns tuples in R but not S.
 3. **C** — Order: FROM → WHERE → GROUP BY → HAVING → **SELECT** → DISTINCT → ORDER BY → LIMIT. HAVING runs before SELECT.
@@ -489,3 +492,5 @@ R → R1, R2 lossless iff (R1 ∩ R2) → R1 or (R1 ∩ R2) → R2.
 18. **C** — When every attribute is a candidate key (cyclic FDs A→B→C→A make {A},{B},{C} all keys), every determinant is a superkey ⇒ BCNF.
 19. **C** — New *inserted* rows matching a predicate between two reads = phantom. Requires SERIALIZABLE or predicate/range locks (standard 2PL on existing rows won't stop it).
 20. **C** — The only candidate key is {A,C}. A → B and C → D are *partial* dependencies on the key ⇒ violates 2NF. So R is only in 1NF. (Trap: looks like a 3NF-vs-BCNF question but fails earlier at 2NF.)
+
+</details>

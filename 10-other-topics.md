@@ -667,6 +667,9 @@ D. LGPL
 
 ### ✅ Answer Key & Explanations
 
+<details>
+<summary>Reveal full answer key</summary>
+
 | # | Ans | Explanation |
 |---|-----|-------------|
 | 1 | **C** | Translation is affine, not linear in 3D. Homogeneous coords add a 4th component so translation can be encoded in matrix multiplication, enabling composition. |
@@ -691,6 +694,8 @@ D. LGPL
 | 20 | **C** | MIT is a permissive license with minimal obligations — basically preserve the copyright/license notice. |
 
 **Note on Q2:** The correct letter is **C (0, 5)**. Row 2 of the table above notes the derivation — rotation 90° CCW maps (5,0) → (0,5).
+
+</details>
 
 ---
 

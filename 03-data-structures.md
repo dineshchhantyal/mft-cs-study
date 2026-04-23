@@ -458,6 +458,9 @@ A) O(n)  B) O(log n)  C) O(1)  D) O(√n)
 
 ### ✅ Answer Key & Explanations
 
+<details>
+<summary>Reveal full answer key</summary>
+
 **1. C** — Head insert rewires two pointers in constant time; no traversal needed.
 
 **2. B** — Elements = (rear − front + capacity) mod capacity = (6−3+8) mod 8 = 3.
@@ -497,4 +500,6 @@ A) O(n)  B) O(log n)  C) O(1)  D) O(√n)
 **19. C** — 12 → idx 2; 22 collides at 2, probes to 3; 32 collides at 2, then 3, lands at 4.
 
 **20. C** — Each element is pushed and popped at most twice across both stacks, so n dequeues cost O(n) total → O(1) amortized.
+
+</details>
 

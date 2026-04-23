@@ -396,6 +396,9 @@ L is **NP-complete** if NP-hard AND L ∈ NP.
 
 ### ✅ Answer Key & Explanations
 
+<details>
+<summary>Reveal full answer key</summary>
+
 **Q1. (c) 8.** For the k-th last symbol condition, a DFA needs 2ᵏ states; here k=3 → 2³ = 8.
 
 **Q2. (b) (a*b*)*.** Generates all strings over {a,b}. (a) misses 'ba'; (c) misses ε; (d) misses mixed strings.
@@ -435,4 +438,6 @@ L is **NP-complete** if NP-hard AND L ∈ NP.
 **Q19. (c) co-RE but not RE.** E_TM is co-RE (can enumerate non-empty witnesses) but not RE — reduction from HALT complement.
 
 **Q20. (b).** HALT is the canonical RE-but-undecidable language. Its complement is NOT RE (it's co-RE only).
+
+</details>
 

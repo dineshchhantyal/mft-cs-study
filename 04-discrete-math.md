@@ -378,6 +378,9 @@ A) 10   B) 25   C) 32   D) 120
 
 ### ✅ Answer Key & Explanations
 
+<details>
+<summary>Reveal full answer key</summary>
+
 1. **B** — p → q is equivalent to ¬p ∨ q, so its negation is p ∧ ¬q by De Morgan.
 2. **C** — ∃! means "there exists exactly one". Only C captures uniqueness.
 3. **A** — Negation flips quantifiers and inner predicate: ∃x ∀y ¬(x < y) = ∃x ∀y (x ≥ y).
@@ -398,3 +401,5 @@ A) 10   B) 25   C) 32   D) 120
 18. **B** — Contrapositive ("if n is odd then n² is odd") is a short one-line algebraic proof; direct is awkward.
 19. **D** — A × (B ∪ C) = (A × B) ∪ (A × C); the extra ∪ (A ∩ B) term makes D false in general (wrong type — A ∩ B is a set, not a set of pairs).
 20. **C** — Choose the pair's rank (13), the two suits (C(4,2)), then 3 distinct other ranks from the remaining 12 with one suit each — standard "one pair" hand count. Option A double-counts suit choices; B counts two pair.
+
+</details>

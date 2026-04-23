@@ -459,6 +459,9 @@ Is the state safe? If yes, give one safe sequence.
 
 ### ✅ Answer Key & Explanations
 
+<details>
+<summary>Reveal full answer key</summary>
+
 **A1.** **(b) running → waiting.** A blocking I/O causes the running process to wait for I/O completion. Ready → waiting is not a valid transition (must run first).
 
 **A2.** **(d) stack.** Each thread has its own stack and registers; heap/globals/file descriptors are shared.
@@ -500,4 +503,6 @@ Is the state safe? If yes, give one safe sequence.
 **A19.** SCAN toward higher from 50 to 199, then reverse. Sorted: 16,24,43,50,82,140,170,190. Go up: 82,140,170,190,199 → movement 199−50 = 149. Then down to 43: 199−43 = 156. Continue to 24,16: already past. Total = 149 + (199−16) = 149 + 183 = **332**. (Alt: 50→199→16 = 149+183=332.)
 
 **A20.** LOOK toward higher first: 50→82→140→170→190 (movement 190−50=140), then reverse to 43→24→16 (190−16=174). Total = 140 + 174 = **314**.
+
+</details>
 

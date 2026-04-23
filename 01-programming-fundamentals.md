@@ -1275,6 +1275,9 @@ D. (a) 6, (b) 6
 
 ### ✅ Answer Key & Explanations
 
+<details>
+<summary>Reveal full answer key</summary>
+
 **Q1 — B.** Call-by-value copies the argument's *value* into the parameter; changes to the parameter cannot affect the caller.
 
 **Q2 — C.** Lexing accepts the tokens, parsing accepts the grammar (assignment is syntactically legal). The `int` vs string-literal mismatch is caught during **semantic analysis / type checking**.
@@ -1320,6 +1323,8 @@ D. (a) 6, (b) 6
 - **(a) Call-by-reference:** both parameters alias `i`. `x = x + 1` makes i = 6. `y = y + 1` reads the same `i`, makes i = 7. Final **i = 7**.
 - **(b) Call-by-value-result:** `x` and `y` each receive a **copy** of 5. Inside, both become 6. On return, values are copied back in order; the second copy-back overwrites the first, so **i = 6**.
 This asymmetry is precisely why the two modes are *not* equivalent when the same variable is passed to multiple parameters (aliasing vs copy-back).
+
+</details>
 
 ---
 

@@ -515,6 +515,9 @@ A) Compulsory  B) Capacity  C) Conflict  D) Coherence
 
 ### ✅ Answer Key & Explanations
 
+<details>
+<summary>Reveal full answer key</summary>
+
 1. **A** — Invert `11110001` → `00001110` (=14), add 1 → 15. Sign negative ⇒ **−15**.
 2. **C** — NAND (and NOR) are functionally complete; AND/OR/XOR alone are not.
 3. **C** — 2⁴ = 16 states ⇒ **4** flip-flops.
@@ -536,6 +539,8 @@ A) Compulsory  B) Capacity  C) Conflict  D) Coherence
 19. **B** — −128 has no positive counterpart in 8-bit two's complement. Invert `10000000` → `01111111`, +1 → `10000000`. Stays −128; operation overflows.
 20. **C** — CPI = 1 + 0.20 · 3 = 1 + 0.6 = **1.6**. Branch stalls crush the 5× ideal.
 21. **D** — NAND is **not** associative. Counter-example: `(1 NAND 1) NAND 0 = 0 NAND 0 = 1`, but `1 NAND (1 NAND 0) = 1 NAND 1 = 0`. All other options are true.
+
+</details>
 
 ---
 
@@ -619,11 +624,16 @@ Two threads on different cores write to **different variables** that happen to l
    A) there are few cores   B) the system has many cores and a non-bus interconnect   C) memory is small   D) caches are write-through
 
 **Answer Key:**
+<details>
+<summary>Reveal Practice MCQ answers</summary>
+
 1. **B** — single instruction stream, many data elements = SIMD (GPUs, vector units).
 2. **B** — a local write on an exclusive line just dirties it in place; no bus traffic needed because no one else has a copy.
 3. **B** — adjacent ints live in the same cache line; each write invalidates the other core's copy.
 4. **B** — `1 / 0.10 = 10`. Serial fraction is the hard ceiling as p → ∞.
 5. **C** — SC is the strongest; TSO and ARM allow reorderings.
 6. **B** — shared buses saturate; directories use point-to-point messages and scale to large core counts.
+
+</details>
 
 ---
