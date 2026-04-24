@@ -2,184 +2,55 @@
 
 Exam: ETS Major Field Test in Computer Science, May 1, 2026.
 
-<details>
-<summary>Reveal answer</summary>
-
-**A1.** **(b) running → waiting.** A blocking I/O causes the running process to wait for I/O completion. Ready → waiting is not a valid transition (must run first).
-
-## </details>
-
-## 1. Processes & Threads
-
-<details>
-<summary>Reveal answer</summary>
-
-**A2.** **(d) stack.** Each thread has its own stack and registers; heap/globals/file descriptors are shared.
-
-</details>
-
 ### Process
 
-<details>
-<summary>Reveal answer</summary>
-
-**A3.** **(c) TLB entries.** The TLB is a CPU-hardware cache, flushed/refilled by hardware — not stored per-process in the PCB. Page-table base pointer is in PCB, but not TLB contents.
-
-</details>
 - A program in execution. Has its own address space (code, data, heap, stack), open files, PID, registers.
 - Created by `fork()` (UNIX) — child gets copy of parent's address space (copy-on-write in practice).
 
-<details>
-<summary>Reveal answer</summary>
-
-**A4.** FCFS order A,B,C,D. Waits: A=0, B=6, C=14, D=21. Avg = (0+6+14+21)/4 = 41/4 = **10.25**.
-
-</details>
 - `exec()` replaces the process image; `wait()` blocks parent until child finishes; `exit()` terminates.
 
-<details>
-<summary>Reveal answer</summary>
-
-**A5.** SJF order D(3), A(6), C(7), B(8). Waits: D=0, A=3, C=9, B=16. Avg = 28/4 = **7.0**.
-
-</details>
 ### Thread
 
-<details>
-<summary>Reveal answer</summary>
-
-**A6.** SRTF timeline: t=0 P1 runs (rem 7). t=2 P2 arrives (4 < 5), preempt → P2 runs. t=4 P3 arrives (1 < 2), preempt → P3 runs 4–5. t=5 P4 arrives (4); remaining: P1=5, P2=2, P4=4 → P2 runs 5–7. t=7: P1=5, P4=4 → P4 runs 7–11. t=11: P1=5 runs 11–16. **P1 completes at t=16.**
-
-</details>
 - Lightweight unit of execution _within_ a process. Shares address space (code/data/heap/open files) with other threads in the process.
 - Each thread has its own: **stack, registers, program counter, thread ID**.
 
-<details>
-<summary>Reveal answer</summary>
-
-**A7.** Queue order arrival P1,P2,P3,P4. RR q=3: P1 0–3(rem 2), P2 3–6(done), P3 6–9(rem 3), P4 9–11(done), P1 11–13(done), P3 13–16(done). Completion order: **P2, P4, P1, P3**.
-
-</details>
 - Context switch between threads of the same process is cheaper than between processes (no TLB/page-table flush).
 
-<details>
-<summary>Reveal answer</summary>
-
-**A8.** S=2 lets 2 in, the other **3 block**.
-
-</details>
 ### User-level vs Kernel-level threads
 
 - **User-level (green threads):** fast context switch, but one blocking syscall blocks all threads; no true multi-core parallelism.
 
-<details>
-<summary>Reveal answer</summary>
-
-**A9.** **(b) readers–writers.** The writer-starvation variant prioritizes writers to prevent them being perpetually blocked by readers.
-
-</details>
 - **Kernel-level:** OS aware, can run on multiple cores, but more expensive context switch.
 - **Hybrid (M:N):** many user threads mapped to N kernel threads.
 
-<details>
-<summary>Reveal answer</summary>
-
-**A10.** **(b) ownership.** Only the thread that locked a mutex may unlock it; a binary semaphore can be signaled by any thread. (a) is false — mutexes can be shared; (c) is false.
-
-</details>
 ### Process States & Transitions
 
 ```
    [new] --admit--> [ready] --dispatch--> [running] --exit--> [terminated]
 
-<details>
-<summary>Reveal answer</summary>
-
-**A11.** **Banker's.** Available = Total − Σalloc = (10,5,7) − (7,2,5) = **(3,3,2)**. Need = Max − Alloc: P0(7,4,3), P1(1,2,2), P2(6,0,0), P3(0,1,1), P4(4,3,1). Check: P1 need(1,2,2) ≤ (3,3,2) ✓ → Avail (5,3,2). P3 need(0,1,1) ≤ ✓ → (7,4,3). P0(7,4,3) ≤ ✓ → (7,5,3). P2(6,0,0) ≤ ✓ → (10,5,5). P4(4,3,1) ≤ ✓. **Safe sequence: P1, P3, P0, P2, P4.**
-
-</details>
                       ^                      | |
                       |--I/O completes-- [waiting]
                       |                      |
 
-<details>
-<summary>Reveal answer</summary>
-
-**A12.** **(b) definite deadlock** — only in single-instance RAG. With multiple instances a cycle is necessary but not sufficient.
-
-</details>
                       |--timer interrupt (preempt)--
 ```
 
-<details>
-<summary>Reveal answer</summary>
-
-**A13.** Pages = 2^32 / 2^12 = 2^20 entries × 4 B = **4 MB per process**. (This motivates multi-level page tables.)
-
-</details>
-
 Five canonical states: **new, ready, running, waiting (blocked), terminated**.
 
-<details>
-<summary>Reveal answer</summary>
-
-**A14.** **(b) pure segmentation.** Variable-size segments → external fragmentation; no fixed page frames → no internal. Paging has internal only; fixed partitions have internal.
-
-</details>
 Transitions:
 
-<details>
-<summary>Reveal answer</summary>
-
-**A15.** LRU, 3 frames, string 7,0,1,2,0,3,0,4,2,3,0,3,2:
-7(F)[7], 0(F)[7,0], 1(F)[7,0,1], 2(F evict 7)[0,1,2], 0(H)[1,2,0], 3(F evict 1)[2,0,3], 0(H)[2,3,0], 4(F evict 2)[3,0,4], 2(F evict 3)[0,4,2], 3(F evict 0)[4,2,3], 0(F evict 4)[2,3,0], 3(H)[2,0,3], 2(H). Faults = **9**.
-
-</details>
 - new → ready: admitted
 - ready → running: scheduler dispatch
 
-<details>
-<summary>Reveal answer</summary>
-
-**A16.** OPT, 3 frames, same string:
-7(F),0(F),1(F),2(F evict 7 — next use: 7 never, 0 soon, 1 farther → evict 7)[0,1,2]. Actually evict farthest-future: at step 4 future = 0,3,0,4,2,3,0,3,2. 7 not used → evict 7. [0,1,2]. 0(H). 3(F): future after = 0,4,2,3,0,3,2; among {0,1,2}: 1 never used again → evict 1. [0,2,3]. 0(H). 4(F): future = 2,3,0,3,2; among {0,2,3}: 0 used at idx, 2 next, 3 next; farthest = 0 → evict 0. [2,3,4]. 2(H). 3(H). 0(F): future = 3,2; among {2,3,4}: 4 never → evict 4. [0,2,3]. 3(H). 2(H). Faults = 7(F),0(F),1(F),2(F),3(F),4(F),0(F) = **7**.
-
-</details>
 - running → ready: preempted (timer)
 - running → waiting: I/O or event wait
 
-<details>
-<summary>Reveal answer</summary>
-
-**A17.** Single-level: on TLB hit → TLB + mem = 10+100 = 110. On miss → TLB + mem (PT) + mem (data) = 10+100+100 = 210. EAT = 0.9·110 + 0.1·210 = 99 + 21 = **120 ns**.
-
-</details>
 - waiting → ready: I/O complete / event
 - running → terminated: exit
 
-<details>
-<summary>Reveal answer</summary>
-
-**A18.** Pointers per block = 4096/4 = 1024. Direct = 12 blocks. Single-indirect = 1024 blocks. Double-indirect = 1024·1024 = 2^20 blocks. Total blocks = 12 + 1024 + 1048576 ≈ 1,049,612 blocks × 4 KB ≈ **~4.0 GB** (exactly 1,049,612·4 KB = 4,198,448 KB ≈ 4.00 GiB).
-
-</details>
-
 ### PCB (Process Control Block) contents
 
-<details>
-<summary>Reveal answer</summary>
-
-**A19.** SCAN toward higher from 50 to 199, then reverse. Sorted: 16,24,43,50,82,140,170,190. Go up: 82,140,170,190,199 → movement 199−50 = 149. Then down to 43: 199−43 = 156. Continue to 24,16: already past. Total = 149 + (199−16) = 149 + 183 = **332**. (Alt: 50→199→16 = 149+183=332.)
-
-</details>
-
 - PID, process state
-<details>
-<summary>Reveal answer</summary>
-
-**A20.** LOOK toward higher first: 50→82→140→170→190 (movement 190−50=140), then reverse to 43→24→16 (190−16=174). Total = 140 + 174 = **314**.
-
-</details>
 - q too large → becomes FCFS. q too small → excessive context-switch overhead.
 - Rule of thumb: q should be large compared to context-switch time, ~10–100 ms. Typically want 80% of CPU bursts < q.
 
@@ -431,6 +302,22 @@ Total movement for LOOK (head 53, up first): 53→65→67→98→122→124→183
 
 </details>
 
+<details>
+<summary>Reveal answer</summary>
+
+**A1.** **(b) running → waiting.** A blocking I/O causes the running process to wait for I/O completion. Ready → waiting is not a valid transition (must run first).
+
+## </details>
+
+## 1. Processes & Threads
+
+<details>
+<summary>Reveal answer</summary>
+
+**A2.** **(d) stack.** Each thread has its own stack and registers; heap/globals/file descriptors are shared.
+
+</details>
+
 **Q2.** Processes P1, P2, P3 arrive at t=0 with bursts 8, 4, 9. Under SJF (non-preemptive), average waiting time?
 
 <details>
@@ -449,12 +336,26 @@ Faults: 1(F),2(F),3(F),4(F evict 1),1(F evict 2),2(F evict 3),5(F evict 4),1(hit
 
 </details>
 
+<details>
+<summary>Reveal answer</summary>
+
+**A3.** **(c) TLB entries.** The TLB is a CPU-hardware cache, flushed/refilled by hardware — not stored per-process in the PCB. Page-table base pointer is in PCB, but not TLB contents.
+
+</details>
+
 **Q4.** Which of the four deadlock conditions does "requesting all resources upfront" negate?
 
 <details>
 <summary>Reveal answer</summary>
 
 **Ans:** Hold and wait.
+
+</details>
+
+<details>
+<summary>Reveal answer</summary>
+
+**A4.** FCFS order A,B,C,D. Waits: A=0, B=6, C=14, D=21. Avg = (0+6+14+21)/4 = 41/4 = **10.25**.
 
 </details>
 
@@ -467,6 +368,13 @@ Faults: 1(F),2(F),3(F),4(F evict 1),1(F evict 2),2(F evict 3),5(F evict 4),1(hit
 
 </details>
 
+<details>
+<summary>Reveal answer</summary>
+
+**A5.** SJF order D(3), A(6), C(7), B(8). Waits: D=0, A=3, C=9, B=16. Avg = 28/4 = **7.0**.
+
+</details>
+
 **Q6.** Disk head at 50; queue = 82,170,43,140,24,16,190. Compute SSTF total movement.
 
 <details>
@@ -476,12 +384,26 @@ Nearest to 50: 43 (7). Next nearest to 43: 24 (19). Next: 16 (8). Next: 82 (66).
 
 </details>
 
+<details>
+<summary>Reveal answer</summary>
+
+**A6.** SRTF timeline: t=0 P1 runs (rem 7). t=2 P2 arrives (4 < 5), preempt → P2 runs. t=4 P3 arrives (1 < 2), preempt → P3 runs 4–5. t=5 P4 arrives (4); remaining: P1=5, P2=2, P4=4 → P2 runs 5–7. t=7: P1=5, P4=4 → P4 runs 7–11. t=11: P1=5 runs 11–16. **P1 completes at t=16.**
+
+</details>
+
 **Q7.** Which page replacement is an OS likely to approximate in hardware?
 
 <details>
 <summary>Reveal answer</summary>
 
 **Ans:** **Clock / second-chance** (LRU approximation using reference bits).
+
+</details>
+
+<details>
+<summary>Reveal answer</summary>
+
+**A7.** Queue order arrival P1,P2,P3,P4. RR q=3: P1 0–3(rem 2), P2 3–6(done), P3 6–9(rem 3), P4 9–11(done), P1 11–13(done), P3 13–16(done). Completion order: **P2, P4, P1, P3**.
 
 </details>
 
@@ -495,6 +417,13 @@ Nearest to 50: 43 (7). Next nearest to 43: 24 (19). Next: 16 (8). Next: 82 (66).
 
 </details>
 
+<details>
+<summary>Reveal answer</summary>
+
+**A8.** S=2 lets 2 in, the other **3 block**.
+
+</details>
+
 **Q9.** A system has 12 tape drives, 3 processes each needing max 5. Is it deadlock-free?
 
 <details>
@@ -504,12 +433,26 @@ If each holds 4, requests 1 more → 12 allocated, 0 free → deadlock. But if e
 
 </details>
 
+<details>
+<summary>Reveal answer</summary>
+
+**A9.** **(b) readers–writers.** The writer-starvation variant prioritizes writers to prevent them being perpetually blocked by readers.
+
+</details>
+
 **Q10.** RR with q = 4, processes (arrival, burst): P1(0,5), P2(1,4), P3(2,2). Completion times?
 
 <details>
 <summary>Reveal answer</summary>
 
 Timeline: P1 0–4, P2 4–8, P3 8–10, P1 10–11. P1 done at 11, P2 at 8, P3 at 10.
+
+</details>
+
+<details>
+<summary>Reveal answer</summary>
+
+**A10.** **(b) ownership.** Only the thread that locked a mutex may unlock it; a binary semaphore can be signaled by any thread. (a) is false — mutexes can be shared; (c) is false.
 
 </details>
 
@@ -523,12 +466,26 @@ Timeline: P1 0–4, P2 4–8, P3 8–10, P1 10–11. P1 done at 11, P2 at 8, P3 
 
 </details>
 
+<details>
+<summary>Reveal answer</summary>
+
+**A11.** **Banker's.** Available = Total − Σalloc = (10,5,7) − (7,2,5) = **(3,3,2)**. Need = Max − Alloc: P0(7,4,3), P1(1,2,2), P2(6,0,0), P3(0,1,1), P4(4,3,1). Check: P1 need(1,2,2) ≤ (3,3,2) ✓ → Avail (5,3,2). P3 need(0,1,1) ≤ ✓ → (7,4,3). P0(7,4,3) ≤ ✓ → (7,5,3). P2(6,0,0) ≤ ✓ → (10,5,5). P4(4,3,1) ≤ ✓. **Safe sequence: P1, P3, P0, P2, P4.**
+
+</details>
+
 **Q12.** Belady's anomaly can occur in which algorithm?
 
 <details>
 <summary>Reveal answer</summary>
 
 **Ans:** **FIFO only** (among the standard ones).
+
+</details>
+
+<details>
+<summary>Reveal answer</summary>
+
+**A12.** **(b) definite deadlock** — only in single-instance RAG. With multiple instances a cycle is necessary but not sufficient.
 
 </details>
 
@@ -541,12 +498,26 @@ Timeline: P1 0–4, P2 4–8, P3 8–10, P1 10–11. P1 done at 11, P2 at 8, P3 
 
 </details>
 
+<details>
+<summary>Reveal answer</summary>
+
+**A13.** Pages = 2^32 / 2^12 = 2^20 entries × 4 B = **4 MB per process**. (This motivates multi-level page tables.)
+
+</details>
+
 **Q14.** Effective access time with TLB hit ratio 80%, TLB 20 ns, memory 100 ns:
 
 <details>
 <summary>Reveal answer</summary>
 
 EAT = 0.8·(20+100) + 0.2·(20+200) = 0.8·120 + 0.2·220 = 96 + 44 = **140 ns**.
+
+</details>
+
+<details>
+<summary>Reveal answer</summary>
+
+**A14.** **(b) pure segmentation.** Variable-size segments → external fragmentation; no fixed page frames → no internal. Paging has internal only; fixed partitions have internal.
 
 </details>
 
@@ -623,6 +594,14 @@ BIG RULES
 
 ## 🧪 Try Yourself — Practice Questions
 
+<details>
+<summary>Reveal answer</summary>
+
+**A15.** LRU, 3 frames, string 7,0,1,2,0,3,0,4,2,3,0,3,2:
+7(F)[7], 0(F)[7,0], 1(F)[7,0,1], 2(F evict 7)[0,1,2], 0(H)[1,2,0], 3(F evict 1)[2,0,3], 0(H)[2,3,0], 4(F evict 2)[3,0,4], 2(F evict 3)[0,4,2], 3(F evict 0)[4,2,3], 0(F evict 4)[2,3,0], 3(H)[2,0,3], 2(H). Faults = **9**.
+
+</details>
+
 **Q1.** A process executing a blocking `read()` transitions from which state to which?
 (a) running → ready (b) running → waiting (c) ready → waiting (d) waiting → running
 
@@ -664,12 +643,48 @@ Is the state safe? If yes, give one safe sequence.
 
 **Q16.** Same reference string as Q15 with **3 frames** under **OPT**. Page faults?
 
+<details>
+<summary>Reveal answer</summary>
+
+**A16.** OPT, 3 frames, same string:
+7(F),0(F),1(F),2(F evict 7 — next use: 7 never, 0 soon, 1 farther → evict 7)[0,1,2]. Actually evict farthest-future: at step 4 future = 0,3,0,4,2,3,0,3,2. 7 not used → evict 7. [0,1,2]. 0(H). 3(F): future after = 0,4,2,3,0,3,2; among {0,1,2}: 1 never used again → evict 1. [0,2,3]. 0(H). 4(F): future = 2,3,0,3,2; among {0,2,3}: 0 used at idx, 2 next, 3 next; farthest = 0 → evict 0. [2,3,4]. 2(H). 3(H). 0(F): future = 3,2; among {2,3,4}: 4 never → evict 4. [0,2,3]. 3(H). 2(H). Faults = 7(F),0(F),1(F),2(F),3(F),4(F),0(F) = **7**.
+
+</details>
+
 **Q17.** TLB access = 10 ns, memory = 100 ns, TLB hit ratio = 90%, page table is single-level in memory. **EAT** (no page faults)?
+
+<details>
+<summary>Reveal answer</summary>
+
+**A17.** Single-level: on TLB hit → TLB + mem = 10+100 = 110. On miss → TLB + mem (PT) + mem (data) = 10+100+100 = 210. EAT = 0.9·110 + 0.1·210 = 99 + 21 = **120 ns**.
+
+</details>
 
 **Q18.** A UNIX inode uses 12 direct, 1 single-indirect, 1 double-indirect pointer. Block = 4 KB, pointer = 4 B. Max file size?
 
+<details>
+<summary>Reveal answer</summary>
+
+**A18.** Pointers per block = 4096/4 = 1024. Direct = 12 blocks. Single-indirect = 1024 blocks. Double-indirect = 1024·1024 = 2^20 blocks. Total blocks = 12 + 1024 + 1048576 ≈ 1,049,612 blocks × 4 KB ≈ **~4.0 GB** (exactly 1,049,612·4 KB = 4,198,448 KB ≈ 4.00 GiB).
+
+</details>
+
 **Q19.** Disk head at cylinder 50. Request queue: 82, 170, 43, 140, 24, 16, 190. Under **SCAN** moving toward higher cylinders first (end = 199), total head movement?
+
+<details>
+<summary>Reveal answer</summary>
+
+**A19.** SCAN toward higher from 50 to 199, then reverse. Sorted: 16,24,43,50,82,140,170,190. Go up: 82,140,170,190,199 → movement 199−50 = 149. Then down to 43: 199−43 = 156. Continue to 24,16: already past. Total = 149 + (199−16) = 149 + 183 = **332**. (Alt: 50→199→16 = 149+183=332.)
+
+</details>
 
 **Q20.** Same disk setup as Q19 (head at 50, queue 82,170,43,140,24,16,190). Under **LOOK** moving toward higher first, total head movement?
 
 ---
+
+<details>
+<summary>Reveal answer</summary>
+
+**A20.** LOOK toward higher first: 50→82→140→170→190 (movement 190−50=140), then reverse to 43→24→16 (190−16=174). Total = 140 + 174 = **314**.
+
+</details>

@@ -181,24 +181,10 @@ Key consequence: column **aliases defined in SELECT** cannot be used in `WHERE`/
 - **Rigorous 2PL**: hold all locks (S and X) until commit.
 - **Deadlock**: cycle in wait-for graph. Handle via detection (abort victim), prevention (wait-die, wound-wait), timeouts, or lock ordering.
 
-   <details>
-   <summary>Reveal answer</summary>
-
-  **Answer:** B. A superkey uniquely identifies tuples, but a candidate key adds the minimality requirement.
-
-   </details>
-
 ### Timestamp Ordering
 
 - Each txn gets TS at start. For each item: `readTS`, `writeTS`.
 - On read/write, if it would violate timestamp order → abort. No deadlocks, but cascading aborts possible.
-
-   <details>
-   <summary>Reveal answer</summary>
-
-  **Answer:** C. Set difference `R − S` returns tuples in R but not in S.
-
-   </details>
 
 ---
 
@@ -207,12 +193,6 @@ Key consequence: column **aliases defined in SELECT** cannot be used in `WHERE`/
 | Level | Dirty Read | Non-repeatable Read | Phantom Read |
 | ----- | ---------- | ------------------- | ------------ |
 
-   <details>
-   <summary>Reveal answer</summary>
-
-**Answer:** C. Order: FROM → WHERE → GROUP BY → HAVING → SELECT → DISTINCT → ORDER BY → LIMIT. HAVING runs before SELECT.
-
-   </details>
 | READ UNCOMMITTED | Possible   | Possible            | Possible     |
 | READ COMMITTED   | **No**     | Possible            | Possible     |
 | REPEATABLE READ  | **No**     | **No**              | Possible     |
@@ -220,38 +200,18 @@ Key consequence: column **aliases defined in SELECT** cannot be used in `WHERE`/
 
 - **Dirty read**: read uncommitted data.
 
-   <details>
-   <summary>Reveal answer</summary>
-
-  **Answer:** B. Transitivity: A → B and B → C imply A → C.
-
-   </details>
-
 - **Non-repeatable read**: re-read a row → different value.
 - **Phantom read**: re-run a range query → different set of rows. Prevented only by **predicate/range locks** or serializable isolation.
 - Snapshot isolation (MVCC) prevents dirty/non-repeatable/phantom but allows **write skew** (not fully serializable).
 
 ---
 
-   <details>
-   <summary>Reveal answer</summary>
-
-**Answer:** C. 1NF means atomic values and no repeating groups. Partial and transitive dependency rules belong to higher normal forms.
-
-   </details>
 ## 9. Indexing
 
 - **B+ tree**: balanced, all data in leaves, leaves linked → great for range queries and equality. O(log n).
 - **Hash index**: O(1) equality, **no range support**.
 - **Clustered index**: table rows physically ordered by key (one per table).
 - **Non-clustered (secondary)**: separate structure pointing to rows; can have many.
-
-   <details>
-   <summary>Reveal answer</summary>
-
-  **Answer:** B. Weak entities lack a full key of their own and depend on an identifying relationship plus a partial key.
-
-   </details>
 
 - **Dense** (entry per record) vs **sparse** (entry per block, must be clustered).
 - **Covering index**: includes all needed columns → avoids table lookup.
@@ -260,25 +220,11 @@ Key consequence: column **aliases defined in SELECT** cannot be used in `WHERE`/
 
 ---
 
-   <details>
-   <summary>Reveal answer</summary>
-
-**Answer:** B. Durability means committed changes persist through crashes.
-
-   </details>
-
 ## 10. Recovery
 
 - **WAL (write-ahead logging)**: log record flushed to stable storage **before** corresponding data page.
 - **Log record**: `<Ti, X, old, new>`.
 - **Undo**: revert uncommitted txns (use old value).
-
-   <details>
-   <summary>Reveal answer</summary>
-
-  **Answer:** B. WAL requires the log record to be on stable storage before the dirty data page.
-
-   </details>
 
 - **Redo**: reapply committed txns that didn't make it to disk (use new value).
 - **Checkpoint**: flush dirty pages + write checkpoint record → limits recovery scan.
@@ -286,25 +232,12 @@ Key consequence: column **aliases defined in SELECT** cannot be used in `WHERE`/
 
 ---
 
-   <details>
-   <summary>Reveal answer</summary>
-
-**Answer:** B. `COUNT(*)` = 10 counts all rows; `COUNT(salary)` = 7 ignores NULLs; the difference is 3.
-
-   </details>
 ## 11. MFT Trick Patterns
 
 1. **Candidate key**: attribute that's **never on RHS** of any FD must be in every candidate key.
 2. **`COUNT(*)` vs `COUNT(col)`**: only `COUNT(*)` includes NULL rows.
 3. **`NOT IN` + NULL** in subquery → returns nothing. Prefer `NOT EXISTS`.
 4. **BCNF decomposition**: might lose dependency preservation. 3NF always preserves.
-
-   <details>
-   <summary>Reveal answer</summary>
-
-   **Answer:** C. A cycle in the precedence graph means the schedule is not conflict-serializable.
-
-   </details>
 
 5. **Phantoms** need range/predicate locks; row locks alone don't prevent them.
 6. **Conflict-serializable test**: precedence graph acyclicity.
@@ -313,139 +246,102 @@ Key consequence: column **aliases defined in SELECT** cannot be used in `WHERE`/
 9. **`GROUP BY`**: every non-aggregated SELECT column must appear in GROUP BY (standard SQL).
 10. **Outer join cardinality**: `|LEFT JOIN|` ≥ `|INNER JOIN|`.
 
-   <details>
-   <summary>Reveal answer</summary>
-
-**Answer:** B. Strict 2PL holds exclusive locks until commit/abort, giving serializability plus recoverability and no cascading aborts. It does not prevent deadlocks.
-
-   </details>
-
 ---
 
 ## 12. Practice MCQs
 
 **Q1.** R(A,B,C,D) with FDs: A→B, B→C, C→D. Candidate keys?
-
-   <details>
-   <summary>Reveal answer</summary>
-
-**Answer:** D. AB → C → D → A, so AB determines all. Also BC → D → A, so BC is also a candidate key.
-
-   </details>
-
 - (a) A (b) AB (c) AC (d) ABCD
 
 <details>
 <summary>Reveal answer</summary>
 
-   <details>
-   <summary>Reveal answer</summary>
-
-**Answer:** B. Range queries need ordered traversal; B+-trees support ranges, hash indexes do not.
-
-   </details>
-**Answer:** (a) A. A⁺ = ABCD. B, C, D each appear on RHS, A never does, so A must be in every key. A alone suffices, so it is the only candidate key.
+**Answer:** (a) A. A+ = ABCD. B, C, D appear on RHS; A does not, so A must be in every key and alone determines all attributes.
 
 </details>
 
-**Q2.** Table T(id, val) has rows (1,10), (2,NULL), (3,20). What's `SELECT COUNT(*), COUNT(val), SUM(val), AVG(val) FROM T;`?
+**Q2.** Table T(id, val) has rows (1,10), (2,NULL), (3,20). What does `SELECT COUNT(*), COUNT(val), SUM(val), AVG(val) FROM T;` return?
 
-   <details>
-   <summary>Reveal answer</summary>
-
-**Answer:** B. GROUP BY forms one row per department, and HAVING filters those groups by aggregate condition.
-
-   </details>
 <details>
 <summary>Reveal answer</summary>
 
-**Answer:** 3, 2, 30, 15. AVG = 30/2, not 30/3.
+**Answer:** 3, 2, 30, 15. `COUNT(*)` counts all rows, `COUNT(val)` ignores NULL, and `AVG` uses non-NULL count.
 
 </details>
 
-   <details>
-   <summary>Reveal answer</summary>
-
-**Answer:** B. LEFT OUTER JOIN preserves all left rows and fills unmatched right-side columns with NULL.
-
-   </details>
-
 **Q3.** R(A,B,C) with FDs A→B, B→C. Highest normal form?
-
 - (a) 1NF (b) 2NF (c) 3NF (d) BCNF
 
 <details>
-
-   <details>
-   <summary>Reveal answer</summary>
-
-**Answer:** B. READ COMMITTED blocks dirty reads but still allows non-repeatable reads and phantoms.
-
-   </details>
 <summary>Reveal answer</summary>
 
-**Answer:** (b) 2NF. Key is A. B→C is transitive (B not superkey, C not prime), so it violates 3NF.
+**Answer:** (b) 2NF. Key is A; B→C creates transitive dependency, violating 3NF.
 
 </details>
 
-   <details>
-   <summary>Reveal answer</summary>
-
-**Answer:** B. `NULL <> 1000` is UNKNOWN, not TRUE, so WHERE drops those rows.
-
-   </details>
-**Q4.** Schedule: T1:R(A); T2:W(A); T1:W(A); T2:Commit; T1:Commit. Conflict serializable?
+**Q4.** Schedule: T1:R(A); T2:W(A); T1:W(A); T2:Commit; T1:Commit. Conflict-serializable?
 
 <details>
 <summary>Reveal answer</summary>
 
-**Answer:** No. T1.R(A)–T2.W(A) gives T1→T2, and T2.W(A)–T1.W(A) gives T2→T1. The cycle means the schedule is not conflict serializable.
-
-   <details>
-   <summary>Reveal answer</summary>
-
-**Answer:** C. Each attribute is a candidate key in the cyclic FDs, so every determinant is a superkey and the relation is in BCNF.
-
-   </details>
+**Answer:** No. Conflicts create T1→T2 and T2→T1 in the precedence graph, so there is a cycle.
 
 </details>
 
 **Q5.** Which isolation level allows phantoms but not non-repeatable reads?
 
 <details>
-
-   <details>
-   <summary>Reveal answer</summary>
-
-**Answer:** C. An inserted matching row between two predicate reads is a phantom. It requires SERIALIZABLE or predicate/range locks.
-
-   </details>
 <summary>Reveal answer</summary>
 
 **Answer:** REPEATABLE READ.
 
 </details>
 
-   <details>
-   <summary>Reveal answer</summary>
-
-**Answer:** C. The only candidate key is {A,C}. A → B and C → D are partial dependencies on that key, so the relation violates 2NF and is only in 1NF.
-
-   </details>
+**Q6.** Which SQL clause filters groups after aggregation?
+- (a) WHERE (b) HAVING (c) ORDER BY (d) DISTINCT
 
 <details>
 <summary>Reveal answer</summary>
 
-**Answer:** 5000.
+**Answer:** (b) HAVING.
 
 </details>
 
-**Q10.** `SELECT dept, COUNT(*) FROM emp GROUP BY dept HAVING COUNT(*) > 5 ORDER BY dept;` — if `emp` is empty?
+**Q7.** Which join keeps all rows from the left table and fills unmatched right columns with NULL?
+- (a) INNER (b) LEFT OUTER (c) RIGHT OUTER (d) CROSS
 
 <details>
 <summary>Reveal answer</summary>
 
-**Answer:** Zero rows, because no groups are formed. A query with no GROUP BY and only aggregates would return one row even on empty input.
+**Answer:** (b) LEFT OUTER JOIN.
+
+</details>
+
+**Q8.** READ COMMITTED prevents which anomaly?
+- (a) Phantom read (b) Dirty read (c) Non-repeatable read (d) Write skew
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** (b) Dirty read.
+
+</details>
+
+**Q9.** Why can `WHERE commission <> 1000` exclude rows with `commission = NULL`?
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** `NULL <> 1000` is UNKNOWN, and WHERE keeps only TRUE.
+
+</details>
+
+**Q10.** `SELECT dept, COUNT(*) FROM emp GROUP BY dept HAVING COUNT(*) > 5 ORDER BY dept;` on an empty `emp` table returns?
+
+<details>
+<summary>Reveal answer</summary>
+
+**Answer:** Zero rows, because no groups are formed.
 
 </details>
 
@@ -454,34 +350,35 @@ Key consequence: column **aliases defined in SELECT** cannot be used in `WHERE`/
 <details>
 <summary>Reveal answer</summary>
 
-**Answer:** It avoids cascading aborts and ensures recoverability/strictness by holding X-locks until commit.
+**Answer:** No cascading aborts and recoverability/strictness by holding X-locks to commit/abort.
 
 </details>
 
-**Q12.** `WHERE col NOT IN (SELECT x FROM T)` returns nothing. Why?
+**Q12.** `WHERE col NOT IN (SELECT x FROM T)` returns nothing. Most likely reason?
 
 <details>
 <summary>Reveal answer</summary>
 
-**Answer:** The subquery returned a NULL; `col <> NULL` is UNKNOWN for every row, so all rows are filtered out. Use `NOT EXISTS`.
+**Answer:** Subquery produced a NULL, making comparisons UNKNOWN. `NOT EXISTS` is safer.
 
 </details>
 
-**Q13.** R1 ⋈ R2 where R1 has schema (A,B), R2 has (B,C). Lossless guarantee when decomposing R(A,B,C)?
+**Q13.** R1(A,B) and R2(B,C). For decomposition of R(A,B,C), when is join lossless?
 
 <details>
 <summary>Reveal answer</summary>
 
-**Answer:** Lossless iff B → A or B → C, since the common attribute B must be a key in one side.
+**Answer:** Lossless iff B→A or B→C (common attributes form a key of one side).
 
 </details>
 
-**Q14.** B+ tree vs hash index — which supports `WHERE salary BETWEEN 1000 AND 2000`?
+**Q14.** Best index for `WHERE salary BETWEEN 1000 AND 2000`?
+- (a) Hash index on salary (b) B+ tree on salary (c) Bitmap on dept (d) No index
 
 <details>
 <summary>Reveal answer</summary>
 
-**Answer:** B+ tree, because its ordered leaves support range scans. Hash indexes cannot do range queries.
+**Answer:** (b) B+ tree, because ordered leaves support range scans.
 
 </details>
 
